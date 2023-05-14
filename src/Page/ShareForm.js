@@ -41,7 +41,7 @@ export function ShareForm() {
   const params = useParams();
   useEffect(() => {
     axios
-      .get("/all_users")
+      .get("https://backend-capstone-project.herokuapp.com/all_users")
       .then((res) => {
         let temp_emailList = [];
         for (let e of res.data) {
@@ -55,7 +55,11 @@ export function ShareForm() {
   }, []);
   useEffect(() => {
     axios
-      .get("/query_shared_info_by_examid/".concat(params.id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/query_shared_info_by_examid/".concat(
+          params.id
+        )
+      )
       .then((res) => {
         let id_list = [];
         for (let e of res.data) {

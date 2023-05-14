@@ -39,7 +39,7 @@ export const Dashboard = () => {
   useEffect(() => {
     axios
       .get(
-        "/recent_practice_exams/".concat(
+        "https://backend-capstone-project.herokuapp.com/recent_practice_exams/".concat(
           userInfo !== undefined ? userInfo["id"] : 0
         )
       )

@@ -40,7 +40,7 @@ export function MyLoginPage() {
   };
   const onSubmit = (data) => {
     axios
-      .post("http://localhost:8000/save_user/", {
+      .post("https://backend-capstone-project.herokuapp.com/save_user/", {
         username: data.Name,
         password: data.Password,
         email: data.Email,

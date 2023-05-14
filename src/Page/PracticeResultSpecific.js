@@ -202,7 +202,9 @@ export const PraceticeResultSpecific = () => {
   useEffect(() => {
     // get the data from the api
     axios
-      .get("/test_result/".concat(id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(id)
+      )
       .then((res) => {
         // console.log("Data: ", res.data);
         setQuestionList(

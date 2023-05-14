@@ -157,7 +157,7 @@ export function PostEdit() {
 
   useEffect(() => {
     axios
-      .get("/query_questions_and_answers_by_examid/".concat(params.id))
+      .get("https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(params.id))
       .then((res) => {
         // console.log("Data: ", res.data);
         setQuestionList(convertQueryDataToQuestionList(res.data["q_and_a"]));
@@ -517,7 +517,7 @@ export function PostEdit() {
     // console.log("DATA will be saved: ", data);
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
-      .post("/save_questions_and_answers/".concat(params.id), data)
+      .post("https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(params.id), data)
       .then((res) => {
         // console.log("Data: ", res.data, res.data["last_modified_date_time"]);
         notify("Save successfully!", { type: "success" });

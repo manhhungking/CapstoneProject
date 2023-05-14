@@ -144,7 +144,7 @@ export const EditPersonalInfo = () => {
       save_data["password"] = userInfo.Password;
     }
     await axios // post  lich sử làm bài và kết quả
-      .patch("/auth/", save_data)
+      .patch("https://backend-capstone-project.herokuapp.com/auth/", save_data)
       .then((res) => {
         localStorage.setItem("auth", JSON.stringify(res.data));
         if (res.status < 200 || res.status >= 300) {

@@ -85,7 +85,7 @@ export function PracticeResult() {
   }
   useEffect(() => {
     axios
-      .get("/test_result/".concat(params.id))
+      .get("https://backend-capstone-project.herokuapp.com/test_result/".concat(params.id))
       .then((res) => {
         // console.log("Test Result: ", res.data);
         setTestInfo(res.data["test_info"]);

@@ -90,9 +90,10 @@ export function PostEditInfo({ ...props }) {
   const params = useParams();
   const redirect = useRedirect();
   const { data: userInfo, isLoading, err } = useGetIdentity();
-  let test_info_url = "http://localhost:8000/all_exams/";
+  let test_info_url =
+    "https://backend-capstone-project.herokuapp.com/all_exams/";
   if (userInfo)
-    test_info_url = "http://localhost:8000/all_exams/".concat(
+    test_info_url = "https://backend-capstone-project.herokuapp.com/all_exams/".concat(
       userInfo.id + "/" + params.id
     );
   // console.log("User info: ", userInfo, test_info_url);
@@ -124,7 +125,7 @@ export function PostEditInfo({ ...props }) {
   }, []);
   async function updateTestInfo(save_data) {
     await axios // post  lich sử làm bài và kết quả
-      .patch("/all_exams/".concat(userInfo.id + "/" + params.id), save_data)
+      .patch("https://backend-capstone-project.herokuapp.com/all_exams/".concat(userInfo.id + "/" + params.id), save_data)
       .then((res) => {
         notify("Save successfully!", { type: "success" });
         // console.log("Data saved: ", res.data);

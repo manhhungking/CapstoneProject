@@ -181,7 +181,11 @@ export function PracticeTest() {
   useEffect(() => {
     // get the data from the api
     axios
-      .get("/query_questions_and_answers_by_examid/".concat(params.id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
+          params.id
+        )
+      )
       .then((res) => {
         // console.log("Api data: ", res.data);
         if (res.data["is_authority"]) {
@@ -627,7 +631,12 @@ export function PracticeTest() {
   async function test_result_Save_API(data) {
     var id;
     await axios // post  lich sử làm bài và kết quả
-      .post("/test_result/".concat(params.id), data)
+      .post(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          params.id
+        ),
+        data
+      )
       .then((res) => {
         id = res.data["id"];
       })
@@ -638,7 +647,12 @@ export function PracticeTest() {
   }
   async function updateTestMark(Score, id) {
     await axios // update lịch sử làm bài và kết quả
-      .patch("/test_result/".concat(id), { Score })
+      .patch(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          id
+        ),
+        { Score }
+      )
       .then((res) => {
         // console.log("Data save practice test: ", res.data);
         wait(1000);
@@ -651,7 +665,12 @@ export function PracticeTest() {
   async function saveTestResultSpecific(data) {
     // console.log("DATA specific will be saved: ", data);
     await axios // update lịch sử làm bài và kết quả
-      .post("/test_result_specific/".concat(params.id), data)
+      .post(
+        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(
+          params.id
+        ),
+        data
+      )
       .then((res) => {
         console.log("Data save practice test: ", res.data);
       })

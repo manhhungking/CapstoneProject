@@ -64,7 +64,7 @@ export function PracticeList() {
   const redirect = useRedirect();
   useEffect(() => {
     axios
-      .get("/exams/".concat(userInfo !== undefined ? userInfo["id"] : 0))
+      .get("https://backend-capstone-project.herokuapp.com/exams/".concat(userInfo !== undefined ? userInfo["id"] : 0))
       .then((res) => {
         setOriginalExamList(res.data);
         setExamList(res.data);
@@ -77,7 +77,7 @@ export function PracticeList() {
 
   useEffect(() => {
     axios
-      .get("/query_exam_tags/")
+      .get("https://backend-capstone-project.herokuapp.com/query_exam_tags/")
       .then((res) => {
         let temp = [];
         for (let e of res.data) {

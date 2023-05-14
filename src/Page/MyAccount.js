@@ -271,7 +271,11 @@ export const MyAccount = () => {
   useEffect(() => {
     // console.log(userInfo.id);
     axios
-      .get("/my_account/tests/".concat(userInfo.id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/my_account/tests/".concat(
+          userInfo.id
+        )
+      )
       .then((res) => {
         setQuestionList(convertQueryDataToQuestionList(res.data));
       })

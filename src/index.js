@@ -12,10 +12,7 @@ import "@material/web/checkbox/checkbox.js";
 
 const store = configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
-if (process.env.NODE_ENV === "production") {
-  console.error = () => {};
-  console.debug = () => {};
-}
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
