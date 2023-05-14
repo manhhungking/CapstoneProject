@@ -2,23 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
 import configureStore from "./Page/store/configureStore";
-// import HighlightApp from "./Page/containers/HighlightApp";
-// import getMuiTheme from "material-ui/styles/getMuiTheme";
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import "./Page/styles/styles.scss";
 import { HomePage } from "./Page/HomePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MyLoginPage } from "./Page/MyLoginPage";
 import "@material/web/button/filled-button.js";
 import "@material/web/button/outlined-button.js";
 import "@material/web/checkbox/checkbox.js";
 
 const store = configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+if (process.env.NODE_ENV === "production") {
+  console.error = () => {};
+  console.debug = () => {};
+}
 root.render(
   <React.StrictMode>
     <BrowserRouter>

@@ -39,7 +39,6 @@ export function MyLoginPage() {
     );
   };
   const onSubmit = (data) => {
-    console.log("Data: ", data);
     axios
       .post("http://localhost:8000/save_user/", {
         username: data.Name,
@@ -55,7 +54,7 @@ export function MyLoginPage() {
         notify("Sign up fail! Email has been used", {
           type: "error",
         });
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -147,7 +146,7 @@ export function MyLoginPage() {
                 errors={errors}
                 name="Name"
                 render={({ messages }) => {
-                  console.log("messages", messages);
+                  // console.log("messages", messages);
                   return messages
                     ? Object.entries(messages).map(([type, message]) => (
                         <Typography
@@ -230,7 +229,7 @@ export function MyLoginPage() {
                 errors={errors}
                 name="Password"
                 render={({ messages }) => {
-                  console.log("Messages: ", messages);
+                  // console.log("Messages: ", messages);
                   return messages
                     ? Object.entries(messages).map(([type, message]) => (
                         <Typography

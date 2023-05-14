@@ -40,10 +40,7 @@ import {
   InputLabel,
   FormHelperText,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 import { ShareButton } from "./ShareButton";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export function PostList() {
   return (
@@ -83,13 +80,13 @@ export const PostCreate = () => {
   const [timeError, setTimeError] = React.useState();
   const [isSetDuration, setIsSetDuration] = React.useState(false);
   const postSave = async function(data) {
-    console.log("User info: ", userInfo);
+    // console.log("User info: ", userInfo);
     if (data["image"]) data["image"] = await toBase64(data["image"].rawFile);
     else data["image"] = "";
     data = { ...data, User_id: userInfo.id };
     if (isSetDuration === true) data["duration"] = num;
     else data["duration"] = 0;
-    console.log("Data saved: ", data);
+    // console.log("Data saved: ", data);
     create("save_exam/", { data });
     if (error) {
       notify("Cannot save!", { type: "error" });

@@ -39,16 +39,15 @@ export const Dashboard = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8000/recent_practice_exams/".concat(
+        "/recent_practice_exams/".concat(
           userInfo !== undefined ? userInfo["id"] : 0
         )
       )
       .then((res) => {
         setExamList(res.data);
-        console.log("Exam list: ", res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [userInfo]);
   const handleChange = (e) => {
@@ -58,8 +57,6 @@ export const Dashboard = () => {
   const clearState = () => setState({ ...initialState });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, message);
-
     emailjs
       .sendForm(
         "service_32fsbp5",
@@ -69,13 +66,11 @@ export const Dashboard = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
           notify("Send successfully!", { type: "success" });
           clearState();
         },
         (error) => {
           notify("Cannot save!", { type: "error" });
-          console.log(error.text);
         }
       );
   };

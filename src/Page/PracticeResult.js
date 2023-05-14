@@ -27,8 +27,6 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
 import {
-  useMediaQuery,
-  useTheme,
   Container,
   Grid,
   Typography,
@@ -67,7 +65,7 @@ export function PracticeResult() {
     let numOfAudio = 0;
     let numOfParagraph = 0;
     for (let x = 0; x < i; x++) {
-      console.log(testSpecific[x].Type);
+      // console.log(testSpecific[x].Type);
       if (testSpecific[x].Type === "Audio") {
         numOfAudio += 1;
       }
@@ -87,9 +85,9 @@ export function PracticeResult() {
   }
   useEffect(() => {
     axios
-      .get("http://localhost:8000/test_result/".concat(params.id))
+      .get("/test_result/".concat(params.id))
       .then((res) => {
-        console.log("Test Result: ", res.data);
+        // console.log("Test Result: ", res.data);
         setTestInfo(res.data["test_info"]);
         setTestSpecific(res.data["test_specific"]);
         setTotalQuestion(res.data["total_question"]);
@@ -105,15 +103,15 @@ export function PracticeResult() {
         } else {
           setAccuracy(0);
         }
-        console.log("Test specific: ", res.data["test_specific"]);
+        // console.log("Test specific: ", res.data["test_specific"]);
         var start = res.data["test_info"]["Start_time"];
         var end = res.data["test_info"]["End_time"];
         var diff = secondsToHMS(hmsToSeconds(end) - hmsToSeconds(start));
-        console.log("Time done: ", diff);
+        // console.log("Time done: ", diff);
         setTime(diff);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   return (
@@ -351,7 +349,6 @@ export function PracticeResult() {
               if (type === "Audio" || type === "Paragraph") return "";
               let userAnswer, correctAnswer;
               let calculatedIndex = calculateIndexMinusNumOfAudio(i);
-              console.log(i, calculatedIndex);
               if (type === "MCQ") {
                 if (exam["User_answer_MCQ"] === "")
                   userAnswer = "Not anwsered!";
@@ -364,12 +361,12 @@ export function PracticeResult() {
                 correctAnswer = exam["Solution"];
               } else if (type === "FIB") {
                 if (exam["User_answer_FIB"]) userAnswer = "Not anwsered!";
-                console.log(
-                  "FIB: ",
-                  exam["User_answer_FIB"],
-                  exam["Solution_FIB"],
-                  typeof exam["User_answer_FIB"]
-                );
+                // console.log(
+                //   "FIB: ",
+                //   exam["User_answer_FIB"],
+                //   exam["Solution_FIB"],
+                //   typeof exam["User_answer_FIB"]
+                // );
 
                 return (
                   <div className="result-answers-item">
@@ -377,63 +374,51 @@ export function PracticeResult() {
                       <strong>{calculatedIndex}</strong>
                     </span>
                     {exam
-                      ? typeof exam["User_answer_FIB"] ===
-                        typeof []
-                        ? exam["User_answer_FIB"].map(
-                            (value, index) => {
-                              let compare =
-                                value.toUpperCase() ===
-                                exam["Solution_FIB"][
-                                  index
-                                ].toUpperCase();
+                      ? typeof exam["User_answer_FIB"] === typeof []
+                        ? exam["User_answer_FIB"].map((value, index) => {
+                            let compare =
+                              value.toUpperCase() ===
+                              exam["Solution_FIB"][index].toUpperCase();
 
-                              return (
-                                <div
-                                  style={{
-                                    display: "inline-block",
-                                    marginRight: "20px",
-                                  }}
-                                >
-                                  <span>
-                                    <Typography
-                                      variant="h6"
-                                      display="inline"
-                                      className="text-answerkey"
-                                    >
-                                      {
-                                        exam["Solution_FIB"][
-                                          index
-                                        ]
-                                      }
-                                      :
-                                    </Typography>
-                                    <span
-                                      style={{
-                                        marginRight: "0.25em",
-                                      }}
-                                    >
-                                      &nbsp;
-                                    </span>
-                                    <span className="mr-1 text-useranswer">
-                                      {value === " "
-                                        ? "Not anwsered!"
-                                        : value}
-                                    </span>
-                                  </span>
+                            return (
+                              <div
+                                style={{
+                                  display: "inline-block",
+                                  marginRight: "20px",
+                                }}
+                              >
+                                <span>
+                                  <Typography
+                                    variant="h6"
+                                    display="inline"
+                                    className="text-answerkey"
+                                  >
+                                    {exam["Solution_FIB"][index]}:
+                                  </Typography>
                                   <span
-                                    className={
-                                      value === " "
-                                        ? "text-unanswer fas fa-minus fa-lg hyphen-icon"
-                                        : compare
-                                        ? "text-correct fas fa-check fa-lg correct-icon"
-                                        : "text-wrong fas fa-times fa-lg wrong-icon"
-                                    }
-                                  />
-                                  <br />
-                                </div>
-                              );
-                            }
-                          )
+                                    style={{
+                                      marginRight: "0.25em",
+                                    }}
+                                  >
+                                    &nbsp;
+                                  </span>
+                                  <span className="mr-1 text-useranswer">
+                                    {value === " " ? "Not anwsered!" : value}
+                                  </span>
+                                </span>
+                                <span
+                                  className={
+                                    value === " "
+                                      ? "text-unanswer fas fa-minus fa-lg hyphen-icon"
+                                      : compare
+                                      ? "text-correct fas fa-check fa-lg correct-icon"
+                                      : "text-wrong fas fa-times fa-lg wrong-icon"
+                                  }
+                                />
+                                <br />
+                              </div>
+                            );
+                          })
                         : ""
                       : ""}
                   </div>
@@ -497,7 +482,6 @@ export function PracticeResult() {
                   temp[calculatedIndex - 1].lastChild.className =
                     "text-wrong fas fa-times fa-lg wrong-icon";
                 else if (type === "Cons") {
-                  console.log("YES", i);
                   temp[calculatedIndex - 1].lastChild.className =
                     "text-constructive fas fa-pencil-alt fa-lg";
                 } else {

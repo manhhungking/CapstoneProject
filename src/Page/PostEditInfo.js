@@ -57,8 +57,6 @@ import {
   SaveButton,
   DeleteButton,
 } from "react-admin";
-import Paper from "@mui/material/Paper";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
 import {
   useMediaQuery,
@@ -121,22 +119,16 @@ export function PostEditInfo({ ...props }) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   async function updateTestInfo(save_data) {
-    console.log("Data saved: ", save_data);
     await axios // post  lich sử làm bài và kết quả
-      .patch(
-        "http://localhost:8000/all_exams/".concat(
-          userInfo.id + "/" + params.id
-        ),
-        save_data
-      )
+      .patch("/all_exams/".concat(userInfo.id + "/" + params.id), save_data)
       .then((res) => {
         notify("Save successfully!", { type: "success" });
-        console.log("Data saved: ", res.data);
-        console.log("Data saved time: ", res.data["Last_Modified_Date_Time"]);
+        // console.log("Data saved: ", res.data);
+        // console.log("Data saved time: ", res.data["Last_Modified_Date_Time"]);
         props.handleCloseDialogEditInfo(null);
         props.updatelastModifiedDateTime(res.data["Last_Modified_Date_Time"]);
       })
@@ -230,7 +222,6 @@ export function PostEditInfo({ ...props }) {
                                   ".RaFileInput-removeButton"
                                 );
                                 node.style.display = "none";
-                                console.log("Node: ", node);
                                 setImage(""); // xóa ảnh thumbnail
                               }}
                             >

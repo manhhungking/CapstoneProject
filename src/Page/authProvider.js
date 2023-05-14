@@ -1,16 +1,14 @@
 import axios from "axios";
 export const authProvider = {
   login: ({ email, password }) => {
-    return axios
-      .post("http://localhost:8000/auth/", { email, password })
-      .then((res) => {
-        console.log("Res: ", res.data);
-        if (res.status < 200 || res.status >= 300) {
-          return Promise.reject();
-        }
-        localStorage.setItem("auth", JSON.stringify(res.data));
-        return Promise.resolve();
-      });
+    return axios.post("/auth/", { email, password }).then((res) => {
+      // console.log("Res: ", res.data);
+      if (res.status < 200 || res.status >= 300) {
+        return Promise.reject();
+      }
+      localStorage.setItem("auth", JSON.stringify(res.data));
+      return Promise.resolve();
+    });
   },
   logout: () => {
     localStorage.removeItem("auth");

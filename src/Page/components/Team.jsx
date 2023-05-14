@@ -25,7 +25,7 @@ export const Team = (props) => {
                   <div className="thumbnail">
                     {" "}
                     <img
-                      src={i === 1 ? anhPhuoc : anhHung}
+                      src={i === 0 ? anhPhuoc : anhHung}
                       alt="..."
                       className="team-img"
                       style={{ height: "240px" }}

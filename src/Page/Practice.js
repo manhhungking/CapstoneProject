@@ -64,24 +64,20 @@ export function PracticeList() {
   const redirect = useRedirect();
   useEffect(() => {
     axios
-      .get(
-        "http://localhost:8000/exams/".concat(
-          userInfo !== undefined ? userInfo["id"] : 0
-        )
-      )
+      .get("/exams/".concat(userInfo !== undefined ? userInfo["id"] : 0))
       .then((res) => {
         setOriginalExamList(res.data);
         setExamList(res.data);
-        console.log("Exam list: ", res.data);
+        // console.log("Exam list: ", res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [userInfo]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/query_exam_tags/")
+      .get("/query_exam_tags/")
       .then((res) => {
         let temp = [];
         for (let e of res.data) {
@@ -121,7 +117,7 @@ export function PracticeList() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [indexTagName]);
 
