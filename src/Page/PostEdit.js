@@ -890,11 +890,6 @@ export function PostEdit() {
         >
           <FunctionsIcon />
         </IconButton>
-        <MathFormulaDialog
-          open={open}
-          setOpen={setOpen}
-          handleCloseDialog={handleCloseDialog}
-        />
       </RichTextInputToolbar>
     );
   };
@@ -980,7 +975,14 @@ export function PostEdit() {
             </Button>
           </div>
         </Grid>
-        <Grid item xs={12} sm={8} md={9} lg={10} style={{ paddingTop: "48px" }}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={9}
+          lg={10}
+          style={{ paddingTop: "48px" }}
+        >
           <Edit
             title="Edit exam"
             style={{ marginTop: "0px", alignItems: "center" }}
@@ -996,7 +998,9 @@ export function PostEdit() {
                   <div className="question-text">
                     {questionList.map((question, i) => {
                       if (question.type === "MCQ") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1026,7 +1030,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1177,7 +1184,9 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "Cons") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1207,7 +1216,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1228,7 +1240,9 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "FIB") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1258,7 +1272,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1320,7 +1337,9 @@ export function PostEdit() {
                               rowGap: "0.5rem",
                             }}
                           >
-                            <Typography variant="h5">Upload audio: </Typography>
+                            <Typography variant="h5">
+                              Upload audio:{" "}
+                            </Typography>
                             <span
                               style={{
                                 display: "flex",
@@ -1419,6 +1438,11 @@ export function PostEdit() {
           <Aside />
         </Grid>
       </Grid>
+      <MathFormulaDialog
+      open={open}
+      setOpen={setOpen}
+      handleCloseDialog={handleCloseDialog}
+    />
     </Container>
   );
 }

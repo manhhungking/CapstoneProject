@@ -390,22 +390,7 @@ export function PracticeTest() {
         let element = div_question.parentNode;
         div_question.parentNode.replaceChild(temp, div_question);
         element = element.firstChild;
-        // loop through children element
-        // console.log("Get children: ", element.children);
-        // [...element.children].map((child) =>
-        //   console.log("Child: ", child, child.innerHTML)
-        // );
       }
-      // var div_question_hl = document.querySelector(
-      //   ".questionHL-".concat(i + 1)
-      // );
-      // if (div_question_hl != null) {
-      //   div_question = div_question_hl.firstChild;
-      //   div_question.parentNode.replaceChild(
-      //     div_question.innerHTML,
-      //     div_question
-      //   );
-      // }
     }
     if (duration > 0) {
       if (completed) {
@@ -585,8 +570,7 @@ export function PracticeTest() {
         saveData.push(k);
       } else if (questionList[i].type === "FIB") {
         let Score = [];
-        let check = false;
-        if(questionList[i].answerOptions.length > 0) check = true;
+        let check = true;
         for (let j = 0; j < questionList[i].answerOptions.length; ++j) {
           console.log(
             "So sanh dap an: ",
