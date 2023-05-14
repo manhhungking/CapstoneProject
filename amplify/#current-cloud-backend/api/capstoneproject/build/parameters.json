@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "capstoneproject",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-amplifyd269b2818ee74-staging-114718-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/748a18826ffb3b6205c3bb3f7a9d4402d5b7ecea"
+}
