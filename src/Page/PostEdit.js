@@ -36,6 +36,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Toolbar, Edit, useCreate, useNotify, TextInput } from "react-admin";
+import { MathJaxContext, MathJax } from "better-react-mathjax";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
