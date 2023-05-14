@@ -1,6 +1,7 @@
 import React, {
   useState,
   useEffect,
+  useRef,
   Component,
   Children,
   isValidElement,
@@ -47,7 +48,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
-import Countdown from "react-countdown";
+import Countdown, { zeroPad } from "react-countdown";
 import {
   useMediaQuery,
   useTheme,
@@ -67,9 +68,8 @@ import Form from "./notepads/Form.js";
 import TodoList from "./notepads/TodoList.js";
 import Stack from "@mui/material/Stack";
 import "../Style/NotePad.css";
-import Textarea from "react-expanding-textarea";
 import { NotFound } from "./NotFound";
-let count = 1;
+
 function changeBlankAnswersToEllipsis(temp) {
   let list = getBlankAnswersFromQuestion(temp);
   for (let i = 0; i < list.length; i++) {
@@ -83,68 +83,7 @@ function changeBlankAnswersToEllipsis(temp) {
   }
   return temp;
 }
-const BasicHighlight = ({ children, name }) => {
-  // console.log("Name: ", name);
-  const RenderChild = (children) => {
-    return Children.map(children, (child) => {
-      console.log("Child text: ", child);
-      console.log(child.type, resolveCalssName(child.type));
-      if (resolveCalssName(child.type) !== "") {
-        return (
-          <child.type
-            {...child.props}
-            children={RenderChild(child.props.children)}
-            // className={resolveCalssName(child.type)}
-          />
-        );
-      }
 
-      return <HighlightApp id={++count} questionText={child} />;
-    });
-  };
-
-  const resolveCalssName = (type) => {
-    switch (type) {
-      case "thead":
-        return "custom-thead-class-name";
-      case "tbody":
-        return "custom-tbody-class-name";
-      case "tr":
-        return "custom-tr-class-name";
-      case "th":
-        return "custom-th-class-name";
-      case "td":
-        return "custom-td-class-name";
-      case "p":
-        return "custom-td-class-name";
-      case "div":
-        return "custom-td-class-name";
-      default:
-        return "";
-    }
-  };
-
-  return (
-    <div>
-      {/* {RenderChild(
-        <div
-          className={name}
-          style={{
-            width: "100%",
-          }}
-        />
-      )} */}
-      <div
-        className={name}
-        style={{
-          width: "100%",
-        }}
-      >
-        {RenderChild(children)}
-      </div>
-    </div>
-  );
-};
 function getBlankAnswersFromQuestion(temp) {
   const regex = /<blank id="[0-9]+">/g;
   const regex2 = /<\/blank>/g;
@@ -221,6 +160,8 @@ export function PracticeTest() {
   const [todos, setTodos] = useState([]);
   // Notepad states
   const [noteDisplay, setNoteDisplay] = useState("None");
+  const clockRef = useRef();
+  const [isRunning, setIsRunning] = useState(true);
   const redirect = useRedirect();
   var ranges = [];
   const store = configureStore();
@@ -393,8 +334,13 @@ export function PracticeTest() {
       }
     }
     if (duration > 0) {
+      // console.log("Is not stop");
+
       if (completed) {
         // Render a completed state
+        setIsRunning(false);
+        test_result_Save();
+        clockRef.current.pause();
         return <Completionist />;
       } else {
         // Render a countdown
@@ -404,7 +350,7 @@ export function PracticeTest() {
               color: "black",
             }}
           >
-            {hours}:{minutes}:{seconds}
+            {zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}
           </span>
         );
       }
@@ -465,7 +411,14 @@ export function PracticeTest() {
                 display: "inline-block",
               }}
             >
-              <Countdown date={countdown} renderer={renderer} />
+              {isRunning && (
+                <Countdown
+                  date={countdown}
+                  renderer={renderer}
+                  // onComplete={test_result_Save()}
+                  ref={clockRef}
+                />
+              )}
             </div>
           </div>
           <Box
