@@ -25,13 +25,16 @@ import {
   Sidebar,
   UserMenu,
   useSidebarState,
+  AppBar,
   Button,
   EditButton,
   Logout,
   LoadingIndicator,
-  AppBar,
   useGetIdentity,
   useUserMenu,
+  TitlePortal,
+  ToggleThemeButton,
+  defaultTheme,
 } from "react-admin";
 import logo from "./Images/logo.jpg";
 import logo2 from "./Images/logo2.png";
@@ -108,6 +111,7 @@ const ProfileMenu = () => {
     </MenuItem>
   );
 };
+const darkTheme = { palette: { mode: "dark" } };
 
 const MyLayout = ({ children, dashboard, title, classes, ...props }) => {
   const [open] = useSidebarState();
@@ -129,17 +133,20 @@ const MyLayout = ({ children, dashboard, title, classes, ...props }) => {
   return (
     <Root>
       <AppFrame>
-        <AppBar {...props} open={open} className="MobileAppBar">
-          {/* <Typography
-            variant="h6"
-            color="inherit"
-            className={classes.title}
-            id="react-admin-title"
-          /> */}
+        <AppBar
+          {...props}
+          open={open}
+          className="MobileAppBar"
+          userMenu={
+            <UserMenu {...props} className={classes.logo1}>
+              <ProfileMenu />
+              <Logout />
+            </UserMenu>
+          }
+        >
           {isLargeEnough && (
             <img src={logo2} alt="logo" className={classes.logo} />
           )}
-
           <span className={classes.spacer} />
         </AppBar>
 
