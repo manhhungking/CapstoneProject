@@ -18,7 +18,7 @@ export function NotFound() {
       }}
     >
       <svg
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium RaNotFound-icon css-hung-MuiSvgIcon-root"
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium RaNotFound-icon css-hung-MuiSvgIcon-root"
         focusable="false"
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -34,9 +34,9 @@ export function NotFound() {
 
       <div className="RaNotFound-toolbar">
         <Button variant="contained" onClick={() => navigate(-1)}>
-          <span class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon">
+          <span className="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon">
             <svg
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
               focusable="false"
               aria-hidden="true"
               viewBox="0 0 24 24"

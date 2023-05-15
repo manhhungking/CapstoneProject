@@ -173,7 +173,7 @@ export const Contact = (props) => {
         <div className="container text-center">
           <p>
             &copy; 2023 StudyAll. Design by{" "}
-            <a href="http://www.studyall.com" rel="nofollow">
+            <a href="https://www.studyall.link" rel="nofollow">
               StudyAll
             </a>
           </p>

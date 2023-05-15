@@ -124,7 +124,7 @@ const MyLayout = ({ children, dashboard, title, classes, ...props }) => {
     fullName: data.Username,
     avatar: data.Avatar,
   };
-  let currentPath = "/app/";
+  let currentPath = "/app";
   if (!!matchPath("/app/all_exams/*", location.pathname)) {
     currentPath = "/app/all_exams/".concat(userInfo.id);
   } else if (!!matchPath("/app/practice_tests/*", location.pathname)) {

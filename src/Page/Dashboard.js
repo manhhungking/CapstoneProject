@@ -333,10 +333,10 @@ export const Dashboard = () => {
               <div className="row">
                 <div className="section-title">
                   <h2>Get In Touch</h2>
-                  <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>
-                    Please fill out the form below to send us an email and we
-                    will get back to you as soon as possible.
-                  </p>
+                  {/* <p style={{ color: "rgba(255, 255, 255, 0.75)" }} > */}
+                  Please fill out the form below to send us an email and we will
+                  get back to you as soon as possible.
+                  {/* </p> */}
                 </div>
                 <form
                   name="sentMessage"
@@ -395,7 +395,7 @@ export const Dashboard = () => {
                 </form>
               </div>
             </Grid>
-            <Grid item md={4} className="contact-info">
+            <Grid item xs={12} md={4} className="contact-info">
               <div className="contact-item">
                 <h3>Contact Info</h3>
                 <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>
@@ -489,7 +489,7 @@ export const Dashboard = () => {
         <div className="container text-center">
           <p>
             &copy; 2023 StudyAll. Design by{" "}
-            <a href="http://www.studyall.com" rel="nofollow">
+            <a href="https://www.studyall.link" rel="nofollow">
               StudyAll
             </a>
           </p>

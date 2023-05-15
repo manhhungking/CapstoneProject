@@ -159,7 +159,7 @@ export function PracticeTest() {
   // Notepad states
   const [todos, setTodos] = useState([]);
   // Notepad states
-  const [noteDisplay, setNoteDisplay] = useState("None");
+  const [noteDisplay, setNoteDisplay] = useState("None"); //useState("None"); block
   const clockRef = useRef();
   const [isRunning, setIsRunning] = useState(true);
   const redirect = useRedirect();
@@ -187,7 +187,7 @@ export function PracticeTest() {
         )
       )
       .then((res) => {
-        // console.log("Api data: ", res.data);
+        console.log("Api data: ", res.data);
         if (res.data["is_authority"]) {
           for (let i = 0; i < res.data["is_authority"].length; ++i) {
             if (res.data["is_authority"][i] === data_user.id) {
@@ -196,6 +196,7 @@ export function PracticeTest() {
           }
         }
         setQuestionList(convertQueryDataToQuestionList(res.data["q_and_a"]));
+
         setDuration(res.data["duration"]);
         setCountdown(Date.now() + res.data["duration"] * 60 * 1000);
       })
@@ -325,9 +326,9 @@ export function PracticeTest() {
         document.getElementById(bien).style.width = "100%";
 
       if (div_question != null) {
-        // console.log(i, questionList[i].questionText);
+        console.log(i, questionList[i].questionText);
         let temp = stringToHTML(`${questionList[i].questionText}`);
-        // console.log("Question text: ", questionList[i].questionText);
+        // console.log("Question text: ");
         let element = div_question.parentNode;
         div_question.parentNode.replaceChild(temp, div_question);
         element = element.firstChild;
@@ -855,6 +856,7 @@ export function PracticeTest() {
                                       }}
                                       className={"question-".concat(i + 1)}
                                     />
+                                    ``
                                   </MathJax>
                                 </MathJaxContext>
                                 <RadioGroup
