@@ -9,18 +9,11 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import {
   SimpleForm,
-  SaveButton,
   Toolbar,
-  Edit,
-  useCreate,
-  useNotify,
-  useGetRecordId,
   useGetIdentity,
   useRedirect,
   Error404,
 } from "react-admin";
-import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -30,7 +23,6 @@ import { Container, Grid, Typography } from "@mui/material";
 import "../Style/PracticeResultSpecific.css";
 import "../Style/PracticeStyle.css";
 import { NotFound } from "./NotFound";
-import { eventWrapper, wait } from "@testing-library/user-event/dist/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
 import HighlightApp from "./containers/HighlightApp";
@@ -84,7 +76,7 @@ function convertQueryDataToQuestionList(data) {
         type: "Cons",
       };
     } else if (e.Type === "FIB") {
-      console.log(e.User_answer_FIB);
+      // console.log(e.User_answer_FIB);
       k = {
         questionText: changeBlankAnswersToEllipsis(e.Question),
         answerOptions: e.Solution_FIB,
@@ -106,7 +98,7 @@ function convertQueryDataToQuestionList(data) {
     }
     questionList.push(k);
   }
-  console.log("Question List: ", questionList);
+  // console.log("Question List: ", questionList);
   return questionList;
 }
 
@@ -118,7 +110,7 @@ export const PraceticeResultSpecific = () => {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const exam_id = searchParams.get("exam_id");
-  console.log("ID test: ", id, "\nExam id: ", exam_id);
+  // console.log("ID test: ", id, "\nExam id: ", exam_id);
   params1.append("name", "John");
   params1.append("age", "32");
   // console.log("Param: ", params1.toString());
@@ -210,20 +202,22 @@ export const PraceticeResultSpecific = () => {
   useEffect(() => {
     // get the data from the api
     axios
-      .get("http://localhost:8000/test_result/".concat(id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(id)
+      )
       .then((res) => {
-        console.log("Data: ", res.data);
+        // console.log("Data: ", res.data);
         setQuestionList(
           convertQueryDataToQuestionList(res.data["test_specific"])
         );
         var start = res.data["test_info"]["Start_time"];
         var end = res.data["test_info"]["End_time"];
         var diff = secondsToHMS(hmsToSeconds(end) - hmsToSeconds(start));
-        console.log("Time done: ", diff);
+        // console.log("Time done: ", diff);
         setTime(diff);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -766,11 +760,11 @@ export const PraceticeResultSpecific = () => {
                             {question
                               ? typeof question.answerOptions === typeof []
                                 ? question.answerOptions.map((answer, idx) => {
-                                    console.log(
-                                      questionList[i].userAnswer[idx],
-                                      questionList[i].mark[idx],
-                                      typeof questionList[i].mark
-                                    );
+                                    // console.log(
+                                    //   questionList[i].userAnswer[idx],
+                                    //   questionList[i].mark[idx],
+                                    //   typeof questionList[i].mark
+                                    // );
                                     return (
                                       <div>
                                         <span

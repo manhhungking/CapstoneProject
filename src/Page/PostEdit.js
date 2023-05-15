@@ -14,7 +14,9 @@ import IconButton from "@mui/material/IconButton";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Remove from "@mui/icons-material/Remove";
-import { MathFormulaDialog } from "./MathFormulaDialog";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+// import { MathFormulaDialog } from "./MathFormulaDialog";
 import { PostEditInfo } from "./PostEditInfo";
 import {
   DefaultEditorOptions,
@@ -62,12 +64,11 @@ function getBlankAnswersFromQuestion(temp) {
 function changeBlankAnswersToEllipsis(temp) {
   let list = getBlankAnswersFromQuestion(temp);
   for (let i = 0; i < list.length; i++) {
-    console.log("Temp before: ", temp, `<blank id="${i}">${list[i]}</blank>`);
+    // console.log("Temp before: ", temp, `<blank id="${i}">${list[i]}</blank>`);
     temp = temp.replace(
       `<blank id="${i}">${list[i].answerText}</blank>`,
       `&lt;blank id="${i}"&gt;...&lt;/blank&gt;`
     );
-    console.log("Temp after: ", temp);
   }
   return temp;
 }
@@ -120,7 +121,7 @@ function convertQueryDataToQuestionList(data) {
     }
     questionList.push(k);
   }
-  console.log("Question List: ", questionList);
+  // console.log("Question List: ", questionList);
   return questionList;
 }
 function assignBlankAnswersToBlanks(question) {
@@ -149,21 +150,21 @@ export function PostEdit() {
     assignNewValueForElementsCheck,
     setAssignNewValueForElementsCheck,
   ] = useState(false);
+  const [equation, setEquation] = useState("");
+  const config = {
+    loader: { load: ["input/asciimath"] },
+  };
 
   useEffect(() => {
     axios
-      .get(
-        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
-          params.id
-        )
-      )
+      .get("https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(params.id))
       .then((res) => {
-        console.log("Data: ", res.data);
+        // console.log("Data: ", res.data);
         setQuestionList(convertQueryDataToQuestionList(res.data["q_and_a"]));
         setLastModifiedDateTime(res.data["last_modified_date_time"]);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -513,20 +514,17 @@ export function PostEdit() {
       dataGen: dataGen,
       last_modified_date_time: lastModifiedDateTime,
     };
-    console.log("DATA will be saved: ", data);
+    // console.log("DATA will be saved: ", data);
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
-      .post(
-        "http://localhost:8000/save_questions_and_answers/".concat(params.id),
-        data
-      )
+      .post("https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(params.id), data)
       .then((res) => {
-        console.log("Data: ", res.data, res.data["last_modified_date_time"]);
+        // console.log("Data: ", res.data, res.data["last_modified_date_time"]);
         notify("Save successfully!", { type: "success" });
         setLastModifiedDateTime(res.data["last_modified_date_time"]);
       })
       .catch((err) => {
-        console.log(err, err.response.status === 409);
+        // console.log(err, err.response.status === 409);
         if (err.response.status === 409)
           notify("Old version, Please reload the page!", { type: "error" });
         else notify("Cannot save!", { type: "error" });
@@ -976,14 +974,7 @@ export function PostEdit() {
             </Button>
           </div>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={9}
-          lg={10}
-          style={{ paddingTop: "48px" }}
-        >
+        <Grid item xs={12} sm={8} md={9} lg={10} style={{ paddingTop: "48px" }}>
           <Edit
             title="Edit exam"
             style={{ marginTop: "0px", alignItems: "center" }}
@@ -999,9 +990,7 @@ export function PostEdit() {
                   <div className="question-text">
                     {questionList.map((question, i) => {
                       if (question.type === "MCQ") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1031,10 +1020,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1185,9 +1171,7 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "Cons") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1217,10 +1201,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1241,9 +1222,7 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "FIB") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1273,10 +1252,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1338,9 +1314,7 @@ export function PostEdit() {
                               rowGap: "0.5rem",
                             }}
                           >
-                            <Typography variant="h5">
-                              Upload audio:{" "}
-                            </Typography>
+                            <Typography variant="h5">Upload audio: </Typography>
                             <span
                               style={{
                                 display: "flex",
@@ -1439,11 +1413,46 @@ export function PostEdit() {
           <Aside />
         </Grid>
       </Grid>
-      <MathFormulaDialog
-      open={open}
-      setOpen={setOpen}
-      handleCloseDialog={handleCloseDialog}
-    />
+      <Dialog
+        open={open}
+        onClose={handleCloseDialog}
+        disablebackdropclick="true"
+      >
+        <div
+          style={{ padding: 16, fontFamily: "sans-serif", textAlign: "center" }}
+        >
+          <TextField
+            helperText="Please enter your formula"
+            id="demo-helper-text-aligned"
+            label="Formula"
+            onChange={(event) => {
+              setEquation("`".concat(event.target.value).concat("`"));
+            }}
+          />
+          <MathJaxContext config={config}>
+            <MathJax>
+              <div style={{ marginBottom: "5px" }}>Preview:</div>
+              <div>{equation}</div>
+            </MathJax>
+          </MathJaxContext>
+        </div>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleCloseDialog(null);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              handleCloseDialog(equation);
+            }}
+          >
+            Insert
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

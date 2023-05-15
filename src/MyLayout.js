@@ -167,9 +167,6 @@ const MyLayout = ({ children, dashboard, title, classes, ...props }) => {
                   indicatorColor="secondary"
                   textColor="inherit"
                 >
-                  {() => {
-                    console.log("all_exams/".concat(userInfo.id));
-                  }}
                   <Tab
                     label={"Dashboard"}
                     component={Link}

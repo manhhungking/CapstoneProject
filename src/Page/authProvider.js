@@ -2,9 +2,12 @@ import axios from "axios";
 export const authProvider = {
   login: ({ email, password }) => {
     return axios
-      .post("http://localhost:8000/auth/", { email, password })
+      .post("https://backend-capstone-project.herokuapp.com/auth/", {
+        email,
+        password,
+      })
       .then((res) => {
-        console.log("Res: ", res.data);
+        // console.log("Res: ", res.data);
         if (res.status < 200 || res.status >= 300) {
           return Promise.reject();
         }

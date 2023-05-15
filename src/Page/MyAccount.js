@@ -52,24 +52,15 @@ import {
   TableSortLabel,
   FormControlLabel,
   Switch,
-  Typography,
   Button,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import "../Style/MyAccount.css";
 import axios from "axios";
 import userBanner from "../Images/user_banner.png";
 import userIcon from "../Images/user_icon5.png";
-// import userIcon from "../Images/user_icon1.png";
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+
 Number.prototype.padLeft = function(base, chr) {
   var len = String(base || 10).length - String(this).length + 1;
   return len > 0 ? new Array(len).join(chr || "0") + this : this;
@@ -188,7 +179,6 @@ function convertQueryDataToQuestionList(data) {
         d.getSeconds().padLeft(),
       ].join(":") +
       (d.getHours() >= 12 ? " PM" : " AM");
-    console.log(d, d.getHours());
     let k = {
       id: e.id,
       name: e.Name,
@@ -199,7 +189,7 @@ function convertQueryDataToQuestionList(data) {
     };
     questionList.push(k);
   }
-  // console.log("Question List: ", questionList);
+  //
   return questionList;
 }
 
@@ -279,14 +269,18 @@ export const MyAccount = () => {
   };
 
   useEffect(() => {
-    console.log(userInfo.id);
+    // console.log(userInfo.id);
     axios
-      .get("http://localhost:8000/my_account/tests/".concat(userInfo.id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/my_account/tests/".concat(
+          userInfo.id
+        )
+      )
       .then((res) => {
         setQuestionList(convertQueryDataToQuestionList(res.data));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [userInfo]);
   return (

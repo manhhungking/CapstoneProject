@@ -28,20 +28,10 @@ import {
   PasswordInput,
 } from "react-admin";
 import {
-  Box,
   Container,
-  Grid,
-  createTheme,
   TextField as TextField1,
-  InputAdornment,
-  FormControl,
-  FilledInput,
-  InputLabel,
-  FormHelperText,
   Typography,
   Button,
-  OutlinedInput,
-  IconButton,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +51,6 @@ export const EditPersonalInfo = () => {
   const notify = useNotify();
   let navigate = useNavigate();
   useEffect(() => {
-    console.log("User info: ", userInfo);
     if (userInfo) {
       setImage(userInfo.Avatar);
       setImageBanner(userInfo.Banner);
@@ -95,9 +84,7 @@ export const EditPersonalInfo = () => {
     const digitsRegExp = /(?=.*?[0-9])/;
     const specialCharRegExp = /.*[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/; ///(?=.*?[#_?!@$%^&*-])/;
     const minLengthRegExp = /.{8,}/;
-    console.log("Mode: ", mode);
     if (mode === 1) {
-      console.log("Password: ", userInfo.Password);
       if (!values.password) {
         errors.password = "Required";
       } else {
@@ -130,7 +117,6 @@ export const EditPersonalInfo = () => {
         } else {
           errMsg = "";
         }
-        console.log("Error: ", errMsg);
         if (errMsg !== "") errors.newPassword = errMsg;
       }
       if (!values.confirmPassword) {
@@ -142,7 +128,6 @@ export const EditPersonalInfo = () => {
     return errors;
   };
   const postSave = async function(data) {
-    console.log("Data: ", data);
     let save_data = {
       ...data,
       mode,
@@ -157,37 +142,20 @@ export const EditPersonalInfo = () => {
         save_data["imageBanner"] = await toBase64(data["imageBanner"].rawFile);
       else save_data["imageBanner"] = imageBanner;
       save_data["password"] = userInfo.Password;
-      console.log("Data saved: ", save_data);
-    } else if (mode === 1) {
-      console.log("Data saved: ", save_data);
     }
     await axios // post  lich sử làm bài và kết quả
-      .patch(
-        "http://localhost:8000/auth/",
-        // window.location.protocol +
-        //   "//" +
-        //   window.location.hostname +
-        //   ":" +
-        //   window.location.port +
-        //   "/auth/",
-        save_data
-      )
+      .patch("https://backend-capstone-project.herokuapp.com/auth/", save_data)
       .then((res) => {
         localStorage.setItem("auth", JSON.stringify(res.data));
         if (res.status < 200 || res.status >= 300) {
           return Promise.reject();
         }
         setUserInfo(res.data);
-        console.log("Data saved: ", res.data);
-
         navigate(-1);
-        // setTimeout(function() {
-        //   window.location.reload();
-        // }, 200);
         return Promise.resolve();
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     if (error) {
       notify("Cannot save!", { type: "error" });
@@ -231,7 +199,6 @@ export const EditPersonalInfo = () => {
                 <Button
                   className="nav-link active BasicInformationButton"
                   onClick={() => {
-                    console.log("change basic info");
                     let tempInfor = document.querySelector(
                       ".BasicInformationButton"
                     );
@@ -255,7 +222,6 @@ export const EditPersonalInfo = () => {
                 <Button
                   className="nav-link ChangePasswordButton"
                   onClick={() => {
-                    console.log("change password button");
                     let tempInfor = document.querySelector(
                       ".ChangePasswordButton"
                     );
@@ -334,7 +300,6 @@ export const EditPersonalInfo = () => {
                                 ".RaFileInput-removeButton"
                               );
                               node.style.display = "none";
-                              console.log("Node: ", node);
                               setImage(""); // xóa ảnh avatar
                             }}
                           >
@@ -378,7 +343,6 @@ export const EditPersonalInfo = () => {
               </ImageInput>
               <FormDataConsumer>
                 {({ formData, dispatch, ...rest }) => {
-                  console.log("Image banner: ", imageBanner);
                   if (!formData.imageBanner && imageBanner !== "") {
                     return (
                       <div className="previews">
@@ -395,7 +359,6 @@ export const EditPersonalInfo = () => {
                                 ".RaFileInput-removeButton1"
                               );
                               node.style.display = "none";
-                              console.log("Node: ", node);
                               setImageBanner(""); // xóa ảnh banner
                             }}
                           >

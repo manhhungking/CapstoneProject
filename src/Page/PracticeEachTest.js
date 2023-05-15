@@ -73,13 +73,13 @@ import { NotFound } from "./NotFound";
 function changeBlankAnswersToEllipsis(temp) {
   let list = getBlankAnswersFromQuestion(temp);
   for (let i = 0; i < list.length; i++) {
-    console.log("Temp before: ", temp, `<blank id="${i}">${list[i]}</blank>`);
-    console.log(list[i]);
+    // console.log("Temp before: ", temp, `<blank id="${i}">${list[i]}</blank>`);
+    // console.log(list[i]);
     temp = temp.replace(
       `<blank id="${i}">${list[i]}</blank>`,
       `<strong id="${i}">${i + 1}</strong> ………… `
     );
-    console.log("Temp after: ", temp);
+    // console.log("Temp after: ", temp);
   }
   return temp;
 }
@@ -141,7 +141,7 @@ function convertQueryDataToQuestionList(data) {
     }
     questionList.push(k);
   }
-  console.log("Question list: ", questionList);
+  // console.log("Question list: ", questionList);
   return questionList;
 }
 
@@ -182,12 +182,12 @@ export function PracticeTest() {
     // get the data from the api
     axios
       .get(
-        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
+        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
           params.id
         )
       )
       .then((res) => {
-        console.log("Api data: ", res.data);
+        // console.log("Api data: ", res.data);
         if (res.data["is_authority"]) {
           for (let i = 0; i < res.data["is_authority"].length; ++i) {
             if (res.data["is_authority"][i] === data_user.id) {
@@ -200,7 +200,7 @@ export function PracticeTest() {
         setCountdown(Date.now() + res.data["duration"] * 60 * 1000);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -325,9 +325,9 @@ export function PracticeTest() {
         document.getElementById(bien).style.width = "100%";
 
       if (div_question != null) {
-        console.log(i, questionList[i].questionText);
+        // console.log(i, questionList[i].questionText);
         let temp = stringToHTML(`${questionList[i].questionText}`);
-        console.log("Question text: ", questionList[i].questionText);
+        // console.log("Question text: ", questionList[i].questionText);
         let element = div_question.parentNode;
         div_question.parentNode.replaceChild(temp, div_question);
         element = element.firstChild;
@@ -471,11 +471,11 @@ export function PracticeTest() {
     let nums_right_question = 0;
     for (let i = 0; i < questionList.length; i++) {
       if (questionList[i].type === "MCQ") {
-        console.log(
-          "So sanh dap an: ",
-          questionList[i].correctAnswer,
-          questionList[i].userAnswer
-        );
+        // console.log(
+        //   "So sanh dap an: ",
+        //   questionList[i].correctAnswer,
+        //   questionList[i].userAnswer
+        // );
         if (
           questionList[i].correctAnswer === questionList[i].userAnswer &&
           questionList[i].userAnswer !== ""
@@ -525,11 +525,11 @@ export function PracticeTest() {
         let Score = [];
         let check = true;
         for (let j = 0; j < questionList[i].answerOptions.length; ++j) {
-          console.log(
-            "So sanh dap an: ",
-            questionList[i].answerOptions[j],
-            questionList[i].userAnswer[j]
-          );
+          // console.log(
+          //   "So sanh dap an: ",
+          //   questionList[i].answerOptions[j],
+          //   questionList[i].userAnswer[j]
+          // );
           if (
             questionList[i].answerOptions[j].toUpperCase() ===
               questionList[i].userAnswer[j].toUpperCase() &&
@@ -605,7 +605,7 @@ export function PracticeTest() {
         saveData.push(k);
       }
     }
-    console.log("Số câu đúng: ", nums_right_question);
+    // console.log("Số câu đúng: ", nums_right_question);
     return [saveData, nums_right_question];
   };
   const test_result_Gen = () => {
@@ -618,7 +618,6 @@ export function PracticeTest() {
       today.getMinutes() +
       ":" +
       today.getSeconds().toFixed(2);
-    console.log("End time: ", end_time);
     let k = {
       Score: 0,
       Start_time: start_time,
@@ -632,41 +631,51 @@ export function PracticeTest() {
   async function test_result_Save_API(data) {
     var id;
     await axios // post  lich sử làm bài và kết quả
-      .post("http://localhost:8000/test_result/".concat(params.id), data)
+      .post(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          params.id
+        ),
+        data
+      )
       .then((res) => {
-        console.log("Data: ", res.data);
-        console.log("ID: ", res.data["id"], typeof res.data["id"]);
         id = res.data["id"];
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     return id;
   }
   async function updateTestMark(Score, id) {
     await axios // update lịch sử làm bài và kết quả
-      .patch("http://localhost:8000/test_result/".concat(id), { Score })
+      .patch(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          id
+        ),
+        { Score }
+      )
       .then((res) => {
-        console.log("Data save practice test: ", res.data);
+        // console.log("Data save practice test: ", res.data);
         wait(1000);
         redirect("/app/practice_tests/result/".concat(id));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }
   async function saveTestResultSpecific(data) {
-    console.log("DATA specific will be saved: ", data);
+    // console.log("DATA specific will be saved: ", data);
     await axios // update lịch sử làm bài và kết quả
       .post(
-        "http://localhost:8000/test_result_specific/".concat(params.id),
+        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(
+          params.id
+        ),
         data
       )
       .then((res) => {
         console.log("Data save practice test: ", res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }
   const test_result_Save = async () => {
@@ -688,7 +697,7 @@ export function PracticeTest() {
 
     await saveTestResultSpecific(data);
     // await create("test_result_specific/", { data }); // post chi tiết bài làm
-    console.log("Điểm bài làm: ", score); // update điểm bài làm
+    // console.log("Điểm bài làm: ", score); // update điểm bài làm
     await updateTestMark(score, id);
     if (error) {
       notify("Cannot save!", {
@@ -716,11 +725,11 @@ export function PracticeTest() {
     let textFieldElement = document.getElementById("textAnswerCons".concat(i));
     let newArr = [...questionList];
     newArr[i].userAnswer = textFieldElement.value;
-    console.log("Answer Cons: ", textFieldElement.value);
+    // console.log("Answer Cons: ", textFieldElement.value);
     setQuestionList(newArr);
   };
   const handleFIBChange = (i) => {
-    console.log("handle FIB change: ", i);
+    // console.log("handle FIB change: ", i);
     let result = [];
     let newArr = [...questionList];
 
@@ -731,17 +740,17 @@ export function PracticeTest() {
           .concat("in")
           .concat(i)
       );
-      console.log(
-        "đáp án thứ: ",
-        j,
-        questionList[i].answerOptions[j].answerText,
-        textFieldElement.value
-      );
+      // console.log(
+      //   "đáp án thứ: ",
+      //   j,
+      //   questionList[i].answerOptions[j].answerText,
+      //   textFieldElement.value
+      // );
       let k = textFieldElement.value;
       if (k === "") k = " ";
       result.push(k);
     }
-    console.log("Result: ", result);
+    // console.log("Result: ", result);
     newArr[i].userAnswer = result;
     setQuestionList(newArr);
   };

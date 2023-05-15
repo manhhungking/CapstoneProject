@@ -39,16 +39,15 @@ export const Dashboard = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8000/recent_practice_exams/".concat(
+        "https://backend-capstone-project.herokuapp.com/recent_practice_exams/".concat(
           userInfo !== undefined ? userInfo["id"] : 0
         )
       )
       .then((res) => {
         setExamList(res.data);
-        console.log("Exam list: ", res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [userInfo]);
   const handleChange = (e) => {
@@ -58,8 +57,6 @@ export const Dashboard = () => {
   const clearState = () => setState({ ...initialState });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, message);
-
     emailjs
       .sendForm(
         "service_32fsbp5",
@@ -69,13 +66,11 @@ export const Dashboard = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
           notify("Send successfully!", { type: "success" });
           clearState();
         },
         (error) => {
           notify("Cannot save!", { type: "error" });
-          console.log(error.text);
         }
       );
   };
@@ -147,94 +142,96 @@ export const Dashboard = () => {
           <h2>Your recent practice test</h2>
           <div spacing={2} className="GridContainer">
             {examList
-              ? examList.map((exam, i) => {
-                  if (exam["description"] === "") {
-                    exam["description"] = "No description";
-                  }
-                  if (exam["duration"] === 0) {
-                    exam["duration"] = infinity;
-                  }
-                  return (
-                    <div item="true" key={i} className="GridPaper">
-                      <Card
-                        sx={{
-                          width: 340,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginBottom: "4px",
-                        }}
-                        className="NavigationAsidePaper"
-                      >
-                        <CardMedia
-                          component="img"
-                          alt="exam paper"
-                          height="140"
-                          image={exam["image"]}
-                        />
-                        <CardContent sx={{ padding: "0px 12px" }}>
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                            noWrap
-                            sx={{ margin: "4px 0px" }}
-                          >
-                            {exam["Name"]}
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            inline="true"
-                            color="text.secondary"
-                            noWrap
-                            sx={{
-                              marginBottom: "2px",
-                              marginLeft: "2px",
-                            }}
-                          >
-                            {exam["description"]}
-                          </Typography>
-                          <Typography variant="subtitle1" component="div">
-                            <div
-                              style={{
-                                transform: "translateY(1px)",
-                                display: "inline-block",
+              ? typeof examList === typeof []
+                ? examList.map((exam, i) => {
+                    if (exam["description"] === "") {
+                      exam["description"] = "No description";
+                    }
+                    if (exam["duration"] === 0) {
+                      exam["duration"] = infinity;
+                    }
+                    return (
+                      <div item="true" key={i} className="GridPaper">
+                        <Card
+                          sx={{
+                            width: 340,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginBottom: "4px",
+                          }}
+                          className="NavigationAsidePaper"
+                        >
+                          <CardMedia
+                            component="img"
+                            alt="exam paper"
+                            height="140"
+                            image={exam["image"]}
+                          />
+                          <CardContent sx={{ padding: "0px 12px" }}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                              noWrap
+                              sx={{ margin: "4px 0px" }}
+                            >
+                              {exam["Name"]}
+                            </Typography>
+                            <Typography
+                              variant="body1"
+                              inline="true"
+                              color="text.secondary"
+                              noWrap
+                              sx={{
+                                marginBottom: "2px",
+                                marginLeft: "2px",
                               }}
                             >
-                              <i
-                                className="fa-regular fa-clock"
+                              {exam["description"]}
+                            </Typography>
+                            <Typography variant="subtitle1" component="div">
+                              <div
                                 style={{
-                                  fontSize: "20px",
-                                  marginRight: ".4rem",
-                                  marginTop: ".4rem",
+                                  transform: "translateY(1px)",
+                                  display: "inline-block",
                                 }}
-                                sx={{ margin: "0px 4px" }}
-                              />
-                            </div>
-                            {exam["duration"]} min
-                          </Typography>
-                        </CardContent>
-                        <CardActions>
-                          <Button
-                            size="small"
-                            onClick={() => {
-                              redirect(
-                                window.location.protocol +
-                                  "//" +
-                                  window.location.hostname +
-                                  ":" +
-                                  window.location.port +
-                                  "/app/practice_tests/" +
-                                  exam["id"]
-                              );
-                            }}
-                          >
-                            Practice again
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </div>
-                  );
-                })
+                              >
+                                <i
+                                  className="fa-regular fa-clock"
+                                  style={{
+                                    fontSize: "20px",
+                                    marginRight: ".4rem",
+                                    marginTop: ".4rem",
+                                  }}
+                                  sx={{ margin: "0px 4px" }}
+                                />
+                              </div>
+                              {exam["duration"]} min
+                            </Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button
+                              size="small"
+                              onClick={() => {
+                                redirect(
+                                  window.location.protocol +
+                                    "//" +
+                                    window.location.hostname +
+                                    ":" +
+                                    window.location.port +
+                                    "/app/practice_tests/" +
+                                    exam["id"]
+                                );
+                              }}
+                            >
+                              Practice again
+                            </Button>
+                          </CardActions>
+                        </Card>
+                      </div>
+                    );
+                  })
+                : ""
               : ""}
           </div>
         </div>
