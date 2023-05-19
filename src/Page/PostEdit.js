@@ -16,7 +16,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Remove from "@mui/icons-material/Remove";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-// import { MathFormulaDialog } from "./MathFormulaDialog";
+import { MathFormulaDialog } from "./MathFormulaDialog";
 import { PostEditInfo } from "./PostEditInfo";
 import {
   DefaultEditorOptions,
@@ -1447,7 +1447,12 @@ export function PostEdit() {
             <MathJax>{equation}</MathJax>
           </MathJaxContext>
         </div>
-        <DialogActions>
+        <MathFormulaDialog
+          open={open}
+          setOpen={setOpen}
+          handleCloseDialog={handleCloseDialog}
+        />
+        {/* <DialogActions>
           <Button
             onClick={() => {
               handleCloseDialog(null);
@@ -1462,7 +1467,7 @@ export function PostEdit() {
           >
             Insert
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </Container>
   );
