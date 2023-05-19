@@ -11,17 +11,10 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {
-  Typography,
-  Container,
-  Box,
-  TextField as TextField1,
-  Button,
-} from "@mui/material";
+import { Typography, Container, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "../Style/ShareForm.css";
 const PostCreateToolbar = () => {
-  const notify = useNotify();
   let navigate = useNavigate();
   return (
     <Toolbar className="PaperBox-saveButton">
@@ -70,9 +63,8 @@ export function ShareForm() {
       .catch((err) => {
         // console.log(err);
       });
-  }, []);
+  }, [params.id]);
   const postSave = (data) => {
-    // console.log("Data saved: ", data);
     create("save_shared_info/".concat(params.id), { data });
     if (error) {
       notify("Cannot save!", { type: "error" });

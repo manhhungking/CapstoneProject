@@ -856,7 +856,7 @@ export function PracticeTest() {
                                       }}
                                       className={"question-".concat(i + 1)}
                                     />
-                                    ``
+                                    {/* `` */}
                                   </MathJax>
                                 </MathJaxContext>
                                 <RadioGroup

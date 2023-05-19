@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 export function MathFormulaDialog({ ...props }) {
-  const [equation, setEquation] = useState("");
+  const [equation, setEquation] = useState(" ");
   const config = {
     loader: { load: ["input/asciimath"] },
   };
@@ -24,14 +24,13 @@ export function MathFormulaDialog({ ...props }) {
           id="demo-helper-text-aligned"
           label="Formula"
           onChange={(event) => {
+            console.log("Value: ", event.target.value);
             setEquation("`".concat(event.target.value).concat("`"));
           }}
         />
+        <div style={{ marginBottom: "5px" }}>Preview:</div>
         <MathJaxContext config={config}>
-          <MathJax>
-            <div style={{ marginBottom: "5px" }}>Preview:</div>
-            <div>{equation}</div>
-          </MathJax>
+          <MathJax>{equation}</MathJax>
         </MathJaxContext>
       </div>
       <DialogActions>

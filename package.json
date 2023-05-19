@@ -1,7 +1,6 @@
 {
   "name": "front-end",
   "version": "0.1.0",
-  "proxy": "https://backend-capstone-project.herokuapp.com",
   "private": true,
   "Access-Control-Expose-Headers": "Content-Range",
   "Access-Control-Allow-Origin": "*",

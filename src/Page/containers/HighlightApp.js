@@ -1,6 +1,6 @@
 import * as appActions from "../actions/appActions";
 
-import Highlightable, { Node } from "highlightable";
+import Highlightable from "highlightable";
 import Tooltip from "rc-tooltip";
 import React, { Component } from "react";
 import { Map, List } from "immutable";
@@ -16,7 +16,6 @@ class HighlightApp extends Component {
     };
   }
   onTextHighlighted(range) {
-    let temp = range.start + "-" + range.end;
     if (
       JSON.stringify(this.state.color_list).includes(
         range.start + "-" + range.end
@@ -49,19 +48,13 @@ class HighlightApp extends Component {
     //         "True"
     //     );
     // }
-    console.log(
-      "Range: ",
-      range,
-      JSON.stringify(this.state.color_list).includes(
-        range.start + "-" + range.end
-      )
-    );
-
-    // this.state.color_list[range.start + "-" + range.end] = this.state.color;
-
-    // this.setState({color_list: {...this.state.color_list, temp: this.state.color}})
-    console.log("this color: ", this.state.color_list);
-
+    // console.log(
+    //   "Range: ",
+    //   range,
+    //   JSON.stringify(this.state.color_list).includes(
+    //     range.start + "-" + range.end
+    //   )
+    // );
     return (
       <Tooltip
         key={`${range.data.id}-${rangeIndex}`}
@@ -72,8 +65,7 @@ class HighlightApp extends Component {
             <span
               className="highlight-icon1 highlight-color yellow"
               onClick={() => {
-                console.log("Set color yellow");
-                let temp = range.start + "-" + range.end;
+                // console.log("Set color yellow");
                 let color_list_val = { ...this.state.color_list };
                 color_list_val[range.start + "-" + range.end] = "#ffff7b";
                 this.setState({ color: "#ffff7b", color_list: color_list_val });
@@ -82,7 +74,7 @@ class HighlightApp extends Component {
             <span
               className="highlight-icon1 highlight-color blue"
               onClick={() => {
-                console.log("Set color blue");
+                // console.log("Set color blue");
                 let color_list_val = { ...this.state.color_list };
                 color_list_val[range.start + "-" + range.end] = "#abf7ff";
                 this.setState({ color: "#abf7ff", color_list: color_list_val });
@@ -91,7 +83,7 @@ class HighlightApp extends Component {
             <span
               className="highlight-icon1 highlight-color pink"
               onClick={() => {
-                console.log("Set color pink");
+                // console.log("Set color pink");
                 let color_list_val = { ...this.state.color_list };
                 color_list_val[range.start + "-" + range.end] = "#ffd1d9";
                 this.setState({ color: "#ffd1d9", color_list: color_list_val });
@@ -100,7 +92,7 @@ class HighlightApp extends Component {
             <span
               className="highlight-icon1 highlight-color green"
               onClick={() => {
-                console.log("Set color green");
+                // console.log("Set color green");
                 let color_list_val = { ...this.state.color_list };
                 color_list_val[range.start + "-" + range.end] = "#ceffce";
                 this.setState({ color: "#ceffce", color_list: color_list_val });
@@ -109,7 +101,7 @@ class HighlightApp extends Component {
             <span
               className="highlight-icon1 highlight-color red"
               onClick={() => {
-                console.log("Set color red");
+                // console.log("Set color red");
                 let color_list_val = { ...this.state.color_list };
                 color_list_val[range.start + "-" + range.end] = "#FF3333";
                 this.setState({ color: "#FF3333", color_list: color_list_val });

@@ -33,11 +33,10 @@ import {
   ImageButtons,
   useTiptapEditor,
 } from "ra-input-rich-text";
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
+// import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import SaveIcon from "@mui/icons-material/Save";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Toolbar, Edit, useCreate, useNotify, TextInput } from "react-admin";
+import { Toolbar, Edit, useCreate, useNotify } from "react-admin";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -842,6 +841,7 @@ export function PostEdit() {
       )}&lt;/Math&gt</p>`;
     }
     setOpen(false);
+    setEquation("");
   };
   const handleClickOpenDialogEditInfo = () => {
     setOpenEditInfo(true);
@@ -1428,7 +1428,11 @@ export function PostEdit() {
         disablebackdropclick="true"
       >
         <div
-          style={{ padding: 16, fontFamily: "sans-serif", textAlign: "center" }}
+          style={{
+            padding: 16,
+            fontFamily: "sans-serif",
+            textAlign: "center",
+          }}
         >
           <TextField
             helperText="Please enter your formula"
@@ -1438,12 +1442,9 @@ export function PostEdit() {
               setEquation("`".concat(event.target.value).concat("`"));
             }}
           />
+          <div>Preview:</div>
           <MathJaxContext config={config}>
-            <MathJax>
-              <div>Preview:</div>
-              ``
-              <div>{equation}</div>
-            </MathJax>
+            <MathJax>{equation}</MathJax>
           </MathJaxContext>
         </div>
         <DialogActions>
