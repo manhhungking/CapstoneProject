@@ -22,6 +22,7 @@ class EXAMS_COLLECTION(models.Model):
     Last_Modified_Date_Time = models.DateTimeField(default = str(datetime.datetime.now()))
     User = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="User_id1")
     duration = models.FloatField(default=0)
+    public = models.BooleanField(null=False, default = False)
     image = models.TextField(null=False, default="")
     description = models.TextField(default=None)
 

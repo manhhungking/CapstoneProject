@@ -1443,9 +1443,14 @@ export function PostEdit() {
             }}
           />
           <div>Preview:</div>
-          <MathJaxContext config={config}>
-            <MathJax>{equation}</MathJax>
-          </MathJaxContext>
+
+          {equation !== "" ? (
+            <MathJaxContext config={config}>
+              <MathJax>{equation}</MathJax>
+            </MathJaxContext>
+          ) : (
+            ""
+          )}
         </div>
         <MathFormulaDialog
           open={open}

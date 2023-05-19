@@ -102,12 +102,14 @@ export function PostEditInfo({ ...props }) {
   const max = 999;
   const [timeError, setTimeError] = useState();
   const [isSetDuration, setIsSetDuration] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
   useEffect(() => {
     axios
       .get(test_info_url)
       .then((res) => {
         setData([res.data]);
         setIsSetDuration(res.data["duration"] > 0);
+        setIsPublic(res.data["public"] === 1);
         if (res.data["duration"] !== 0) setNum(res.data["duration"]);
         setImage(res.data["image"]);
         if (res.data["duration"] > 0) {
@@ -125,7 +127,12 @@ export function PostEditInfo({ ...props }) {
   }, []);
   async function updateTestInfo(save_data) {
     await axios // post  lich sử làm bài và kết quả
-      .patch("https://backend-capstone-project.herokuapp.com/all_exams/".concat(userInfo.id + "/" + params.id), save_data)
+      .patch(
+        "https://backend-capstone-project.herokuapp.com/all_exams/".concat(
+          userInfo.id + "/" + params.id
+        ),
+        save_data
+      )
       .then((res) => {
         notify("Save successfully!", { type: "success" });
         // console.log("Data saved: ", res.data);
@@ -153,7 +160,8 @@ export function PostEditInfo({ ...props }) {
     };
     if (isSetDuration === true) data["duration"] = num;
     else data["duration"] = 0;
-
+    if (isPublic === true) data["public"] = 1;
+    else data["public"] = 0;
     updateTestInfo(data);
   };
   const PostEditToolbar = (props) => (
@@ -306,6 +314,15 @@ export function PostEditInfo({ ...props }) {
                     </FormHelperText>
                   </FormControl>
                 </Container>
+                <BooleanInput
+                  label="Set public?"
+                  source="Is_public"
+                  options={{ display: "flex" }}
+                  defaultValue={i["public"] === 1}
+                  onChange={() => {
+                    setIsPublic(!isPublic);
+                  }}
+                />
                 <TextInput
                   label="Description"
                   source="description"

@@ -79,6 +79,7 @@ export const PostCreate = () => {
   const max = 999;
   const [timeError, setTimeError] = React.useState();
   const [isSetDuration, setIsSetDuration] = React.useState(false);
+  const [isPublic, setIsPublic] = React.useState(false);
   const postSave = async function(data) {
     // console.log("User info: ", userInfo);
     if (data["image"]) data["image"] = await toBase64(data["image"].rawFile);
@@ -86,6 +87,8 @@ export const PostCreate = () => {
     data = { ...data, User_id: userInfo.id };
     if (isSetDuration === true) data["duration"] = num;
     else data["duration"] = 0;
+    if (isPublic === true) data["public"] = 1;
+    else data["public"] = 0;
     // console.log("Data saved: ", data);
     create("save_exam/", { data });
     if (error) {
@@ -184,6 +187,14 @@ export const PostCreate = () => {
                 </FormHelperText>
               </FormControl>
             </Container>
+            <BooleanInput
+              label="Is public?"
+              source="Is_public"
+              options={{ display: "flex" }}
+              onChange={() => {
+                setIsPublic(!isPublic);
+              }}
+            />
             <AutocompleteArrayInput
               validate={required()}
               source="tags"
