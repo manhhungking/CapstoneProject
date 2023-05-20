@@ -1617,7 +1617,7 @@ pre code {
 .row {
   margin-right: -15px;
   margin-left: -15px;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .col-xs-1,
 .col-sm-1,

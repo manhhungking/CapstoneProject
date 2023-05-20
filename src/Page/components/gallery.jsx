@@ -9,7 +9,7 @@ export const Gallery = (props) => {
           <h2>Gallery</h2>
           <p>One product, unlimited solutions.</p>
         </div>
-        <div className="row">
+        <div className="row" style={{ justifyContent: "center" }}>
           <div className="portfolio-items">
             {props.data
               ? props.data.map((d, i) => (
