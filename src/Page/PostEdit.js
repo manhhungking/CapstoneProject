@@ -1443,22 +1443,12 @@ export function PostEdit() {
             }}
           />
           <div>Preview:</div>
-
-          {equation !== "" ? (
-            <MathJaxContext config={config}>
-              <MathJax inline dynamic>
-                {equation}
-              </MathJax>
-            </MathJaxContext>
-          ) : (
-            ""
-          )}
+          <MathJaxContext config={config}>
+            <MathJax inline dynamic>
+              {equation}
+            </MathJax>
+          </MathJaxContext>
         </div>
-        {/* <MathFormulaDialog
-          open={open}
-          setOpen={setOpen}
-          handleCloseDialog={handleCloseDialog}
-        /> */}
         <DialogActions>
           <Button
             onClick={() => {

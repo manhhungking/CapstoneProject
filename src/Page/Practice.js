@@ -64,11 +64,15 @@ export function PracticeList() {
   const redirect = useRedirect();
   useEffect(() => {
     axios
-      .get("https://backend-capstone-project.herokuapp.com/exams/".concat(userInfo !== undefined ? userInfo["id"] : 0))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/exams/".concat(
+          userInfo !== undefined ? userInfo["id"] : 0
+        )
+      )
       .then((res) => {
         setOriginalExamList(res.data);
         setExamList(res.data);
-        // console.log("Exam list: ", res.data);
+        console.log("Exam list: ", res.data);
       })
       .catch((err) => {
         // console.log(err);

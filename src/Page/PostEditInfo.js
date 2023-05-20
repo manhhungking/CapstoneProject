@@ -110,7 +110,7 @@ export function PostEditInfo({ ...props }) {
         setData([res.data]);
         setIsSetDuration(res.data["duration"] > 0);
         console.log("Data: ", res.data);
-        setIsPublic(res.data["public"] === 1);
+        setIsPublic(res.data["public"] === true);
         if (res.data["duration"] !== 0) setNum(res.data["duration"]);
         setImage(res.data["image"]);
         if (res.data["duration"] > 0) {
@@ -318,7 +318,7 @@ export function PostEditInfo({ ...props }) {
                   label="Set public?"
                   source="Is_public"
                   options={{ display: "flex" }}
-                  defaultValue={i["public"] === 1}
+                  defaultValue={i["public"]}
                   onChange={() => {
                     console.log("Is public: ", !isPublic);
                     setIsPublic(!isPublic);

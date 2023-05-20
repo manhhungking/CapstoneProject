@@ -54,18 +54,3 @@ img {
     transform: rotate(360deg);
   }
 }
-@font-face {
-  font-family: "Medium"; /*Can be any text*/
-  src: local("MathJax_Main-Zero"),
-    url("./fonts/fonts/MathJax_Main-Zero.woff") format("truetype");
-}
-@font-face {
-  font-family: "Medium"; /*Can be any text*/
-  src: local("MathJax_Main-Regular"),
-    url("./fonts/fonts/MathJax_Main-Regular.woff") format("truetype");
-}
-@font-face {
-  font-family: "Medium"; /*Can be any text*/
-  src: local("MathJax_Main-Italic"),
-    url("./fonts/fonts/MathJax_Math-Italic.woff") format("truetype");
-}

@@ -188,6 +188,7 @@ export function PracticeTest() {
       )
       .then((res) => {
         console.log("Api data: ", res.data);
+        if (res.data["public"] === true) setIsAuthority(true);
         if (res.data["is_authority"]) {
           for (let i = 0; i < res.data["is_authority"].length; ++i) {
             if (res.data["is_authority"][i] === data_user.id) {
@@ -849,14 +850,13 @@ export function PracticeTest() {
                                   }}
                                 />
                                 <MathJaxContext config={config}>
-                                  <MathJax inline dynamic>
+                                  <MathJax inline dynamic="true">
                                     <div
                                       style={{
                                         width: "100%",
                                       }}
                                       className={"question-".concat(i + 1)}
                                     />
-                                    {/* `` */}
                                   </MathJax>
                                 </MathJaxContext>
                                 <RadioGroup

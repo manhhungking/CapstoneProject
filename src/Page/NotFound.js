@@ -46,7 +46,7 @@ export function NotFound() {
             </svg>
           </span>
           Go Back
-          <span class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root" />
+          <span className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root" />
         </Button>
       </div>
     </Box>

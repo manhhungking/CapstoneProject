@@ -85,7 +85,11 @@ export function PracticeResult() {
   }
   useEffect(() => {
     axios
-      .get("https://backend-capstone-project.herokuapp.com/test_result/".concat(params.id))
+      .get(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          params.id
+        )
+      )
       .then((res) => {
         // console.log("Test Result: ", res.data);
         setTestInfo(res.data["test_info"]);
@@ -361,12 +365,6 @@ export function PracticeResult() {
                 correctAnswer = exam["Solution"];
               } else if (type === "FIB") {
                 if (exam["User_answer_FIB"]) userAnswer = "Not anwsered!";
-                // console.log(
-                //   "FIB: ",
-                //   exam["User_answer_FIB"],
-                //   exam["Solution_FIB"],
-                //   typeof exam["User_answer_FIB"]
-                // );
 
                 return (
                   <div className="result-answers-item">
@@ -424,7 +422,24 @@ export function PracticeResult() {
                   </div>
                 );
               }
-
+              let classtype = "";
+              if (type === "MCQ" && userAnswer === correctAnswer)
+                  classtype =
+                    "text-correct fas fa-check fa-lg correct-icon";
+                else if (
+                  type === "MCQ" &&
+                  exam["User_answer_MCQ"] !== "" &&
+                  userAnswer !== correctAnswer
+                )
+                  classtype =
+                    "text-wrong fas fa-times fa-lg wrong-icon";
+                else if (type === "Cons") {
+                  classtype =
+                    "text-constructive fas fa-pencil-alt fa-lg";
+                } else {
+                  classtype =
+                    "text-unanswer fas fa-minus fa-lg hyphen-icon";
+                }  
               return (
                 <div className="result-answers-item">
                   <span className="question-number">
@@ -448,11 +463,12 @@ export function PracticeResult() {
                     </span>
                     <span className="mr-1 text-useranswer">{userAnswer}</span>
                   </span>
-                  <span className="" />
+                  <span className={classtype} />
+                  
                 </div>
               );
             })}
-            {testSpecific.map((exam, i) => {
+            {/* {testSpecific.map((exam, i) => {
               let temp = document.querySelectorAll(".result-answers-item");
               let type = exam["Type"];
               if (type === "Audio" || type === "FIB" || type === "Paragraph")
@@ -471,6 +487,7 @@ export function PracticeResult() {
                 correctAnswer = exam["Solution"];
               }
               if (temp != null && temp[calculatedIndex - 1] != null) {
+                console.log("YES");
                 if (type === "MCQ" && userAnswer === correctAnswer)
                   temp[calculatedIndex - 1].lastChild.className =
                     "text-correct fas fa-check fa-lg correct-icon";
@@ -490,7 +507,7 @@ export function PracticeResult() {
                 }
               }
               return "";
-            })}
+            })} */}
           </div>
         </Grid>
       </Grid>
