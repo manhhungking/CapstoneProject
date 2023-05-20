@@ -1446,18 +1446,20 @@ export function PostEdit() {
 
           {equation !== "" ? (
             <MathJaxContext config={config}>
-              <MathJax>{equation}</MathJax>
+              <MathJax inline dynamic>
+                {equation}
+              </MathJax>
             </MathJaxContext>
           ) : (
             ""
           )}
         </div>
-        <MathFormulaDialog
+        {/* <MathFormulaDialog
           open={open}
           setOpen={setOpen}
           handleCloseDialog={handleCloseDialog}
-        />
-        {/* <DialogActions>
+        /> */}
+        <DialogActions>
           <Button
             onClick={() => {
               handleCloseDialog(null);
@@ -1472,7 +1474,7 @@ export function PostEdit() {
           >
             Insert
           </Button>
-        </DialogActions> */}
+        </DialogActions>
       </Dialog>
     </Container>
   );

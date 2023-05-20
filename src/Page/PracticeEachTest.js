@@ -849,7 +849,7 @@ export function PracticeTest() {
                                   }}
                                 />
                                 <MathJaxContext config={config}>
-                                  <MathJax>
+                                  <MathJax inline dynamic>
                                     <div
                                       style={{
                                         width: "100%",
@@ -1061,7 +1061,7 @@ export function PracticeTest() {
                                   }}
                                 />
                                 <MathJaxContext config={config}>
-                                  <MathJax>
+                                  <MathJax inline dynamic>
                                     <div
                                       style={{
                                         width: "100%",
@@ -1126,7 +1126,7 @@ export function PracticeTest() {
                                   }}
                                 />
                                 <MathJaxContext config={config}>
-                                  <MathJax>
+                                  <MathJax inline dynamic>
                                     <div
                                       style={{
                                         width: "100%",
@@ -1209,7 +1209,7 @@ export function PracticeTest() {
                                 }}
                               >
                                 <MathJaxContext config={config}>
-                                  <MathJax>
+                                  <MathJax inline dynamic>
                                     <HighlightApp
                                       id={i + 1}
                                       questionText={questionList[

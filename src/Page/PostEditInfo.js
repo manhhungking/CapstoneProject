@@ -109,6 +109,7 @@ export function PostEditInfo({ ...props }) {
       .then((res) => {
         setData([res.data]);
         setIsSetDuration(res.data["duration"] > 0);
+        console.log("Data: ", res.data);
         setIsPublic(res.data["public"] === 1);
         if (res.data["duration"] !== 0) setNum(res.data["duration"]);
         setImage(res.data["image"]);
@@ -198,7 +199,6 @@ export function PostEditInfo({ ...props }) {
                 <ImageInput
                   source="image"
                   label="Choose a profile picture:"
-                  // labelSingle
                   accept="image/*"
                   required
                   placeholder={
@@ -320,6 +320,7 @@ export function PostEditInfo({ ...props }) {
                   options={{ display: "flex" }}
                   defaultValue={i["public"] === 1}
                   onChange={() => {
+                    console.log("Is public: ", !isPublic);
                     setIsPublic(!isPublic);
                   }}
                 />

@@ -30,6 +30,9 @@ import { MyAccountTestCreated } from "./Page/MyAccountTestCreated";
 import { EditPersonalInfo } from "./Page/EditPersonalInfo";
 import { Dashboard } from "./Page/Dashboard";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import "./fonts/MathJax_Zero.woff";
+import "./fonts/MathJax_Main-Regular.woff";
+import "./fonts/MathJax_Math-Italic.woff";
 // A list of allowed origins that can access our backend API
 
 const httpClient = (url, options = {}) => {

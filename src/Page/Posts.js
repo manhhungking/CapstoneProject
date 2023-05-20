@@ -192,6 +192,7 @@ export const PostCreate = () => {
               source="Is_public"
               options={{ display: "flex" }}
               onChange={() => {
+                console.log("Is public: ", !isPublic);
                 setIsPublic(!isPublic);
               }}
             />
