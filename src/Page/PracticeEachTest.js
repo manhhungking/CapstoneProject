@@ -455,7 +455,7 @@ export function PracticeTest() {
         <Paper
           style={{
             marginTop: "1em",
-            wordBreak: "break-all",
+            wordBreak: "break-word",
             maxHeight: "40vh",
             overflow: "auto",
           }}

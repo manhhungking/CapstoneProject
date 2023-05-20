@@ -117,13 +117,7 @@ export function MyLoginPage() {
               <h1 className="loginFormh1">Create Account</h1>
               <div className="social-container">
                 <a href="#" className="social loginForma">
-                  <i className="fab fa-facebook-f" />
-                </a>
-                <a href="#" className="social loginForma">
                   <i className="fab fa-google-plus-g" />
-                </a>
-                <a href="#" className="social loginForma">
-                  <i className="fab fa-linkedin-in" />
                 </a>
               </div>
               <span className="loginFormspan">
@@ -281,13 +275,7 @@ export function MyLoginPage() {
               </h1>
               <div className="social-container">
                 <a href="#" className="social loginForma">
-                  <i className="fab fa-facebook-f" />
-                </a>
-                <a href="#" className="social loginForma">
                   <i className="fab fa-google-plus-g" />
-                </a>
-                <a href="#" className="social loginForma">
-                  <i className="fab fa-linkedin-in" />
                 </a>
               </div>
               <span className="loginFormspan">or use your account</span>

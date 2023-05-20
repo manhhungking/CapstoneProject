@@ -80,6 +80,12 @@ p {
   -o-transition: none;
   transition: none;
 }
+label {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Open Sans", sans-serif;
+  float: left;
+}
 .form-group {
   margin-bottom: 15px;
 }
@@ -107,13 +113,13 @@ textarea.form-control {
   color: #fff;
   background-color: #5ca9fb;
   background-image: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%);
-  padding: 14px 34px;
+  padding: 14px 34px !important;
   letter-spacing: 1px;
-  margin: 0;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 25px;
-  transition: all 0.5s linear;
+  margin: 0 !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  border-radius: 25px !important;
+  transition: all 0.5s linear !important;
   border: 0;
 }
 .btn-lg,
@@ -164,6 +170,11 @@ h3 {
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)
     format("woff2");
+}
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 .text-center {
   align-items: center;
