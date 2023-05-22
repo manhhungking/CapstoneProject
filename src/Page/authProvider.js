@@ -1,10 +1,11 @@
 import axios from "axios";
 export const authProvider = {
-  login: ({ email, password }) => {
+  login: ({ email, password, isgoogle }) => {
     return axios
       .post("https://backend-capstone-project.herokuapp.com/auth/", {
         email,
         password,
+        isgoogle,
       })
       .then((res) => {
         // console.log("Res: ", res.data);

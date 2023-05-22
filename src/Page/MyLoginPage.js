@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogin, useNotify, useRedirect } from "react-admin";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -8,10 +8,10 @@ import { Typography, Container } from "@mui/material";
 import { ErrorMessage } from "@hookform/error-message";
 import Button from "@mui/material/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { LoginGoogle } from "./LoginGoogle";
 
 export function MyLoginPage() {
   const redirect = useRedirect();
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -34,7 +34,7 @@ export function MyLoginPage() {
   });
   const handleSubmitSignIn = (e) => {
     e.preventDefault();
-    login({ email, password }).catch(() =>
+    login({ email, password, isgoogle: false }).catch(() =>
       notify("Invalid email or password", { type: "error" })
     );
   };
@@ -44,6 +44,7 @@ export function MyLoginPage() {
         username: data.Name,
         password: data.Password,
         email: data.Email,
+        IsGoogle: false,
         avatar,
       })
       .then((res) => {
@@ -57,7 +58,6 @@ export function MyLoginPage() {
         // console.log(err);
       });
   };
-
   const handleSignUp = () => {
     const signUpButton = document.getElementById("signUp");
     const container = document.getElementById("container");
@@ -115,14 +115,10 @@ export function MyLoginPage() {
               style={{ overflow: "scroll" }}
             >
               <h1 className="loginFormh1">Create Account</h1>
-              <div className="social-container">
-                <a href="#" className="social loginForma">
-                  <i className="fab fa-google-plus-g" />
-                </a>
-              </div>
-              <span className="loginFormspan">
+              <div className="social-container">{/* <LoginGoogle /> */}</div>
+              {/* <span className="loginFormspan">
                 or use your email for registration
-              </span>
+              </span> */}
               <input
                 className="loginForminput"
                 {...register("Name", {
@@ -192,6 +188,7 @@ export function MyLoginPage() {
               <input
                 className="loginForminput"
                 type="password"
+                autoComplete="on"
                 {...register("Password", {
                   required: "This input is required!",
                   validate: {
@@ -256,11 +253,7 @@ export function MyLoginPage() {
                   onChange={handleAvatar}
                 />
               </span>
-              <button
-                className="loginFormbutton"
-                type="submit"
-                // onClick={handleSubmitSignUp}
-              >
+              <button className="loginFormbutton" type="submit">
                 Sign Up
               </button>
             </form>
@@ -274,9 +267,7 @@ export function MyLoginPage() {
                 Sign in
               </h1>
               <div className="social-container">
-                <a href="#" className="social loginForma">
-                  <i className="fab fa-google-plus-g" />
-                </a>
+                <LoginGoogle />
               </div>
               <span className="loginFormspan">or use your account</span>
               <input
@@ -289,6 +280,7 @@ export function MyLoginPage() {
                 type="password"
                 className="loginForminput"
                 placeholder="Password"
+                autoComplete="on"
                 onChange={(e) => setPassword(e.target.value)}
               />
               <a href="#" className="loginForma">
