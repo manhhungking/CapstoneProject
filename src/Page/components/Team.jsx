@@ -29,8 +29,8 @@ export const Team = (props) => {
             ? props.data.map((d, i) => (
                 <div key={`${d.name}-${i}`} className="col-md-6 col-sm-6 team">
                   <div
-                    className="thumbnail"
-                    sx={{ maxWidth: "240px !important" }}
+                    // className="thumbnail"
+                    style={{ maxWidth: "240px !important" }}
                   >
                     {" "}
                     <img
