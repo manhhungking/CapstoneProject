@@ -5,7 +5,13 @@ export const Team = (props) => {
   return (
     <div id="team" className="text-center">
       <div className="container">
-        <div className="col-md-8 col-md-offset-2 section-title">
+        <div
+          className="col-md-8 col-md-offset-2 section-title"
+          style={{
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
           <h2>Meet the Team</h2>
           <p>
             We are a team of 2 students from Ho Chi Minh City University of
@@ -22,7 +28,10 @@ export const Team = (props) => {
           {props.data
             ? props.data.map((d, i) => (
                 <div key={`${d.name}-${i}`} className="col-md-6 col-sm-6 team">
-                  <div className="thumbnail">
+                  <div
+                    className="thumbnail"
+                    sx={{ maxWidth: "240px !important" }}
+                  >
                     {" "}
                     <img
                       src={i === 0 ? anhPhuoc : anhHung}
