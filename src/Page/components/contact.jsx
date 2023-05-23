@@ -105,7 +105,7 @@ export const Contact = (props) => {
               </form>
             </div>
           </div>
-          <div className="col-md-3 col-md-offset-1 contact-info">
+          <div className="col-md-4 contact-info">
             <div className="contact-item">
               <h3>Contact Info</h3>
               <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>

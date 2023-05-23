@@ -23,7 +23,7 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
       <link
         rel="stylesheet"

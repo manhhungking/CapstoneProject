@@ -107,7 +107,7 @@ export function MyLoginPage() {
         <div className="container loginPageContainer" id="container">
           <div
             className="form-container sign-up-container"
-            // style={{ overflow: "scroll" }}
+            style={{ overflow: "scroll" }}
           >
             <form
               className="loginFormform"
