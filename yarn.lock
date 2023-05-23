@@ -10472,6 +10472,13 @@
     "@remix-run/router" "1.0.2"
     "react-router" "6.4.2"
 
+"react-router-sitemap@^1.2.0":
+  "integrity" "sha512-3aETwxCFTGHsGbXpyh7sr+c/WDr0q1rpng0M4pgoV6Owl3673buejPHGvzDmZEdiqhRa+I0znRDneKRc1NC06Q=="
+  "resolved" "https://registry.npmjs.org/react-router-sitemap/-/react-router-sitemap-1.2.0.tgz"
+  "version" "1.2.0"
+  dependencies:
+    "sitemap" "^1.6.0"
+
 "react-router@^6.1.0", "react-router@6.4.2":
   "integrity" "sha512-Rb0BAX9KHhVzT1OKhMvCDMw776aTYM0DtkxqUBP8dNBom3mPXlfNs76JNGK8wKJ1IZEY1+WGj+cvZxHVk/GiKw=="
   "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.4.2.tgz"
@@ -11269,6 +11276,14 @@
   "resolved" "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
   "version" "1.0.5"
 
+"sitemap@^1.6.0":
+  "integrity" "sha512-++mJIYR1+WpO1m0iqZv9viGmalxkm6r8Zq8OOFcFzx3aLlXU50T0JV3pvr6WHyFkwudlXmt190ZRbtH3yOm3Hg=="
+  "resolved" "https://registry.npmjs.org/sitemap/-/sitemap-1.13.0.tgz"
+  "version" "1.13.0"
+  dependencies:
+    "underscore" "^1.7.0"
+    "url-join" "^1.1.0"
+
 "slash@^3.0.0":
   "integrity" "sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q=="
   "resolved" "https://registry.npmjs.org/slash/-/slash-3.0.0.tgz"
@@ -11981,6 +11996,11 @@
     "invariant" "^2.2.4"
     "react-lifecycles-compat" "^3.0.4"
 
+"underscore@^1.7.0":
+  "integrity" "sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A=="
+  "resolved" "https://registry.npmjs.org/underscore/-/underscore-1.13.6.tgz"
+  "version" "1.13.6"
+
 "unicode-canonical-property-names-ecmascript@^2.0.0":
   "integrity" "sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ=="
   "resolved" "https://registry.npmjs.org/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.0.tgz"
@@ -12079,6 +12099,11 @@
   "version" "4.4.1"
   dependencies:
     "punycode" "^2.1.0"
+
+"url-join@^1.1.0":
+  "integrity" "sha512-zz1wZk4Lb5PTVwZ3HWDmm8XnlPvmOof6/fjdDPA5yBrUcbtV64U6bV832Zf1BtU2WkBBWaUT46wCs+l0HP5nhg=="
+  "resolved" "https://registry.npmjs.org/url-join/-/url-join-1.1.0.tgz"
+  "version" "1.1.0"
 
 "url-parse@^1.5.3":
   "integrity" "sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ=="
