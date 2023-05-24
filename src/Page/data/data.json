@@ -11,47 +11,47 @@
   "Gallery": [
     {
       "title": "Dashboard",
-      "largeImage": "img/Dashboard/Dashboard.png",
+      "largeImage": "img/Dashboard/Dashboard_temp.png",
       "smallImage": "img/Dashboard/Dashboard.png"
     },
     {
       "title": "Create Test",
-      "largeImage": "img/CreateTestMode/CreateTest.png",
+      "largeImage": "img/CreateTestMode/CreateTest_temp.png",
       "smallImage": "img/CreateTestMode/CreateTest.png"
     },
     {
       "title": "Share test",
-      "largeImage": "img/CreateTestMode/ShareTest.png",
+      "largeImage": "img/CreateTestMode/ShareTest_temp.png",
       "smallImage": "img/CreateTestMode/ShareTest.png"
     },
     {
       "title": "Create IELTS Writing",
-      "largeImage": "img/CreateTestMode/CreateTestIELTSWriting1.png",
+      "largeImage": "img/CreateTestMode/CreateTestIELTSWriting1_temp.png",
       "smallImage": "img/CreateTestMode/CreateTestIELTSWriting1.png"
     },
     {
       "title": "Create Math Exam",
-      "largeImage": "img/CreateTestMode/CreateTestMath1.png",
+      "largeImage": "img/CreateTestMode/CreateTestMath1_temp.png",
       "smallImage": "img/CreateTestMode/CreateTestMath1.png"
     }, 
     {
       "title": "Test Pool",
-      "largeImage": "img/PracticeTestMode/TestPool/PracticePage1.png",
+      "largeImage": "img/PracticeTestMode/TestPool/PracticePage1_temp.png",
       "smallImage": "img/PracticeTestMode/TestPool/PracticePage1.png"
     },
     {
       "title": "Practice Math",
-      "largeImage": "img/PracticeTestMode/DoTest/PracticeMath.png",
+      "largeImage": "img/PracticeTestMode/DoTest/PracticeMath_temp.png",
       "smallImage": "img/PracticeTestMode/DoTest/PracticeMath.png"
     },
     {
       "title": "Math Test Result",
-      "largeImage": "img/PracticeTestMode/TestResult/TestResultMath.png",
+      "largeImage": "img/PracticeTestMode/TestResult/TestResultMath_temp.png",
       "smallImage": "img/PracticeTestMode/TestResult/TestResultMath.png"
     },
     {
       "title": "Math Test Result Specific",
-      "largeImage": "img/PracticeTestMode/TestResultSpecific/TestResultSpecificMath.png",
+      "largeImage": "img/PracticeTestMode/TestResultSpecific/TestResultSpecificMath_temp.png",
       "smallImage": "img/PracticeTestMode/TestResultSpecific/TestResultSpecificMath.png"
     }
   ],
