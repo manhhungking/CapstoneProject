@@ -30,8 +30,9 @@ export const Navigation = (props) => {
             <span className="icon-bar" /> <span className="icon-bar" />{" "}
             <span className="icon-bar" />{" "}
           </button>
-          <a className="navbar-brand page-scroll" href="#page-top">
+          <a className="navbar-brand page-scroll" href="/">
             StudyAll
+            {/* <img src="logo1.png" alt="StudyAll" style={{ height: "25px" }} /> */}
           </a>{" "}
         </div>
 
