@@ -76,36 +76,36 @@ export const Dashboard = () => {
   };
   const data2 = [
     {
-      image: "/img/CreateTestMode/CreateTest.png",
+      image: "/img/CreateTestMode/CreateTest_temp.png",
       caption: "Create Test",
     },
     {
-      image: "/img/CreateTestMode/ShareTest.png",
+      image: "/img/CreateTestMode/ShareTest_temp.png",
       caption: "Share test",
     },
     {
-      image: "/img/CreateTestMode/CreateTestIELTSWriting1.png",
+      image: "/img/CreateTestMode/CreateTestIELTSWriting1_temp.png",
       caption: "Create IELTS Writing",
     },
     {
-      image: "/img/CreateTestMode/CreateTestMath1.png",
+      image: "/img/CreateTestMode/CreateTestMath1_temp.png",
       caption: "Create Math Exam",
     },
     {
-      image: "/img/PracticeTestMode/TestPool/PracticePage1.png",
+      image: "/img/PracticeTestMode/TestPool/PracticePage1_temp.png",
       caption: "Test Pool",
     },
     {
-      image: "/img/PracticeTestMode/DoTest/PracticeMath.png",
+      image: "/img/PracticeTestMode/DoTest/PracticeMath_temp.png",
       caption: "Practice Math",
     },
     {
-      image: "/img/PracticeTestMode/TestResult/TestResultMath.png",
+      image: "/img/PracticeTestMode/TestResult/TestResultMath_temp.png",
       caption: "Math Test Result",
     },
     {
       image:
-        "/img/PracticeTestMode/TestResultSpecific/TestResultSpecificMath.png",
+        "/img/PracticeTestMode/TestResultSpecific/TestResultSpecificMath_temp.png",
       caption: "Math Test Result Specific",
     },
   ];

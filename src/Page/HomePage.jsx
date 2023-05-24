@@ -53,7 +53,7 @@ export const HomePage = () => {
         href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900"
         rel="stylesheet"
       /> */}
-      <script type="text/javascript" src="js/jquery.1.11.1.js" />
+      {/* <script type="text/javascript" src="js/jquery.1.11.1.js" /> */}
       <script type="text/javascript" src="js/bootstrap.js" />
       <Navigation />
       <Header data={landingPageData.Header} />
