@@ -17,7 +17,7 @@ export const Navigation = (props) => {
       <div className="container">
         <div className="navbar-header">
           <button
-            type="button"
+            type={"button"}
             className="navbar-toggle collapsed"
             data-bs-toggle="collapse"
             onClick={() => {
@@ -28,7 +28,7 @@ export const Navigation = (props) => {
             {" "}
             <span className="sr-only">Toggle navigation</span>{" "}
             <span className="icon-bar" /> <span className="icon-bar" />{" "}
-            <button className="icon-bar" />{" "}
+            <span className="icon-bar" />{" "}
           </button>
           <a className="navbar-brand page-scroll" href="#page-top">
             StudyAll
