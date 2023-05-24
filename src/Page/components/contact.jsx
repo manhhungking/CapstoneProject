@@ -50,7 +50,7 @@ export const Contact = (props) => {
             <div className="row">
               <div className="section-title">
                 <h2>Get In Touch</h2>
-                <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+                <p style={{ color: "rgba(255, 255, 255, 0.9)" }}>
                   Please fill out the form below to send us an email and we will
                   get back to you as soon as possible.
                 </p>
@@ -108,7 +108,7 @@ export const Contact = (props) => {
           <div className="col-md-4 contact-info">
             <div className="contact-item">
               <h3>Contact Info</h3>
-              <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+              <p style={{ color: "rgba(255, 255, 255, 0.9)" }}>
                 <span>
                   <i className="fa fa-map-marker" /> Address
                 </span>
@@ -116,7 +116,7 @@ export const Contact = (props) => {
               </p>
             </div>
             <div className="contact-item">
-              <p style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+              <p style={{ color: "rgba(255, 255, 255, 0.9)" }}>
                 <span>
                   <i className="fa fa-phone" /> Phone
                 </span>{" "}
