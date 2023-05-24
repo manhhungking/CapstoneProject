@@ -2,7 +2,14 @@ import React from "react";
 import Button from "@mui/material/Button";
 import LoginIcon from "@mui/icons-material/Login";
 import { useRedirect } from "react-admin";
-
+function toggleCollapse() {
+  let element = document.getElementById("bs-example-navbar-collapse-1");
+  if (element && element.classList.contains("collapse")) {
+    element.classList.remove("collapse");
+  } else {
+    element.classList.add("collapse");
+  }
+}
 export const Navigation = (props) => {
   const redirect = useRedirect();
   return (
@@ -12,8 +19,11 @@ export const Navigation = (props) => {
           <button
             type="button"
             className="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#bs-example-navbar-collapse-1"
+            data-bs-toggle="collapse"
+            onClick={() => {
+              toggleCollapse();
+            }}
+            // data-bs-target="#bs-example-navbar-collapse-1"
           >
             {" "}
             <span className="sr-only">Toggle navigation</span>{" "}
