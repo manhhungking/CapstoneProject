@@ -1,12 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  Component,
-  Children,
-  isValidElement,
-} from "react";
-import { connect, Provider } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
+import { Provider } from "react-redux";
 import { useParams } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -17,9 +10,9 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { animated, useTransition } from "react-spring";
 import {
   SimpleForm,
-  SaveButton,
   Toolbar,
   Edit,
   useCreate,
@@ -27,36 +20,12 @@ import {
   useGetIdentity,
   useRedirect,
 } from "react-admin";
-import {
-  DefaultEditorOptions,
-  RichTextInput,
-  RichTextInputToolbar,
-  LevelSelect,
-  FormatButtons,
-  AlignmentButtons,
-  ListButtons,
-  LinkButtons,
-  QuoteButtons,
-  ClearButtons,
-  ColorButtons,
-  ImageButtons,
-  useTiptapEditor,
-} from "ra-input-rich-text";
-import SaveIcon from "@mui/icons-material/Save";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
 import Countdown, { zeroPad } from "react-countdown";
-import {
-  useMediaQuery,
-  useTheme,
-  Container,
-  Grid,
-  Typography,
-  ToggleButton,
-} from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import "../Style/PracticeStyle.css";
 import { wait } from "@testing-library/user-event/dist/utils";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
@@ -73,13 +42,10 @@ import { NotFound } from "./NotFound";
 function changeBlankAnswersToEllipsis(temp) {
   let list = getBlankAnswersFromQuestion(temp);
   for (let i = 0; i < list.length; i++) {
-    // console.log("Temp before: ", temp, `<blank id="${i}">${list[i]}</blank>`);
-    // console.log(list[i]);
     temp = temp.replace(
       `<blank id="${i}">${list[i]}</blank>`,
       `<strong id="${i}">${i + 1}</strong> ………… `
     );
-    // console.log("Temp after: ", temp);
   }
   return temp;
 }
@@ -141,7 +107,6 @@ function convertQueryDataToQuestionList(data) {
     }
     questionList.push(k);
   }
-  // console.log("Question list: ", questionList);
   return questionList;
 }
 
@@ -163,7 +128,12 @@ export function PracticeTest() {
   const clockRef = useRef();
   const [isRunning, setIsRunning] = useState(true);
   const redirect = useRedirect();
-  var ranges = [];
+  const [show, setShow] = useState();
+  const transitions = useTransition(show, null, {
+    from: { position: "fixed", opacity: 0, width: 0 },
+    enter: { opacity: 1, width: 230 },
+    leave: { opacity: 0, width: 0 },
+  });
   const store = configureStore();
   const config = {
     loader: {
@@ -359,17 +329,7 @@ export function PracticeTest() {
     }
   };
   const Aside = () => (
-    <Box
-      className="NavigationAside"
-      sx={{
-        position: "fixed",
-        display: "flex",
-        textAlign: "center",
-        justifyContent: "center",
-        alignItems: "center",
-        maxWidth: "200px",
-      }}
-    >
+    <Box className="NavigationAside">
       <Stack spacing={2}>
         <Paper
           style={{
@@ -1234,16 +1194,48 @@ export function PracticeTest() {
           </Provider>
         </Grid>
         <Grid
+          className="hideGrid"
           item
           xs={0}
           sm={4}
           md={3}
           lg={2}
           style={{
-            paddingTop: "40px",
+            paddingTop: "38px",
           }}
         >
-          <Aside />
+          <Aside className="hideGrid" />
+        </Grid>
+
+        <Grid item xs={12} sm={0} md={0} lg={0}>
+          <div className="App">
+            <div className="drawer-toggler unHideGrid">
+              <button
+                onClick={() => setShow((prevState) => !prevState)}
+                className="btn"
+              >
+                <i class="fa-solid fa-bars" />
+              </button>
+            </div>
+            {transitions?.map(
+              ({ item, key, props }) =>
+                item && (
+                  <animated.div
+                    key={key}
+                    style={{ opacity: props.opacity }}
+                    className="overlay"
+                  >
+                    <div className="fill" onClick={() => setShow(false)} />
+                    <animated.div
+                      style={{ width: props.width }}
+                      className="drawer"
+                    >
+                      <Aside className="drawer" />
+                    </animated.div>
+                  </animated.div>
+                )
+            )}
+          </div>
         </Grid>
       </Grid>
     </Container>

@@ -211,6 +211,12 @@ div.css-46bh2p-MuiCardContent-root {
   flex-basis: 100%;
   height: 0;
 }
+.test-paper {
+  padding-top: 58px !important;
+}
+.navigation-paper {
+  padding-top: 72px !important;
+}
 /* Responsive tablet */
 @media only screen and (max-width: 1200px) {
   .NavigationAside {
@@ -227,11 +233,20 @@ div.css-46bh2p-MuiCardContent-root {
   .NavigationAside {
     width: 178px;
   }
+  .test-paper {
+    padding-top: 94px !important;
+  }
+  .navigation-paper {
+    padding-top: 108px !important;
+  }
 }
 /* Responsive mobile */
 @media only screen and (max-width: 600px) {
   .NavigationAside {
     display: none;
+  }
+  .RaToolbar-mobileToolbar {
+    padding: 8px 16px !important;
   }
 }
 /* Responsive small mobile */

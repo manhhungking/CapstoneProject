@@ -16,8 +16,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Remove from "@mui/icons-material/Remove";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import { MathFormulaDialog } from "./MathFormulaDialog";
 import { PostEditInfo } from "./PostEditInfo";
+import { animated, useTransition } from "react-spring";
 import {
   DefaultEditorOptions,
   RichTextInput,
@@ -44,6 +44,9 @@ import axios from "axios";
 import { Container, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import insertTextAtCursor from "insert-text-at-cursor";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { red } from "@mui/material/colors";
+
 function getBlankAnswersFromQuestion(temp) {
   const regex = /<blank id="[0-9]+">/g;
   const regex2 = /<\/blank>/g;
@@ -153,7 +156,12 @@ export function PostEdit() {
   const config = {
     loader: { load: ["input/asciimath"] },
   };
-
+  const [show, setShow] = useState();
+  const transitions = useTransition(show, null, {
+    from: { position: "fixed", opacity: 0, width: 0 },
+    enter: { opacity: 1, width: 230 },
+    leave: { opacity: 0, width: 0 },
+  });
   useEffect(() => {
     axios
       .get(
@@ -347,15 +355,7 @@ export function PostEdit() {
     return buttonGroupList;
   };
   const Aside = () => (
-    <Box
-      className="NavigationAside"
-      sx={{
-        position: "fixed",
-        display: "flex",
-        textAlign: "center",
-        justifyContent: "center",
-      }}
-    >
+    <Box className="NavigationAside">
       <Paper className="NavigationAsidePaper">
         <div
           style={{
@@ -541,6 +541,12 @@ export function PostEdit() {
   const handleMCQChange = (event, i) => {
     let newArr = [...questionList];
     newArr[i].correctAnswer = event.target.value;
+    setQuestionList(newArr);
+  };
+  const handleQuestionTextChangeForRemoveBlank = (i) => {
+    let questionTextElement = document.getElementById("questionText".concat(i));
+    let newArr = [...questionList];
+    newArr[i].questionText = questionTextElement.innerHTML;
     setQuestionList(newArr);
   };
   const handleQuestionTextChange = (i) => {
@@ -935,7 +941,44 @@ export function PostEdit() {
     );
     setQuestionList([...tempQuestionList]);
   };
-  // console.log("Question list: ", questionList);
+  const handleRemoveBlank = (i, idx) => {
+    let newArr = [...questionList];
+    let tempAnswerOptions = newArr[i].answerOptions;
+    for (let idx = 0; idx < tempAnswerOptions.length; idx++) {
+      let blankAnswer_Element = document.getElementById(
+        "blankAnswer"
+          .concat(idx)
+          .concat("in")
+          .concat(i)
+      );
+      newArr[i].answerOptions[idx].answerText = blankAnswer_Element.value;
+    }
+    newArr[i].answerOptions.splice(idx, 1);
+    newArr[i].questionText = newArr[i].questionText.replaceAll(
+      `&lt;blank id="${idx}"&gt;...&lt;/blank&gt;`,
+      ""
+    );
+    for (let k = idx; k < newArr[i].answerOptions.length; k++) {
+      let blankAnswer_Element = document.getElementById(
+        "blankAnswer"
+          .concat(k)
+          .concat("in")
+          .concat(i)
+      );
+      blankAnswer_Element.value = newArr[i].answerOptions[k].answerText;
+    }
+    for (let k = idx + 1; k < tempAnswerOptions.length + 1; k++) {
+      newArr[i].questionText = newArr[i].questionText.replaceAll(
+        `&lt;blank id="${k}"`,
+        `&lt;blank id="${k - 1}"`
+      );
+    }
+    let questionText_Element = document.getElementById(
+      "questionText".concat(i)
+    );
+    questionText_Element.innerHTML = newArr[i].questionText;
+    setQuestionList(newArr);
+  };
   return (
     <Container sx={{ maxWidth: { xl: 1280 } }}>
       <Grid container justifyContent="space-between" spacing={2}>
@@ -983,7 +1026,7 @@ export function PostEdit() {
             </Button>
           </div>
         </Grid>
-        <Grid item xs={12} sm={8} md={9} lg={10} style={{ paddingTop: "48px" }}>
+        <Grid item xs={12} sm={8} md={9} lg={10} className="test-paper">
           <Edit
             title="Edit exam"
             style={{ marginTop: "0px", alignItems: "center" }}
@@ -1302,6 +1345,18 @@ export function PostEdit() {
                                       question.answerOptions[idx].answerText
                                     }
                                   />
+                                  <IconButton
+                                    aria-label="delete"
+                                    sx={{
+                                      color: red[500],
+                                    }}
+                                    onClick={() => {
+                                      handleQuestionTextChangeForRemoveBlank(i);
+                                      handleRemoveBlank(i, idx);
+                                    }}
+                                  >
+                                    <RemoveCircleOutlineIcon />
+                                  </IconButton>
                                 </div>
                               );
                             })}
@@ -1418,8 +1473,45 @@ export function PostEdit() {
             </SimpleForm>
           </Edit>
         </Grid>
-        <Grid item xs={0} sm={4} md={3} lg={2} style={{ paddingTop: "64px" }}>
-          <Aside />
+        <Grid
+          item
+          xs={0}
+          sm={4}
+          md={3}
+          lg={2}
+          className="hideGrid navigation-paper"
+        >
+          <Aside className="hideGrid" />
+        </Grid>
+        <Grid item xs={12} sm={0} md={0} lg={0}>
+          <div className="App">
+            <div className="drawer-toggler unHideGrid">
+              <button
+                onClick={() => setShow((prevState) => !prevState)}
+                className="btn"
+              >
+                <i class="fa-solid fa-bars" />
+              </button>
+            </div>
+            {transitions?.map(
+              ({ item, key, props }) =>
+                item && (
+                  <animated.div
+                    key={key}
+                    style={{ opacity: props.opacity }}
+                    className="overlay"
+                  >
+                    <div className="fill" onClick={() => setShow(false)} />
+                    <animated.div
+                      style={{ width: props.width }}
+                      className="drawer"
+                    >
+                      <Aside className="drawer" />
+                    </animated.div>
+                  </animated.div>
+                )
+            )}
+          </div>
         </Grid>
       </Grid>
       <Dialog

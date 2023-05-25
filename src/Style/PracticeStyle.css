@@ -106,20 +106,19 @@ form div.textAnswer1 {
 div.css-46bh2p-MuiCardContent-root {
   padding-top: 0;
 }
-.EditExam .NavigationAside {
-  /* width: 170px; */
+.NavigationAside {
+  max-width: 200px;
   position: relative;
-  margin: auto;
-  /* margin-top: 8px; */
-  padding: 8px;
-  /* margin: 0 0.5em; */
+  /* margin: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
   margin-left: auto;
   overflow: hidden;
+  padding: 2px;
 }
 /* Timer */
 .Duration {
@@ -199,7 +198,52 @@ div.css-46bh2p-MuiCardContent-root {
   border-radius: 2px;
   margin-right: 5px;
 }
-
+.overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000 !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-tap-highlight-color: transparent;
+}
+.fill {
+  flex: 1;
+  background: transparent;
+}
+.drawer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+.hideGrid {
+  display: block;
+}
+.unHideGrid {
+  display: none;
+}
+.drawer-toggler {
+  position: fixed;
+  right: 0;
+  top: calc(60px + 0.7rem);
+  z-index: 300;
+}
+.drawer-toggler .btn {
+  border-radius: 200px;
+  padding-right: 12px;
+  padding-left: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: rgb(208 208 208);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: padding 200ms;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 /* Note pad */
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
 #textAreaNote {
@@ -225,8 +269,19 @@ div.css-46bh2p-MuiCardContent-root {
 }
 /* Responsive mobile */
 @media only screen and (max-width: 600px) {
-  .NavigationAside {
+  .hideGrid {
     display: none;
+  }
+  .unHideGrid {
+    display: block;
+  }
+  .NavigationAside {
+    position: fixed !important;
+    top: 70px;
+    transform: unset;
+    left: auto;
+    margin-left: auto;
+    overflow: auto;
   }
 }
 /* Responsive small mobile */
