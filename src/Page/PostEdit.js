@@ -1042,7 +1042,9 @@ export function PostEdit() {
                   <div className="question-text">
                     {questionList.map((question, i) => {
                       if (question.type === "MCQ") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1072,7 +1074,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1223,7 +1228,9 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "Cons") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1253,7 +1260,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1274,7 +1284,9 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "FIB") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(
+                          i
+                        );
                         return (
                           <div key={i}>
                             <div
@@ -1304,7 +1316,10 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
+                                <MyRichTextInputToolbar
+                                  size="medium"
+                                  idx={i}
+                                />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1351,7 +1366,9 @@ export function PostEdit() {
                                       color: red[500],
                                     }}
                                     onClick={() => {
-                                      handleQuestionTextChangeForRemoveBlank(i);
+                                      handleQuestionTextChangeForRemoveBlank(
+                                        i
+                                      );
                                       handleRemoveBlank(i, idx);
                                     }}
                                   >
@@ -1378,7 +1395,9 @@ export function PostEdit() {
                               rowGap: "0.5rem",
                             }}
                           >
-                            <Typography variant="h5">Upload audio: </Typography>
+                            <Typography variant="h5">
+                              Upload audio:{" "}
+                            </Typography>
                             <span
                               style={{
                                 display: "flex",
@@ -1499,7 +1518,7 @@ export function PostEdit() {
                   <animated.div
                     key={key}
                     style={{ opacity: props.opacity }}
-                    className="overlay"
+                    className="overlay-navigation"
                   >
                     <div className="fill" onClick={() => setShow(false)} />
                     <animated.div

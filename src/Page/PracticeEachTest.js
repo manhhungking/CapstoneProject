@@ -1223,7 +1223,7 @@ export function PracticeTest() {
                   <animated.div
                     key={key}
                     style={{ opacity: props.opacity }}
-                    className="overlay"
+                    className="overlay-navigation"
                   >
                     <div className="fill" onClick={() => setShow(false)} />
                     <animated.div

@@ -109,14 +109,12 @@ div.css-46bh2p-MuiCardContent-root {
 .NavigationAside {
   max-width: 200px;
   position: relative;
-  /* margin: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   left: 50%;
   transform: translate(-50%, 0);
-  margin-left: auto;
   overflow: hidden;
   padding: 2px;
 }
@@ -198,7 +196,7 @@ div.css-46bh2p-MuiCardContent-root {
   border-radius: 2px;
   margin-right: 5px;
 }
-.overlay {
+.overlay-navigation {
   display: flex;
   position: fixed;
   top: 0;
