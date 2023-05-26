@@ -355,7 +355,16 @@ export function PostEdit() {
     return buttonGroupList;
   };
   const Aside = () => (
-    <Box className="NavigationAside">
+    <Box
+      className="NavigationAside"
+      sx={{
+        position: "fixed",
+        display: "flex",
+        textAlign: "center",
+        justifyContent: "center",
+        padding: "2px",
+      }}
+    >
       <Paper className="NavigationAsidePaper">
         <div
           style={{
@@ -1042,9 +1051,7 @@ export function PostEdit() {
                   <div className="question-text">
                     {questionList.map((question, i) => {
                       if (question.type === "MCQ") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1074,10 +1081,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1228,9 +1232,7 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "Cons") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1260,10 +1262,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1284,9 +1283,7 @@ export function PostEdit() {
                           </div>
                         );
                       } else if (question.type === "FIB") {
-                        let calculatedIndex = calculateIndexMinusNumOfAudio(
-                          i
-                        );
+                        let calculatedIndex = calculateIndexMinusNumOfAudio(i);
                         return (
                           <div key={i}>
                             <div
@@ -1316,10 +1313,7 @@ export function PostEdit() {
                               source=""
                               editorOptions={MyEditorOptions}
                               toolbar={
-                                <MyRichTextInputToolbar
-                                  size="medium"
-                                  idx={i}
-                                />
+                                <MyRichTextInputToolbar size="medium" idx={i} />
                               }
                               defaultValue={questionList[i].questionText}
                               className="RichTextContentEdit"
@@ -1366,9 +1360,7 @@ export function PostEdit() {
                                       color: red[500],
                                     }}
                                     onClick={() => {
-                                      handleQuestionTextChangeForRemoveBlank(
-                                        i
-                                      );
+                                      handleQuestionTextChangeForRemoveBlank(i);
                                       handleRemoveBlank(i, idx);
                                     }}
                                   >
@@ -1395,9 +1387,7 @@ export function PostEdit() {
                               rowGap: "0.5rem",
                             }}
                           >
-                            <Typography variant="h5">
-                              Upload audio:{" "}
-                            </Typography>
+                            <Typography variant="h5">Upload audio: </Typography>
                             <span
                               style={{
                                 display: "flex",

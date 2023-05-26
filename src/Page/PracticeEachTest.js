@@ -293,9 +293,11 @@ export function PracticeTest() {
       if (
         document.getElementById(bien) !== null &&
         document.getElementById(bien).style.width !== null
-      )
+      ) {
+        document.getElementById(bien).style.marginBottom = "4px";
+        document.getElementById(bien).style.marginTop = "4px";
         document.getElementById(bien).style.width = "100%";
-
+      }
       if (div_question != null) {
         console.log(i, questionList[i].questionText);
         let temp = stringToHTML(`${questionList[i].questionText}`);
@@ -329,7 +331,16 @@ export function PracticeTest() {
     }
   };
   const Aside = () => (
-    <Box className="NavigationAside">
+    <Box
+      className="NavigationAside"
+      sx={{
+        position: "fixed",
+        display: "flex",
+        textAlign: "center",
+        justifyContent: "center",
+        padding: "2px",
+      }}
+    >
       <Stack spacing={2}>
         <Paper
           style={{
@@ -718,7 +729,8 @@ export function PracticeTest() {
   };
   let stringToHTML = (str) => {
     let dom = document.createElement("div");
-    dom.style.cssText = "line-break: anywhere;";
+    dom.style.cssText =
+      "line-break: anywhere; margin-bottom: 16px; margin-top: 10px";
     dom.innerHTML = str;
     return dom;
   };
@@ -805,7 +817,6 @@ export function PracticeTest() {
                                   fullWidth
                                   variant="standard"
                                   style={{
-                                    marginTop: "2px",
                                     display: noteDisplay,
                                   }}
                                 />
@@ -1016,7 +1027,6 @@ export function PracticeTest() {
                                   maxRows={3}
                                   variant="standard"
                                   style={{
-                                    marginTop: "2px",
                                     display: noteDisplay,
                                   }}
                                 />
@@ -1081,7 +1091,6 @@ export function PracticeTest() {
                                   fullWidth
                                   variant="standard"
                                   style={{
-                                    marginTop: "2px",
                                     display: noteDisplay,
                                   }}
                                 />

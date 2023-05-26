@@ -106,7 +106,7 @@ form div.textAnswer1 {
 div.css-46bh2p-MuiCardContent-root {
   padding-top: 0;
 }
-.NavigationAside {
+/* .NavigationAside {
   max-width: 200px;
   position: relative;
   display: flex;
@@ -117,7 +117,7 @@ div.css-46bh2p-MuiCardContent-root {
   transform: translate(-50%, 0);
   overflow: hidden;
   padding: 2px;
-}
+} */
 /* Timer */
 .Duration {
   visibility: hidden;
@@ -251,12 +251,12 @@ div.css-46bh2p-MuiCardContent-root {
 /* Responsive tablet */
 @media only screen and (max-width: 1200px) {
   .NavigationAside {
-    width: 250px;
+    width: 200px;
   }
 }
 @media only screen and (max-width: 1000px) {
   .NavigationAside {
-    width: 250px;
+    width: 200px;
   }
 }
 /* Responsive small tablet */

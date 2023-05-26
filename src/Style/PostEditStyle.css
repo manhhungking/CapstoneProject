@@ -135,19 +135,19 @@ button.InsertParagraphButton {
   background-color: #fff;
   border-color: rgb(0, 0, 0, 23%);
   display: inline-block;
-  word-break: break-all;
+  word-break: break-word;
   width: 100% !important;
 }
 div.css-46bh2p-MuiCardContent-root {
   padding-top: 0;
 }
+
 .EditExam .NavigationAside {
   /* width: 170px; */
   position: relative;
-  margin: auto;
-  /* margin-top: 8px; */
+  /* margin: auto; */
   padding: 8px;
-  /* margin: 0 0.5em; */
+  margin: 0 0.5em;
   display: flex;
   justify-content: center;
   align-items: center;
