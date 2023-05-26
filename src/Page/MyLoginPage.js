@@ -9,6 +9,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import Button from "@mui/material/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { LoginGoogle } from "./LoginGoogle";
+import showPwdImg from "../Images/show-password.svg";
+import hidePwdImg from "../Images/hide-password.svg";
 
 export function MyLoginPage() {
   const redirect = useRedirect();
@@ -25,6 +27,8 @@ export function MyLoginPage() {
   const SPECIAL_CHARS_REGEX = new RegExp(
     /.*[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/
   );
+  const [isRevealPwd, setIsRevealPwd] = useState(false);
+  const [isRevealPwd2, setIsRevealPwd2] = useState(false);
   const {
     register,
     formState: { errors },
@@ -185,37 +189,47 @@ export function MyLoginPage() {
                     : null;
                 }}
               />
-              <input
-                className="loginForminput"
-                type="password"
-                autoComplete="on"
-                {...register("Password", {
-                  required: "This input is required!",
-                  validate: {
-                    hasUpperCase: (value) =>
-                      UPPERCASE_REGEX.test(value) || "At least one Uppercase!",
-                    hasLowerCase: (value) =>
-                      LOWERCASE_REGEX.test(value) || "At least one Lowercase!",
-                    hasNumbers: (value) =>
-                      NUMBER_REGEX.test(value) || "At least one digit!",
-                    hasSpecialChar: (value) =>
-                      SPECIAL_CHARS_REGEX.test(value) ||
-                      "At least one Special Characters!",
-                    hasEnoughChar: (value) =>
-                      LENGTH_REGEX.test(value) ||
-                      "At least minumum 8 characters!",
-                  },
-                  maxLength: {
-                    value: 30,
-                    message: "This input must not exceed 30 characters",
-                  },
-                })}
-                placeholder="Password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  validatePassword(e.target.value);
-                }}
-              />
+              <div className="pwd-container">
+                <input
+                  className="loginForminput"
+                  type={isRevealPwd2 ? "text" : "password"}
+                  autoComplete="on"
+                  {...register("Password", {
+                    required: "This input is required!",
+                    validate: {
+                      hasUpperCase: (value) =>
+                        UPPERCASE_REGEX.test(value) ||
+                        "At least one Uppercase!",
+                      hasLowerCase: (value) =>
+                        LOWERCASE_REGEX.test(value) ||
+                        "At least one Lowercase!",
+                      hasNumbers: (value) =>
+                        NUMBER_REGEX.test(value) || "At least one digit!",
+                      hasSpecialChar: (value) =>
+                        SPECIAL_CHARS_REGEX.test(value) ||
+                        "At least one Special Characters!",
+                      hasEnoughChar: (value) =>
+                        LENGTH_REGEX.test(value) ||
+                        "At least minumum 8 characters!",
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: "This input must not exceed 30 characters",
+                    },
+                  })}
+                  placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    validatePassword(e.target.value);
+                  }}
+                />
+                <img
+                  title={isRevealPwd2 ? "Hide password" : "Show password"}
+                  src={isRevealPwd2 ? hidePwdImg : showPwdImg}
+                  onClick={() => setIsRevealPwd2((prevState) => !prevState)}
+                  alt="passwordIcon"
+                />
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="Password"
@@ -276,13 +290,21 @@ export function MyLoginPage() {
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <input
-                type="password"
-                className="loginForminput"
-                placeholder="Password"
-                autoComplete="on"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="pwd-container">
+                <input
+                  type={isRevealPwd ? "text" : "password"}
+                  className="loginForminput"
+                  placeholder="Password"
+                  autoComplete="on"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <img
+                  title={isRevealPwd ? "Hide password" : "Show password"}
+                  src={isRevealPwd ? hidePwdImg : showPwdImg}
+                  onClick={() => setIsRevealPwd((prevState) => !prevState)}
+                  alt="passwordIcon"
+                />
+              </div>
               <a href="#" className="loginForma">
                 Forgot your password?
               </a>

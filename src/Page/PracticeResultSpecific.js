@@ -25,7 +25,7 @@ import "../Style/PracticeStyle.css";
 import { NotFound } from "./NotFound";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
-import HighlightApp from "./containers/HighlightApp";
+import { animated, useTransition } from "react-spring";
 function getBlankAnswersFromQuestion(temp) {
   const regex = /<blank id="[0-9]+">/g;
   const regex2 = /<\/blank>/g;
@@ -109,11 +109,12 @@ export const PraceticeResultSpecific = () => {
   const params1 = new URLSearchParams();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
-  const exam_id = searchParams.get("exam_id");
-  // console.log("ID test: ", id, "\nExam id: ", exam_id);
-  params1.append("name", "John");
-  params1.append("age", "32");
-  // console.log("Param: ", params1.toString());
+  const [show, setShow] = useState();
+  const transitions = useTransition(show, null, {
+    from: { position: "fixed", opacity: 0, width: 0 },
+    enter: { opacity: 1, width: 230 },
+    leave: { opacity: 0, width: 0 },
+  });
   const [time, setTime] = useState(0);
   const params = useParams();
   const { data: userInfo, isLoading, error1 } = useGetIdentity();
@@ -355,15 +356,7 @@ export const PraceticeResultSpecific = () => {
     );
   };
   const Aside = () => (
-    <Box
-      className="NavigationAside"
-      sx={{
-        position: "fixed",
-        display: "flex",
-        textAlign: "center",
-        justifyContent: "center",
-      }}
-    >
+    <Box className="NavigationAside">
       <Paper className="NavigationAsidePaper">
         <div
           style={{
@@ -886,8 +879,46 @@ export const PraceticeResultSpecific = () => {
             </SimpleForm>
           </div>
         </Grid>
-        <Grid item xs={0} sm={4} md={3} lg={2} style={{ paddingTop: "64px" }}>
-          <Aside />
+        <Grid
+          item
+          xs={0}
+          sm={4}
+          md={3}
+          lg={2}
+          style={{ paddingTop: "64px" }}
+          className="hideGrid"
+        >
+          <Aside className="hideGrid" />
+        </Grid>
+        <Grid item xs={12} sm={0} md={0} lg={0}>
+          <div className="App">
+            <div className="drawer-toggler unHideGrid">
+              <button
+                onClick={() => setShow((prevState) => !prevState)}
+                className="btn"
+              >
+                <i class="fa-solid fa-bars" />
+              </button>
+            </div>
+            {transitions?.map(
+              ({ item, key, props }) =>
+                item && (
+                  <animated.div
+                    key={key}
+                    style={{ opacity: props.opacity }}
+                    className="overlay-navigation"
+                  >
+                    <div className="fill" onClick={() => setShow(false)} />
+                    <animated.div
+                      style={{ width: props.width }}
+                      className="drawer"
+                    >
+                      <Aside className="drawer" />
+                    </animated.div>
+                  </animated.div>
+                )
+            )}
+          </div>
         </Grid>
         <Grid item xs={12}>
           <LoadingButton

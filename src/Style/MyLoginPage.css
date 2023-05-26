@@ -291,3 +291,14 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
   background: #0568c1;
 }
+
+.pwd-container {
+  position: relative;
+}
+.pwd-container img {
+  cursor: pointer;
+  position: absolute;
+  width: 20px;
+  right: 8px;
+  top: 18px;
+}

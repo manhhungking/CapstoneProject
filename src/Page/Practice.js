@@ -194,9 +194,9 @@ export function PracticeList() {
             <FormControl sx={{ width: "100%", marginTop: 0 }}>
               <InputLabel
                 id="demo-multiple-checkbox-label"
-                style={{
-                  top: "-12px",
-                }}
+                // style={{
+                //   top: "-12px",
+                // }}
                 className="labelTagFilter"
               >
                 Tag
@@ -206,8 +206,9 @@ export function PracticeList() {
                 id="demo-multiple-checkbox"
                 multiple
                 value={tagName}
+                label="Tag"
                 onChange={handleTagFilterChange}
-                input={<OutlinedInput label="Tag" />}
+                // input={<OutlinedInput label="Tag" />}
                 renderValue={(selected) => selected.join(", ")}
                 MenuProps={MenuProps}
                 style={{ verticalAlign: "middle", height: "48px" }}
