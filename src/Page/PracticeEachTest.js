@@ -150,6 +150,15 @@ export function PracticeTest() {
     ":" +
     today.getSeconds().toFixed(2);
   let [isAuthority, setIsAuthority] = useState(true);
+  let color_none =
+    '{ "& label.Mui-focused" : { "color":"rgba(0,0,0,0.6)" },' +
+    '"& .MuiInput-underline:after" : { "borderBottomColor":"#fff" },' +
+    '"& label" : { "color":"rgba(0,0,0,0.6)" },' +
+    '"& .MuiOutlinedInput-root": { "& fieldset": {  "borderColor": "rgb(224, 224, 235)" },' +
+    '"&:hover fieldset": {  "borderColor": "rgb(224, 224, 235)" },' +
+    '"&.Mui-focused fieldset": {  "borderWidth": "1px", "borderColor":"rgb(224, 224, 235)" }}' +
+    "}";
+  const text_none = JSON.parse(color_none);
   useEffect(() => {
     // get the data from the api
     axios
@@ -839,6 +848,7 @@ export function PracticeTest() {
                                   style={{
                                     marginTop: "0.5em",
                                     marginLeft: "0px",
+                                    display: "block",
                                   }}
                                   id={"textAnswerMCQ".concat(i)}
                                 >
@@ -860,6 +870,7 @@ export function PracticeTest() {
                                       sx={{
                                         marginLeft: "-4px",
                                         marginRight: "-4px",
+                                        width: "100%",
                                       }}
                                       noValidate
                                       autoComplete="off"
@@ -869,6 +880,11 @@ export function PracticeTest() {
                                         id={"textAnswerA".concat(i)}
                                         label="Answer A"
                                         variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        sx={() => {
+                                          return text_none;
+                                        }}
                                         InputProps={{
                                           readOnly: true,
                                         }}
@@ -897,6 +913,7 @@ export function PracticeTest() {
                                       sx={{
                                         marginLeft: "-4px",
                                         marginRight: "-4px",
+                                        width: "100%",
                                       }}
                                       noValidate
                                       autoComplete="off"
@@ -906,6 +923,11 @@ export function PracticeTest() {
                                         id={"textAnswerB".concat(i)}
                                         label="Answer B"
                                         variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        sx={() => {
+                                          return text_none;
+                                        }}
                                         InputProps={{
                                           readOnly: true,
                                         }}
@@ -934,6 +956,7 @@ export function PracticeTest() {
                                       sx={{
                                         marginLeft: "-4px",
                                         marginRight: "-4px",
+                                        width: "100%",
                                       }}
                                       noValidate
                                       autoComplete="off"
@@ -943,6 +966,11 @@ export function PracticeTest() {
                                         id={"textAnswerC".concat(i)}
                                         label="Answer C"
                                         variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        sx={() => {
+                                          return text_none;
+                                        }}
                                         InputProps={{
                                           readOnly: true,
                                         }}
@@ -971,6 +999,10 @@ export function PracticeTest() {
                                       sx={{
                                         marginLeft: "-4px",
                                         marginRight: "-4px",
+                                        width: "100%",
+                                        "&:hover": {
+                                          backgroundColor: "#fff",
+                                        },
                                       }}
                                       noValidate
                                       autoComplete="off"
@@ -980,6 +1012,11 @@ export function PracticeTest() {
                                         id={"textAnswerD".concat(i)}
                                         label="Answer D"
                                         variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        sx={() => {
+                                          return text_none;
+                                        }}
                                         InputProps={{
                                           readOnly: true,
                                         }}

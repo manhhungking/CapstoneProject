@@ -350,12 +350,7 @@ export const PraceticeResultSpecific = () => {
       }
     }
 
-    return (
-      <span style={{ color: "black" }}>
-        {time}
-        {/* {hours}:{minutes}:{seconds} */}
-      </span>
-    );
+    return <span style={{ color: "black" }}>{time}</span>;
   };
   const Aside = () => (
     <Box
@@ -488,6 +483,7 @@ export const PraceticeResultSpecific = () => {
                               style={{
                                 marginTop: "0.5em",
                                 marginLeft: "0px",
+                                display: "block",
                               }}
                               defaultValue={questionList[i].userAnswer}
                               id={"textAnswerMCQ".concat(i)}
@@ -513,6 +509,7 @@ export const PraceticeResultSpecific = () => {
                                   sx={{
                                     marginLeft: "-4px",
                                     marginRight: "-4px",
+                                    width: "100%",
                                   }}
                                   noValidate
                                   autoComplete="off"
@@ -522,6 +519,8 @@ export const PraceticeResultSpecific = () => {
                                     id={"textAnswerA".concat(i)}
                                     label="Answer A"
                                     variant="outlined"
+                                    multiline
+                                    fullWidth
                                     sx={() => {
                                       return questionList[i].correctAnswer ===
                                         "A"
@@ -559,6 +558,7 @@ export const PraceticeResultSpecific = () => {
                                   sx={{
                                     marginLeft: "-4px",
                                     marginRight: "-4px",
+                                    width: "100%",
                                   }}
                                   noValidate
                                   autoComplete="off"
@@ -568,6 +568,8 @@ export const PraceticeResultSpecific = () => {
                                     id={"textAnswerB".concat(i)}
                                     label="Answer B"
                                     variant="outlined"
+                                    multiline
+                                    fullWidth
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -605,6 +607,7 @@ export const PraceticeResultSpecific = () => {
                                   sx={{
                                     marginLeft: "-4px",
                                     marginRight: "-4px",
+                                    width: "100%",
                                   }}
                                   noValidate
                                   autoComplete="off"
@@ -614,6 +617,8 @@ export const PraceticeResultSpecific = () => {
                                     id={"textAnswerC".concat(i)}
                                     label="Answer C"
                                     variant="outlined"
+                                    multiline
+                                    fullWidth
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -651,6 +656,7 @@ export const PraceticeResultSpecific = () => {
                                   sx={{
                                     marginLeft: "-4px",
                                     marginRight: "-4px",
+                                    width: "100%",
                                   }}
                                   noValidate
                                   autoComplete="off"
@@ -660,6 +666,8 @@ export const PraceticeResultSpecific = () => {
                                     id={"textAnswerD".concat(i)}
                                     label="Answer D"
                                     variant="outlined"
+                                    multiline
+                                    fullWidth
                                     InputProps={{
                                       readOnly: true,
                                     }}
