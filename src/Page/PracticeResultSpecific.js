@@ -330,7 +330,7 @@ export const PraceticeResultSpecific = () => {
   };
   let stringToHTML = (str) => {
     let dom = document.createElement("div");
-    dom.style.cssText = "line-break: anywhere;";
+    dom.style.cssText = "line-break: normal;";
     dom.innerHTML = str;
     return dom;
   };

@@ -732,7 +732,7 @@ export function PracticeTest() {
   let stringToHTML = (str) => {
     let dom = document.createElement("div");
     dom.style.cssText =
-      "line-break: anywhere; margin-bottom: 16px; margin-top: 10px";
+      "line-break: normal; margin-bottom: 16px; margin-top: 10px";
     dom.innerHTML = str;
     return dom;
   };

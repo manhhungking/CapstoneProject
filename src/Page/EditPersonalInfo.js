@@ -1,26 +1,11 @@
 import * as React from "react";
 import {
-  List,
-  Datagrid,
-  Create,
   SimpleForm,
-  DateField,
-  TextField,
-  EditButton,
   TextInput,
-  BooleanField,
-  NumberField,
-  NumberInput,
-  BooleanInput,
   ImageInput,
   ImageField,
   useCreate,
   useNotify,
-  useRedirect,
-  useGetIdentity,
-  ReferenceInput,
-  SelectInput,
-  AutocompleteArrayInput,
   Toolbar,
   SaveButton,
   required,
@@ -93,6 +78,8 @@ export const EditPersonalInfo = () => {
       }
       if (!values.newPassword) {
         errors.newPassword = "Required";
+      } else if (values.newPassword === values.password) {
+        errors.newPassword = "New password must be different from old password";
       } else {
         const passwordLength = values.newPassword.trim().length;
         const uppercasePassword = uppercaseRegExp.test(values.newPassword);
