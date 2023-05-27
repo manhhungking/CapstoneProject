@@ -110,6 +110,7 @@ export const PraceticeResultSpecific = () => {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [show, setShow] = useState();
+  const [loadingPopUp, setLoadingPopUp] = useState("block");
   const transitions = useTransition(show, null, {
     from: { position: "fixed", opacity: 0, width: 0 },
     enter: { opacity: 1, width: 230 },
@@ -208,6 +209,7 @@ export const PraceticeResultSpecific = () => {
       )
       .then((res) => {
         // console.log("Data: ", res.data);
+        setLoadingPopUp("none");
         setQuestionList(
           convertQueryDataToQuestionList(res.data["test_specific"])
         );
@@ -356,7 +358,16 @@ export const PraceticeResultSpecific = () => {
     );
   };
   const Aside = () => (
-    <Box className="NavigationAside">
+    <Box
+      className="NavigationAside"
+      sx={{
+        position: "fixed",
+        display: "flex",
+        textAlign: "center",
+        justifyContent: "center",
+        padding: "2px",
+      }}
+    >
       <Paper className="NavigationAsidePaper">
         <div
           style={{
@@ -885,7 +896,7 @@ export const PraceticeResultSpecific = () => {
           sm={4}
           md={3}
           lg={2}
-          style={{ paddingTop: "64px" }}
+          style={{ paddingTop: "60px" }}
           className="hideGrid"
         >
           <Aside className="hideGrid" />
@@ -933,6 +944,20 @@ export const PraceticeResultSpecific = () => {
           </LoadingButton>
         </Grid>
       </Grid>
+      <div className="overlay-loading" style={{ display: loadingPopUp }}>
+        <div className="popup">
+          <h2>
+            Loading result{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
     </Container>
   );
 };

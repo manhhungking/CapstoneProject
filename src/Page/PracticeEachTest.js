@@ -128,6 +128,8 @@ export function PracticeTest() {
   const clockRef = useRef();
   const [isRunning, setIsRunning] = useState(true);
   const redirect = useRedirect();
+  const [loadingPopUp, setLoadingPopUp] = useState("block");
+  const [savingPopUp, setSavingPopUp] = useState("none");
   const [show, setShow] = useState();
   const transitions = useTransition(show, null, {
     from: { position: "fixed", opacity: 0, width: 0 },
@@ -147,7 +149,7 @@ export function PracticeTest() {
     today.getMinutes() +
     ":" +
     today.getSeconds().toFixed(2);
-  let [isAuthority, setIsAuthority] = useState(false);
+  let [isAuthority, setIsAuthority] = useState(true);
   useEffect(() => {
     // get the data from the api
     axios
@@ -158,7 +160,10 @@ export function PracticeTest() {
       )
       .then((res) => {
         console.log("Api data: ", res.data);
+        setLoadingPopUp("none");
+        setIsAuthority(false);
         if (res.data["public"] === true) setIsAuthority(true);
+        setLoadingPopUp("none");
         if (res.data["is_authority"]) {
           for (let i = 0; i < res.data["is_authority"].length; ++i) {
             if (res.data["is_authority"][i] === data_user.id) {
@@ -614,6 +619,7 @@ export function PracticeTest() {
         id = res.data["id"];
       })
       .catch((err) => {
+        setSavingPopUp("none");
         // console.log(err);
       });
     return id;
@@ -628,6 +634,7 @@ export function PracticeTest() {
       )
       .then((res) => {
         // console.log("Data save practice test: ", res.data);
+        setSavingPopUp("none");
         wait(1000);
         redirect("/app/practice_tests/result/".concat(id));
       })
@@ -648,10 +655,12 @@ export function PracticeTest() {
         console.log("Data save practice test: ", res.data);
       })
       .catch((err) => {
+        setSavingPopUp("none");
         // console.log(err);
       });
   }
   const test_result_Save = async () => {
+    setSavingPopUp("block");
     handleMCQChange();
     for (let i in questionList) {
       if (questionList[i].type === "MCQ") {
@@ -713,17 +722,10 @@ export function PracticeTest() {
           .concat("in")
           .concat(i)
       );
-      // console.log(
-      //   "đáp án thứ: ",
-      //   j,
-      //   questionList[i].answerOptions[j].answerText,
-      //   textFieldElement.value
-      // );
       let k = textFieldElement.value;
       if (k === "") k = " ";
       result.push(k);
     }
-    // console.log("Result: ", result);
     newArr[i].userAnswer = result;
     setQuestionList(newArr);
   };
@@ -1247,6 +1249,34 @@ export function PracticeTest() {
           </div>
         </Grid>
       </Grid>
+      <div className="overlay-loading" style={{ display: loadingPopUp }}>
+        <div className="popup">
+          <h2>
+            Loading test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
+      <div className="overlay-loading" style={{ display: savingPopUp }}>
+        <div className="popup">
+          <h2>
+            Saving test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
     </Container>
   );
 }

@@ -148,6 +148,8 @@ export function PostEdit() {
   const [create, { error }] = useCreate();
   const notify = useNotify();
   const params = useParams();
+  const [loadingPopUp, setLoadingPopUp] = useState("block");
+  const [savingPopUp, setSavingPopUp] = useState("none");
   const [
     assignNewValueForElementsCheck,
     setAssignNewValueForElementsCheck,
@@ -171,6 +173,7 @@ export function PostEdit() {
       )
       .then((res) => {
         // console.log("Data: ", res.data);
+        setLoadingPopUp("none");
         setQuestionList(convertQueryDataToQuestionList(res.data["q_and_a"]));
         setLastModifiedDateTime(res.data["last_modified_date_time"]);
       })
@@ -244,6 +247,7 @@ export function PostEdit() {
         <LoadingButton
           color="primary"
           onClick={() => {
+            setSavingPopUp("block");
             questions_and_answers_Save();
           }}
           loading={false}
@@ -537,6 +541,7 @@ export function PostEdit() {
       )
       .then((res) => {
         // console.log("Data: ", res.data, res.data["last_modified_date_time"]);
+        setSavingPopUp("none");
         notify("Save successfully!", { type: "success" });
         setLastModifiedDateTime(res.data["last_modified_date_time"]);
       })
@@ -1567,6 +1572,34 @@ export function PostEdit() {
           </Button>
         </DialogActions>
       </Dialog>
+      <div className="overlay-loading" style={{ display: loadingPopUp }}>
+        <div className="popup">
+          <h2>
+            Loading test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
+      <div className="overlay-loading" style={{ display: savingPopUp }}>
+        <div className="popup">
+          <h2>
+            Saving test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
     </Container>
   );
 }

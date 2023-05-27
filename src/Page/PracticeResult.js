@@ -6,21 +6,7 @@ import Box from "@mui/material/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Safe from "react-safe";
-import {
-  SimpleForm,
-  SaveButton,
-  Toolbar,
-  Edit,
-  useCreate,
-  useNotify,
-  useGetRecordId,
-  useGetIdentity,
-  useRedirect,
-} from "react-admin";
-import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
-import SaveIcon from "@mui/icons-material/Save";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { useRedirect } from "react-admin";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -56,6 +42,7 @@ export function PracticeResult() {
   const [skipQuestion, setSkipQuestion] = useState(0);
   const [numsConsQuestion, setNumsConsQuestion] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
+  const [loadingPopUp, setLoadingPopUp] = useState("block");
   const params = useParams();
   const params1 = new URLSearchParams();
   const redirect = useRedirect();
@@ -92,6 +79,7 @@ export function PracticeResult() {
       )
       .then((res) => {
         // console.log("Test Result: ", res.data);
+        setLoadingPopUp("none");
         setTestInfo(res.data["test_info"]);
         setTestSpecific(res.data["test_specific"]);
         setTotalQuestion(res.data["total_question"]);
@@ -424,22 +412,18 @@ export function PracticeResult() {
               }
               let classtype = "";
               if (type === "MCQ" && userAnswer === correctAnswer)
-                  classtype =
-                    "text-correct fas fa-check fa-lg correct-icon";
-                else if (
-                  type === "MCQ" &&
-                  exam["User_answer_MCQ"] !== "" &&
-                  userAnswer !== correctAnswer
-                )
-                  classtype =
-                    "text-wrong fas fa-times fa-lg wrong-icon";
-                else if (type === "Cons") {
-                  classtype =
-                    "text-constructive fas fa-pencil-alt fa-lg";
-                } else {
-                  classtype =
-                    "text-unanswer fas fa-minus fa-lg hyphen-icon";
-                }  
+                classtype = "text-correct fas fa-check fa-lg correct-icon";
+              else if (
+                type === "MCQ" &&
+                exam["User_answer_MCQ"] !== "" &&
+                userAnswer !== correctAnswer
+              )
+                classtype = "text-wrong fas fa-times fa-lg wrong-icon";
+              else if (type === "Cons") {
+                classtype = "text-constructive fas fa-pencil-alt fa-lg";
+              } else {
+                classtype = "text-unanswer fas fa-minus fa-lg hyphen-icon";
+              }
               return (
                 <div className="result-answers-item">
                   <span className="question-number">
@@ -464,53 +448,26 @@ export function PracticeResult() {
                     <span className="mr-1 text-useranswer">{userAnswer}</span>
                   </span>
                   <span className={classtype} />
-                  
                 </div>
               );
             })}
-            {/* {testSpecific.map((exam, i) => {
-              let temp = document.querySelectorAll(".result-answers-item");
-              let type = exam["Type"];
-              if (type === "Audio" || type === "FIB" || type === "Paragraph")
-                return "";
-              let userAnswer, correctAnswer;
-              let calculatedIndex = calculateIndexMinusNumOfAudio(i);
-              if (type === "MCQ") {
-                if (exam["User_answer_MCQ"] === "")
-                  userAnswer = "Not anwsered!";
-                else userAnswer = exam["User_answer_MCQ"];
-                correctAnswer = exam["Correct_answer"];
-              } else if (type === "Cons") {
-                if (exam["User_answer_CONS"] === "")
-                  userAnswer = "Not anwsered!";
-                else userAnswer = exam["User_answer_CONS"];
-                correctAnswer = exam["Solution"];
-              }
-              if (temp != null && temp[calculatedIndex - 1] != null) {
-                console.log("YES");
-                if (type === "MCQ" && userAnswer === correctAnswer)
-                  temp[calculatedIndex - 1].lastChild.className =
-                    "text-correct fas fa-check fa-lg correct-icon";
-                else if (
-                  type === "MCQ" &&
-                  exam["User_answer_MCQ"] !== "" &&
-                  userAnswer !== correctAnswer
-                )
-                  temp[calculatedIndex - 1].lastChild.className =
-                    "text-wrong fas fa-times fa-lg wrong-icon";
-                else if (type === "Cons") {
-                  temp[calculatedIndex - 1].lastChild.className =
-                    "text-constructive fas fa-pencil-alt fa-lg";
-                } else {
-                  temp[calculatedIndex - 1].lastChild.className =
-                    "text-unanswer fas fa-minus fa-lg hyphen-icon";
-                }
-              }
-              return "";
-            })} */}
           </div>
         </Grid>
       </Grid>
+      <div className="overlay-loading" style={{ display: loadingPopUp }}>
+        <div className="popup">
+          <h2>
+            Loading test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
+      </div>
     </Container>
   );
 }
