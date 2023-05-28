@@ -59,6 +59,7 @@ export function PracticeList() {
   const [tagName, setTagName] = useState([]);
   const [indexTagName, setIndexTagName] = useState([]);
   const [examTagList, setExamTagList] = useState([]);
+  const [loadingPopUp, setLoadingPopUp] = useState("block");
   let infinity = "♾️";
   const { data: userInfo, isLoading, error } = useGetIdentity();
   const redirect = useRedirect();
@@ -70,9 +71,10 @@ export function PracticeList() {
         )
       )
       .then((res) => {
+        setLoadingPopUp("none");
         setOriginalExamList(res.data);
         setExamList(res.data);
-        console.log("Exam list: ", res.data);
+        // console.log("Exam list: ", res.data);
       })
       .catch((err) => {
         // console.log(err);
@@ -405,6 +407,20 @@ export function PracticeList() {
               </div>
             );
           })}
+      </div>
+      <div className="overlay-loading" style={{ display: loadingPopUp }}>
+        <div className="popup">
+          <h2>
+            Loading test{" "}
+            <i
+              style={{
+                marginLeft: "3px",
+              }}
+              className="fa fa-spinner fa-spin"
+            />
+          </h2>
+          <div className="content">Please wait a min!</div>
+        </div>
       </div>
     </>
   );

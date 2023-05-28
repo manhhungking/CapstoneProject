@@ -38,6 +38,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Toolbar, Edit, useCreate, useNotify } from "react-admin";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
+import { MathFormulaDialog } from "./MathFormulaDialog";
 import Paper from "@mui/material/Paper";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
@@ -98,6 +99,13 @@ function convertQueryDataToQuestionList(data) {
         type: "MCQ",
       };
     } else if (e.Type === "Cons") {
+      // fixed cái này
+      let temp2 = e.Solution.replaceAll(
+        "<MathJaxContext config={config}><MathJax>`",
+        "&lt;Math&gt;"
+      );
+      temp2 = temp2.replaceAll('<br class="ProseMirror-trailingBreak">', "");
+      temp2 = temp2.replaceAll("`</MathJax></MathJaxContext>", "&lt;/Math&gt;");
       k = {
         questionText: temp,
         answerOptions: e.Solution,
@@ -360,16 +368,19 @@ export function PostEdit() {
   };
   const Aside = () => (
     <Box
-      className="NavigationAside"
+      className="NavigationAside NavigationAsidePaper"
       sx={{
+        marginTop: "2px",
         position: "fixed",
+        maxHeight: "calc(83vh - 50px - 30px)",
+        overflow: "scroll",
         display: "flex",
         textAlign: "center",
         justifyContent: "center",
         padding: "2px",
       }}
     >
-      <Paper className="NavigationAsidePaper">
+      <div>
         <div
           style={{
             textAlign: "center",
@@ -415,7 +426,7 @@ export function PostEdit() {
           ModifiedDateTime={lastModifiedDateTime}
           updatelastModifiedDateTime={setLastModifiedDateTime}
         />
-      </Paper>
+      </div>
     </Box>
   );
 
@@ -861,6 +872,7 @@ export function PostEdit() {
       )}&lt;/Math&gt</p>`;
     }
     setOpen(false);
+    console.log("Close");
     setEquation("");
   };
   const handleClickOpenDialogEditInfo = () => {
@@ -1528,7 +1540,12 @@ export function PostEdit() {
           </div>
         </Grid>
       </Grid>
-      <Dialog
+      <MathFormulaDialog
+        open={open}
+        handleCloseDialog={handleCloseDialog}
+        disablebackdropclick="true"
+      />
+      {/* <Dialog
         open={open}
         onClose={handleCloseDialog}
         disablebackdropclick="true"
@@ -1571,7 +1588,7 @@ export function PostEdit() {
             Insert
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       <div className="overlay-loading" style={{ display: loadingPopUp }}>
         <div className="popup">
           <h2>

@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 export function MathFormulaDialog({ ...props }) {
-  const [equation, setEquation] = useState(" ");
+  const [equation, setEquation] = useState("");
   const config = {
     loader: { load: ["input/asciimath"] },
   };
@@ -37,6 +37,7 @@ export function MathFormulaDialog({ ...props }) {
         <Button
           onClick={() => {
             props.handleCloseDialog(null);
+            setEquation("");
           }}
         >
           Cancel
@@ -44,6 +45,7 @@ export function MathFormulaDialog({ ...props }) {
         <Button
           onClick={() => {
             props.handleCloseDialog(equation);
+            setEquation("");
           }}
         >
           Insert
