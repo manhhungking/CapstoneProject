@@ -31,8 +31,6 @@ export function MathFormulaDialog({ ...props }) {
         <div style={{ marginBottom: "5px" }}>Preview:</div>
         <MathJaxContext config={config}>
           <MathJax inline dynamic>
-            
-          
             {equation}
           </MathJax>
         </MathJaxContext>
