@@ -168,7 +168,7 @@ export function PracticeTest() {
         )
       )
       .then((res) => {
-        console.log("Api data: ", res.data);
+        // console.log("Api data: ", res.data);
         setLoadingPopUp("none");
         setIsAuthority(false);
         if (res.data["public"] === true) setIsAuthority(true);
@@ -313,7 +313,7 @@ export function PracticeTest() {
         document.getElementById(bien).style.width = "100%";
       }
       if (div_question != null) {
-        console.log(i, questionList[i].questionText);
+        // console.log(i, questionList[i].questionText);
         let temp = stringToHTML(`${questionList[i].questionText}`);
         // console.log("Question text: ");
         let element = div_question.parentNode;
@@ -661,7 +661,7 @@ export function PracticeTest() {
         data
       )
       .then((res) => {
-        console.log("Data save practice test: ", res.data);
+        // console.log("Data save practice test: ", res.data);
       })
       .catch((err) => {
         setSavingPopUp("none");
@@ -679,7 +679,7 @@ export function PracticeTest() {
         handleFIBChange(i);
       }
     }
-    console.log("Question List", questionList);
+    // console.log("Question List", questionList);
     var data = test_result_Gen();
     // console.log("DATA TEST", data);
     const id = await test_result_Save_API(data); // post  lich sử làm bài và kết quả

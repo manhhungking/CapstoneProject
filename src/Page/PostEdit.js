@@ -545,9 +545,7 @@ export function PostEdit() {
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(
-          params.id
-        ),
+        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(params.id),
         data
       )
       .then((res) => {
@@ -872,7 +870,7 @@ export function PostEdit() {
       )}&lt;/Math&gt</p>`;
     }
     setOpen(false);
-    console.log("Close");
+    // console.log("Close");
     setEquation("");
   };
   const handleClickOpenDialogEditInfo = () => {

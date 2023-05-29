@@ -1,4 +1,6 @@
 import axios from "axios";
+// https://backend-capstone-project.herokuapp.com
+// http://localhost:8000
 export const authProvider = {
   login: ({ email, password, isgoogle }) => {
     return axios

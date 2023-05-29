@@ -90,8 +90,7 @@ export function PostEditInfo({ ...props }) {
   const params = useParams();
   const redirect = useRedirect();
   const { data: userInfo, isLoading, err } = useGetIdentity();
-  let test_info_url =
-    "https://backend-capstone-project.herokuapp.com/all_exams/";
+  let test_info_url = "https://backend-capstone-project.herokuapp.com/all_exams/";
   if (userInfo)
     test_info_url = "https://backend-capstone-project.herokuapp.com/all_exams/".concat(
       userInfo.id + "/" + params.id
@@ -109,7 +108,7 @@ export function PostEditInfo({ ...props }) {
       .then((res) => {
         setData([res.data]);
         setIsSetDuration(res.data["duration"] > 0);
-        console.log("Data: ", res.data);
+        // console.log("Data: ", res.data);
         setIsPublic(res.data["public"] === true);
         if (res.data["duration"] !== 0) setNum(res.data["duration"]);
         setImage(res.data["image"]);
@@ -282,7 +281,7 @@ export function PostEditInfo({ ...props }) {
                     sx={{ width: "25ch", display: "flex" }}
                     variant="filled"
                     id="clock"
-                    className="Duration"
+                    className={isSetDuration ? "" : "Duration"}
                   >
                     <InputLabel htmlFor="filled-adornment-timer">
                       Test duration
@@ -320,7 +319,6 @@ export function PostEditInfo({ ...props }) {
                   options={{ display: "flex" }}
                   defaultValue={i["public"]}
                   onChange={() => {
-                    console.log("Is public: ", !isPublic);
                     setIsPublic(!isPublic);
                   }}
                 />

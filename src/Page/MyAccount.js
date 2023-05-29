@@ -132,8 +132,8 @@ function convertQueryDataToQuestionList(data) {
     // var d = Date.parse(e.Date);
     var dformat =
       [
-        (d.getMonth() + 1).padLeft(),
         d.getDate().padLeft(),
+        (d.getMonth() + 1).padLeft(),
         d.getFullYear(),
       ].join("/") +
       " " +
@@ -235,11 +235,7 @@ export const MyAccount = () => {
   useEffect(() => {
     // console.log(userInfo.id);
     axios
-      .get(
-        "https://backend-capstone-project.herokuapp.com/my_account/tests/".concat(
-          userInfo.id
-        )
-      )
+      .get("https://backend-capstone-project.herokuapp.com/my_account/tests/".concat(userInfo.id))
       .then((res) => {
         setQuestionList(convertQueryDataToQuestionList(res.data));
       })
