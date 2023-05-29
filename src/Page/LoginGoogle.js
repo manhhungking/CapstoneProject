@@ -7,6 +7,7 @@ import { useLogin, useNotify, useRedirect } from "react-admin";
 {
   /* <script src="https://apis.google.com/js/api:client.js" async defer />; */
 }
+
 export function LoginGoogle() {
   const [user, setUser] = useState({});
   const login = useLogin();
