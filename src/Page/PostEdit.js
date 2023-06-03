@@ -33,13 +33,13 @@ import {
   ImageButtons,
   useTiptapEditor,
 } from "ra-input-rich-text";
-// import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Toolbar, Edit, useCreate, useNotify } from "react-admin";
 import { MathJaxContext, MathJax } from "better-react-mathjax";
 import { MathFormulaDialog } from "./MathFormulaDialog";
 import Paper from "@mui/material/Paper";
+import { MyRichTextInput } from "./MyRichTextInput";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
 import { Container, Grid } from "@mui/material";
@@ -75,40 +75,37 @@ function changeBlankAnswersToEllipsis(temp) {
   }
   return temp;
 }
+function changeMathFunctionToQuestion(temp) {
+  temp = temp.replaceAll(
+    "<MathJaxContext config={config}><MathJax>`",
+    "&lt;Math&gt;"
+  );
+  temp = temp.replaceAll('<br class="ProseMirror-trailingBreak">', "");
+  temp = temp.replaceAll("`</MathJax></MathJaxContext>", "&lt;/Math&gt;");
+  return temp;
+}
 function convertQueryDataToQuestionList(data) {
   let questionList = [];
   for (let e of data) {
     let k = {};
 
-    let temp = e.Question.replaceAll(
-      "<MathJaxContext config={config}><MathJax>`",
-      "&lt;Math&gt;"
-    );
-    temp = temp.replaceAll('<br class="ProseMirror-trailingBreak">', "");
-    temp = temp.replaceAll("`</MathJax></MathJaxContext>", "&lt;/Math&gt;");
+    let temp = changeMathFunctionToQuestion(e.Question);
     if (e.Type === "MCQ") {
       k = {
         questionText: temp,
         answerOptions: [
-          { answerText: e.Answer_a },
-          { answerText: e.Answer_b },
-          { answerText: e.Answer_c },
-          { answerText: e.Answer_d },
+          { answerText: changeMathFunctionToQuestion(e.Answer_a) },
+          { answerText: changeMathFunctionToQuestion(e.Answer_b) },
+          { answerText: changeMathFunctionToQuestion(e.Answer_c) },
+          { answerText: changeMathFunctionToQuestion(e.Answer_d) },
         ],
         correctAnswer: e.Correct_answer,
         type: "MCQ",
       };
     } else if (e.Type === "Cons") {
-      // fixed cái này
-      let temp2 = e.Solution.replaceAll(
-        "<MathJaxContext config={config}><MathJax>`",
-        "&lt;Math&gt;"
-      );
-      temp2 = temp2.replaceAll('<br class="ProseMirror-trailingBreak">', "");
-      temp2 = temp2.replaceAll("`</MathJax></MathJaxContext>", "&lt;/Math&gt;");
       k = {
         questionText: temp,
-        answerOptions: e.Solution,
+        answerOptions: changeMathFunctionToQuestion(e.Solution),
         type: "Cons",
       };
     } else if (e.Type === "FIB") {
@@ -175,7 +172,7 @@ export function PostEdit() {
   useEffect(() => {
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
+        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
           params.id
         )
       )
@@ -373,7 +370,7 @@ export function PostEdit() {
         marginTop: "2px",
         position: "fixed",
         maxHeight: "calc(83vh - 50px - 30px)",
-        overflow: "scroll",
+        overflow: "auto",
         display: "flex",
         textAlign: "center",
         justifyContent: "center",
@@ -545,7 +542,7 @@ export function PostEdit() {
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(params.id),
+        "http://localhost:8000/save_questions_and_answers/".concat(params.id),
         data
       )
       .then((res) => {
@@ -572,52 +569,58 @@ export function PostEdit() {
     newArr[i].questionText = questionTextElement.innerHTML;
     setQuestionList(newArr);
   };
-  const handleQuestionTextChange = (i) => {
-    let questionTextElement = document.getElementById("questionText".concat(i));
-    let newArr = [...questionList];
-    newArr[i].questionText = questionTextElement.innerHTML;
-    newArr[i].questionText = newArr[i].questionText.replaceAll(
-      '<br class="ProseMirror-trailingBreak">',
-      ""
-    );
-    newArr[i].questionText = newArr[i].questionText.replaceAll(
+  const handleMathText = (value) => {
+    value = value.replaceAll('<br class="ProseMirror-trailingBreak">', "");
+    value = value.replaceAll(
       "&lt;Math&gt;",
       "<MathJaxContext config={config}><MathJax>`"
     );
-    newArr[i].questionText = newArr[i].questionText.replaceAll(
-      "&lt;/Math&gt;",
-      "`</MathJax></MathJaxContext>"
-    );
+    value = value.replaceAll("&lt;/Math&gt;", "`</MathJax></MathJaxContext>");
+    return value;
+  };
+  const handleQuestionTextChange = (i) => {
+    let questionTextElement = document.getElementById("questionText".concat(i));
+    let newArr = [...questionList];
+    newArr[i].questionText = handleMathText(questionTextElement.innerHTML);
     setQuestionList(newArr);
   };
   const handleTextFieldA_MCQChange = (i) => {
     let textFieldA_Element = document.getElementById("textAnswerA".concat(i));
     let newArr = [...questionList];
-    newArr[i].answerOptions[0].answerText = textFieldA_Element.value;
+    console.log("textFieldA: ", textFieldA_Element);
+    newArr[i].answerOptions[0].answerText = handleMathText(
+      textFieldA_Element.innerHTML
+    );
     setQuestionList(newArr);
   };
   const handleTextFieldB_MCQChange = (i) => {
     let textFieldB_Element = document.getElementById("textAnswerB".concat(i));
     let newArr = [...questionList];
-    newArr[i].answerOptions[1].answerText = textFieldB_Element.value;
+    newArr[i].answerOptions[1].answerText = handleMathText(
+      textFieldB_Element.innerHTML
+    );
     setQuestionList(newArr);
   };
   const handleTextFieldC_MCQChange = (i) => {
     let textFieldC_Element = document.getElementById("textAnswerC".concat(i));
     let newArr = [...questionList];
-    newArr[i].answerOptions[2].answerText = textFieldC_Element.value;
+    newArr[i].answerOptions[2].answerText = handleMathText(
+      textFieldC_Element.innerHTML
+    );
     setQuestionList(newArr);
   };
   const handleTextFieldD_MCQChange = (i) => {
     let textFieldD_Element = document.getElementById("textAnswerD".concat(i));
     let newArr = [...questionList];
-    newArr[i].answerOptions[3].answerText = textFieldD_Element.value;
+    newArr[i].answerOptions[3].answerText = handleMathText(
+      textFieldD_Element.innerHTML
+    );
     setQuestionList(newArr);
   };
   const handleTextField_ConsChange = (i) => {
     let textFieldElement = document.getElementById("textAnswerCons".concat(i));
     let newArr = [...questionList];
-    newArr[i].answerOptions = textFieldElement.value;
+    newArr[i].answerOptions = handleMathText(textFieldElement.innerHTML);
     setQuestionList(newArr);
   };
   const handleBlankAnswerChange = (i) => {
@@ -711,7 +714,7 @@ export function PostEdit() {
           "textAnswerCons".concat(i)
         );
         if (textFieldElement !== null) {
-          newArr[i].answerOptions = textFieldElement.value;
+          newArr[i].answerOptions = textFieldElement.innerHTML;
         }
       } else if (questionList[i].type === "FIB") {
         // questionText
@@ -861,16 +864,13 @@ export function PostEdit() {
   const handleCloseDialog = (eq, reason) => {
     if (reason && reason === "backdropClick" && "escapeKeyDown") return;
     if (eq !== null && eq !== "") {
-      let questionTextElement = document.getElementById(
-        "questionText".concat(idx)
-      );
+      let questionTextElement = document.getElementById(idx);
       questionTextElement.innerHTML += `<p>&lt;Math&gt;${eq.substring(
         1,
         eq.length - 1
       )}&lt;/Math&gt</p>`;
     }
     setOpen(false);
-    // console.log("Close");
     setEquation("");
   };
   const handleClickOpenDialogEditInfo = () => {
@@ -1090,35 +1090,27 @@ export function PostEdit() {
                                 Delete
                               </Button>
                             </div>
-                            <RichTextInput
-                              id={"questionText".concat(i)}
-                              key={i}
-                              source=""
-                              editorOptions={MyEditorOptions}
-                              toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
-                              }
-                              defaultValue={questionList[i].questionText}
-                              className="RichTextContentEdit"
+                            <MyRichTextInput
+                              i={"questionText".concat(i)}
+                              value={questionList[i].questionText}
+                              handleClickOpenDialog={handleClickOpenDialog}
                             />
                             <RadioGroup
                               row
                               aria-labelledby="demo-row-radio-buttons-group-label"
                               name="row-radio-buttons-group"
                               style={{
-                                marginTop: "0.5em",
                                 marginLeft: "0px",
                               }}
                               onChange={(event) => {
                                 handleMCQChange(event, i);
                               }}
-                              defaultValue={questionList[i].correctAnswer}
+                              value={questionList[i].correctAnswer}
                               id={"correctAnswer".concat(i)}
                             >
                               <Box
                                 sx={{
                                   display: "flex",
-                                  marginBottom: "1em",
                                 }}
                               >
                                 <FormControlLabel
@@ -1135,7 +1127,18 @@ export function PostEdit() {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
+                                  <MyRichTextInput
+                                    i={"textAnswerA".concat(i)}
+                                    value={
+                                      questionList[i].answerOptions[0]
+                                        .answerText
+                                    }
+                                    handleClickOpenDialog={
+                                      handleClickOpenDialog
+                                    }
+                                    label="Answer A"
+                                  />
+                                  {/* <TextField
                                     className="textAnswer"
                                     id={"textAnswerA".concat(i)}
                                     label="Answer A"
@@ -1144,13 +1147,12 @@ export function PostEdit() {
                                       questionList[i].answerOptions[0]
                                         .answerText
                                     }
-                                  />
+                                  /> */}
                                 </Box>
                               </Box>
                               <Box
                                 sx={{
                                   display: "flex",
-                                  marginBottom: "1em",
                                 }}
                               >
                                 <FormControlLabel
@@ -1167,7 +1169,18 @@ export function PostEdit() {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
+                                  <MyRichTextInput
+                                    i={"textAnswerB".concat(i)}
+                                    value={
+                                      questionList[i].answerOptions[1]
+                                        .answerText
+                                    }
+                                    handleClickOpenDialog={
+                                      handleClickOpenDialog
+                                    }
+                                    label="Answer B"
+                                  />
+                                  {/* <TextField
                                     className="textAnswer"
                                     id={"textAnswerB".concat(i)}
                                     label="Answer B"
@@ -1176,13 +1189,12 @@ export function PostEdit() {
                                       questionList[i].answerOptions[1]
                                         .answerText
                                     }
-                                  />
+                                  /> */}
                                 </Box>
                               </Box>
                               <Box
                                 sx={{
                                   display: "flex",
-                                  marginBottom: "1em",
                                 }}
                               >
                                 <FormControlLabel
@@ -1199,7 +1211,18 @@ export function PostEdit() {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
+                                  <MyRichTextInput
+                                    i={"textAnswerC".concat(i)}
+                                    value={
+                                      questionList[i].answerOptions[2]
+                                        .answerText
+                                    }
+                                    handleClickOpenDialog={
+                                      handleClickOpenDialog
+                                    }
+                                    label="Answer C"
+                                  />
+                                  {/* <TextField
                                     className="textAnswer"
                                     id={"textAnswerC".concat(i)}
                                     label="Answer C"
@@ -1208,13 +1231,12 @@ export function PostEdit() {
                                       questionList[i].answerOptions[2]
                                         .answerText
                                     }
-                                  />
+                                  /> */}
                                 </Box>
                               </Box>
                               <Box
                                 sx={{
                                   display: "flex",
-                                  marginBottom: "1em",
                                 }}
                               >
                                 <FormControlLabel
@@ -1231,7 +1253,18 @@ export function PostEdit() {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
+                                  <MyRichTextInput
+                                    i={"textAnswerD".concat(i)}
+                                    value={
+                                      questionList[i].answerOptions[3]
+                                        .answerText
+                                    }
+                                    handleClickOpenDialog={
+                                      handleClickOpenDialog
+                                    }
+                                    label="Answer D"
+                                  />
+                                  {/* <TextField
                                     className="textAnswer"
                                     id={"textAnswerD".concat(i)}
                                     label="Answer D"
@@ -1240,7 +1273,7 @@ export function PostEdit() {
                                       questionList[i].answerOptions[3]
                                         .answerText
                                     }
-                                  />
+                                  /> */}
                                 </Box>
                               </Box>
                             </RadioGroup>
@@ -1271,18 +1304,30 @@ export function PostEdit() {
                                 Delete
                               </Button>
                             </div>
-                            <RichTextInput
-                              id={"questionText".concat(i)}
-                              key={i}
-                              source=""
-                              editorOptions={MyEditorOptions}
-                              toolbar={
-                                <MyRichTextInputToolbar size="medium" idx={i} />
-                              }
-                              defaultValue={questionList[i].questionText}
+                            <MyRichTextInput
+                              i={"questionText".concat(i)}
+                              value={questionList[i].questionText}
+                              handleClickOpenDialog={handleClickOpenDialog}
                               className="RichTextContentEdit"
                             />
-                            <div>
+
+                            <MyRichTextInput
+                              i={"textAnswerCons".concat(i)}
+                              value={questionList[i].answerOptions}
+                              handleClickOpenDialog={handleClickOpenDialog}
+                              label={
+                                <div
+                                  style={{
+                                    marginLeft: "1.5rem",
+                                    fontSize: "16px",
+                                    textDecoration: "underline",
+                                  }}
+                                >
+                                  Answer
+                                </div>
+                              }
+                            />
+                            {/* <div>
                               <TextField
                                 id={"textAnswerCons".concat(i)}
                                 label="Answer"
@@ -1294,7 +1339,7 @@ export function PostEdit() {
                                 }}
                                 defaultValue={questionList[i].answerOptions}
                               />
-                            </div>
+                            </div> */}
                           </div>
                         );
                       } else if (question.type === "FIB") {
@@ -1543,50 +1588,7 @@ export function PostEdit() {
         handleCloseDialog={handleCloseDialog}
         disablebackdropclick="true"
       />
-      {/* <Dialog
-        open={open}
-        onClose={handleCloseDialog}
-        disablebackdropclick="true"
-      >
-        <div
-          style={{
-            padding: 16,
-            fontFamily: "sans-serif",
-            textAlign: "center",
-          }}
-        >
-          <TextField
-            helperText="Please enter your formula"
-            id="demo-helper-text-aligned"
-            label="Formula"
-            onChange={(event) => {
-              setEquation("`".concat(event.target.value).concat("`"));
-            }}
-          />
-          <div>Preview:</div>
-          <MathJaxContext config={config}>
-            <MathJax inline dynamic>
-              {equation}
-            </MathJax>
-          </MathJaxContext>
-        </div>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              handleCloseDialog(null);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              handleCloseDialog(equation);
-            }}
-          >
-            Insert
-          </Button>
-        </DialogActions>
-      </Dialog> */}
+
       <div className="overlay-loading" style={{ display: loadingPopUp }}>
         <div className="popup">
           <h2>

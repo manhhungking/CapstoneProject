@@ -66,7 +66,7 @@ export function PracticeList() {
   useEffect(() => {
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/exams/".concat(
+        "http://localhost:8000/exams/".concat(
           userInfo !== undefined ? userInfo["id"] : 0
         )
       )
@@ -83,7 +83,7 @@ export function PracticeList() {
 
   useEffect(() => {
     axios
-      .get("https://backend-capstone-project.herokuapp.com/query_exam_tags/")
+      .get("http://localhost:8000/query_exam_tags/")
       .then((res) => {
         let temp = [];
         for (let e of res.data) {

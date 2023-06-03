@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { animated, useTransition } from "react-spring";
+import { MathFormulaDialog } from "./MathFormulaDialog";
 import {
   SimpleForm,
   Toolbar,
@@ -38,7 +39,7 @@ import TodoList from "./notepads/TodoList.js";
 import Stack from "@mui/material/Stack";
 import "../Style/NotePad.css";
 import { NotFound } from "./NotFound";
-
+import { MyRichTextInput } from "./MyRichTextInput";
 function changeBlankAnswersToEllipsis(temp) {
   let list = getBlankAnswersFromQuestion(temp);
   for (let i = 0; i < list.length; i++) {
@@ -63,6 +64,7 @@ function getBlankAnswersFromQuestion(temp) {
   }
   return list;
 }
+
 function convertQueryDataToQuestionList(data) {
   let questionList = []; // questionList bao gồm: questionText, answerOptions, correctAnswer đối với MCQ, type
   for (let e of data) {
@@ -109,7 +111,15 @@ function convertQueryDataToQuestionList(data) {
   }
   return questionList;
 }
-
+const handleMathText = (value) => {
+  value = value.replaceAll('<br class="ProseMirror-trailingBreak">', "");
+  value = value.replaceAll(
+    "&lt;Math&gt;",
+    "<MathJaxContext config={config}><MathJax>`"
+  );
+  value = value.replaceAll("&lt;/Math&gt;", "`</MathJax></MathJaxContext>");
+  return value;
+};
 export function PracticeTest() {
   //edit create test
   const [questionList, setQuestionList] = useState([]); // list các câu hỏi bao gồm biến và đáp án
@@ -131,6 +141,8 @@ export function PracticeTest() {
   const [loadingPopUp, setLoadingPopUp] = useState("block");
   const [savingPopUp, setSavingPopUp] = useState("none");
   const [show, setShow] = useState();
+  const [open, setOpen] = useState(false);
+  const [idx, setIdx] = useState();
   const transitions = useTransition(show, null, {
     from: { position: "fixed", opacity: 0, width: 0 },
     enter: { opacity: 1, width: 230 },
@@ -141,6 +153,21 @@ export function PracticeTest() {
     loader: {
       load: ["input/asciimath"],
     },
+  };
+  const handleClickOpenDialog = (idx) => {
+    setIdx(idx);
+    setOpen(true);
+  };
+  const handleCloseDialog = (eq, reason) => {
+    if (reason && reason === "backdropClick" && "escapeKeyDown") return;
+    if (eq !== null && eq !== "") {
+      let questionTextElement = document.getElementById(idx);
+      questionTextElement.innerHTML += `<p>&lt;Math&gt;${eq.substring(
+        1,
+        eq.length - 1
+      )}&lt;/Math&gt</p>`;
+    }
+    setOpen(false);
   };
   var today = new Date();
   const start_time =
@@ -163,7 +190,7 @@ export function PracticeTest() {
     // get the data from the api
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
+        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
           params.id
         )
       )
@@ -300,6 +327,18 @@ export function PracticeTest() {
     return <span style={{ color: "red" }}>Time is up!</span>;
   };
   // Renderer callback with condition
+  const AsignValueToAnswer = (i, j, c) => {
+    var div_question_answer = document.querySelector(
+      "#textAnswer" + c + "-" + i
+    );
+    console.log("textAnswer" + c + "-" + i, div_question_answer);
+    let temp = stringToHTMLAnswer(
+      `${questionList[i].answerOptions[j].answerText}`
+    );
+    if (div_question_answer != null) {
+      div_question_answer.parentNode.replaceChild(temp, div_question_answer);
+    }
+  };
   const renderer = ({ hours, minutes, seconds, completed }) => {
     for (let i = 0; i < questionList.length; i++) {
       var div_question = document.querySelector(".question-".concat(i + 1));
@@ -312,13 +351,16 @@ export function PracticeTest() {
         document.getElementById(bien).style.marginTop = "4px";
         document.getElementById(bien).style.width = "100%";
       }
+      if (questionList[i].type === "MCQ") {
+        AsignValueToAnswer(i, 0, "A");
+        AsignValueToAnswer(i, 1, "B");
+        AsignValueToAnswer(i, 2, "C");
+        AsignValueToAnswer(i, 3, "D");
+      }
       if (div_question != null) {
         // console.log(i, questionList[i].questionText);
         let temp = stringToHTML(`${questionList[i].questionText}`);
-        // console.log("Question text: ");
-        let element = div_question.parentNode;
         div_question.parentNode.replaceChild(temp, div_question);
-        element = element.firstChild;
       }
     }
     if (duration > 0) {
@@ -458,11 +500,6 @@ export function PracticeTest() {
     let nums_right_question = 0;
     for (let i = 0; i < questionList.length; i++) {
       if (questionList[i].type === "MCQ") {
-        // console.log(
-        //   "So sanh dap an: ",
-        //   questionList[i].correctAnswer,
-        //   questionList[i].userAnswer
-        // );
         if (
           questionList[i].correctAnswer === questionList[i].userAnswer &&
           questionList[i].userAnswer !== ""
@@ -512,11 +549,6 @@ export function PracticeTest() {
         let Score = [];
         let check = true;
         for (let j = 0; j < questionList[i].answerOptions.length; ++j) {
-          // console.log(
-          //   "So sanh dap an: ",
-          //   questionList[i].answerOptions[j],
-          //   questionList[i].userAnswer[j]
-          // );
           if (
             questionList[i].answerOptions[j].toUpperCase() ===
               questionList[i].userAnswer[j].toUpperCase() &&
@@ -618,12 +650,7 @@ export function PracticeTest() {
   async function test_result_Save_API(data) {
     var id;
     await axios // post  lich sử làm bài và kết quả
-      .post(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
-          params.id
-        ),
-        data
-      )
+      .post("http://localhost:8000/test_result/".concat(params.id), data)
       .then((res) => {
         id = res.data["id"];
       })
@@ -635,12 +662,7 @@ export function PracticeTest() {
   }
   async function updateTestMark(Score, id) {
     await axios // update lịch sử làm bài và kết quả
-      .patch(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
-          id
-        ),
-        { Score }
-      )
+      .patch("http://localhost:8000/test_result/".concat(id), { Score })
       .then((res) => {
         // console.log("Data save practice test: ", res.data);
         setSavingPopUp("none");
@@ -655,9 +677,7 @@ export function PracticeTest() {
     // console.log("DATA specific will be saved: ", data);
     await axios // update lịch sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(
-          params.id
-        ),
+        "http://localhost:8000/test_result_specific/".concat(params.id),
         data
       )
       .then((res) => {
@@ -715,7 +735,7 @@ export function PracticeTest() {
   const handleTextField_ConsChange = (i) => {
     let textFieldElement = document.getElementById("textAnswerCons".concat(i));
     let newArr = [...questionList];
-    newArr[i].userAnswer = textFieldElement.value;
+    newArr[i].userAnswer = handleMathText(textFieldElement.innerHTML);
     // console.log("Answer Cons: ", textFieldElement.value);
     setQuestionList(newArr);
   };
@@ -742,6 +762,13 @@ export function PracticeTest() {
     let dom = document.createElement("div");
     dom.style.cssText =
       "line-break: normal; margin-bottom: 16px; margin-top: 10px";
+    dom.innerHTML = str;
+    return dom;
+  };
+  let stringToHTMLAnswer = (str, type = "mcq") => {
+    let dom = document.createElement("div");
+    str = str.replaceAll("<p>", "<p style='margin-bottom: 0px'>");
+    dom.style.cssText = "line-break: normal;";
     dom.innerHTML = str;
     return dom;
   };
@@ -875,24 +902,34 @@ export function PracticeTest() {
                                       noValidate
                                       autoComplete="off"
                                     >
-                                      <TextField
-                                        className="textAnswer1"
-                                        id={"textAnswerA".concat(i)}
-                                        label="Answer A"
-                                        variant="outlined"
-                                        multiline
-                                        fullWidth
-                                        sx={() => {
-                                          return text_none;
-                                        }}
-                                        InputProps={{
-                                          readOnly: true,
-                                        }}
-                                        defaultValue={
-                                          questionList[i].answerOptions[0]
-                                            .answerText
-                                        }
-                                      />
+                                      <MathJaxContext config={config}>
+                                        <MathJax inline dynamic="true">
+                                          <TextField
+                                            className="textAnswer1"
+                                            id={"textAnswerA-".concat(i)}
+                                            label="Answer A"
+                                            variant="outlined"
+                                            multiline
+                                            fullWidth
+                                            sx={() => {
+                                              return text_none;
+                                            }}
+                                            InputProps={{
+                                              readOnly: true,
+                                            }}
+                                            value={
+                                              <div
+                                                style={{
+                                                  width: "100%",
+                                                }}
+                                                className={"textAnswerA-".concat(
+                                                  i
+                                                )}
+                                              />
+                                            }
+                                          />
+                                        </MathJax>
+                                      </MathJaxContext>
                                     </Box>
                                   </Box>
                                   <Box
@@ -918,24 +955,34 @@ export function PracticeTest() {
                                       noValidate
                                       autoComplete="off"
                                     >
-                                      <TextField
-                                        className="textAnswer1"
-                                        id={"textAnswerB".concat(i)}
-                                        label="Answer B"
-                                        variant="outlined"
-                                        multiline
-                                        fullWidth
-                                        sx={() => {
-                                          return text_none;
-                                        }}
-                                        InputProps={{
-                                          readOnly: true,
-                                        }}
-                                        defaultValue={
-                                          questionList[i].answerOptions[1]
-                                            .answerText
-                                        }
-                                      />
+                                      <MathJaxContext config={config}>
+                                        <MathJax inline dynamic="true">
+                                          <TextField
+                                            className="textAnswer1"
+                                            id={"textAnswerB-".concat(i)}
+                                            label="Answer B"
+                                            variant="outlined"
+                                            multiline
+                                            fullWidth
+                                            sx={() => {
+                                              return text_none;
+                                            }}
+                                            InputProps={{
+                                              readOnly: true,
+                                            }}
+                                            defaultValue={
+                                              <div
+                                                style={{
+                                                  width: "100%",
+                                                }}
+                                                className={"textAnswerB-".concat(
+                                                  i
+                                                )}
+                                              />
+                                            }
+                                          />
+                                        </MathJax>
+                                      </MathJaxContext>
                                     </Box>
                                   </Box>
                                   <Box
@@ -961,24 +1008,34 @@ export function PracticeTest() {
                                       noValidate
                                       autoComplete="off"
                                     >
-                                      <TextField
-                                        className="textAnswer1"
-                                        id={"textAnswerC".concat(i)}
-                                        label="Answer C"
-                                        variant="outlined"
-                                        multiline
-                                        fullWidth
-                                        sx={() => {
-                                          return text_none;
-                                        }}
-                                        InputProps={{
-                                          readOnly: true,
-                                        }}
-                                        defaultValue={
-                                          questionList[i].answerOptions[2]
-                                            .answerText
-                                        }
-                                      />
+                                      <MathJaxContext config={config}>
+                                        <MathJax inline dynamic="true">
+                                          <TextField
+                                            className="textAnswer1"
+                                            id={"textAnswerC-".concat(i)}
+                                            label="Answer C"
+                                            variant="outlined"
+                                            multiline
+                                            fullWidth
+                                            sx={() => {
+                                              return text_none;
+                                            }}
+                                            InputProps={{
+                                              readOnly: true,
+                                            }}
+                                            defaultValue={
+                                              <div
+                                                style={{
+                                                  width: "100%",
+                                                }}
+                                                className={"textAnswerC-".concat(
+                                                  i
+                                                )}
+                                              />
+                                            }
+                                          />
+                                        </MathJax>
+                                      </MathJaxContext>
                                     </Box>
                                   </Box>
                                   <Box
@@ -1007,24 +1064,34 @@ export function PracticeTest() {
                                       noValidate
                                       autoComplete="off"
                                     >
-                                      <TextField
-                                        className="textAnswer1"
-                                        id={"textAnswerD".concat(i)}
-                                        label="Answer D"
-                                        variant="outlined"
-                                        multiline
-                                        fullWidth
-                                        sx={() => {
-                                          return text_none;
-                                        }}
-                                        InputProps={{
-                                          readOnly: true,
-                                        }}
-                                        defaultValue={
-                                          questionList[i].answerOptions[3]
-                                            .answerText
-                                        }
-                                      />
+                                      <MathJaxContext config={config}>
+                                        <MathJax inline dynamic="true">
+                                          <TextField
+                                            className="textAnswer1"
+                                            id={"textAnswerD-".concat(i)}
+                                            label="Answer D"
+                                            variant="outlined"
+                                            multiline
+                                            fullWidth
+                                            sx={() => {
+                                              return text_none;
+                                            }}
+                                            InputProps={{
+                                              readOnly: true,
+                                            }}
+                                            defaultValue={
+                                              <div
+                                                style={{
+                                                  width: "100%",
+                                                }}
+                                                className={"textAnswerD-".concat(
+                                                  i
+                                                )}
+                                              />
+                                            }
+                                          />
+                                        </MathJax>
+                                      </MathJaxContext>
                                     </Box>
                                   </Box>
                                 </RadioGroup>
@@ -1079,7 +1146,7 @@ export function PracticeTest() {
                                     />
                                   </MathJax>
                                 </MathJaxContext>
-                                <div>
+                                {/* <div>
                                   <TextField
                                     id={"textAnswerCons".concat(i)}
                                     label="Answer"
@@ -1091,7 +1158,23 @@ export function PracticeTest() {
                                     }}
                                     defaultValue={""}
                                   />
-                                </div>
+                                </div> */}
+                                <MyRichTextInput
+                                  i={"textAnswerCons".concat(i)}
+                                  value=""
+                                  handleClickOpenDialog={handleClickOpenDialog}
+                                  label={
+                                    <div
+                                      style={{
+                                        marginLeft: "1.5rem",
+                                        fontSize: "1rem",
+                                        textDecoration: "underline",
+                                      }}
+                                    >
+                                      Answer
+                                    </div>
+                                  }
+                                />
                               </div>
                             );
                           } else if (question.type === "FIB") {
@@ -1254,7 +1337,11 @@ export function PracticeTest() {
         >
           <Aside className="hideGrid" />
         </Grid>
-
+        <MathFormulaDialog
+          open={open}
+          handleCloseDialog={handleCloseDialog}
+          disablebackdropclick="true"
+        />
         <Grid item xs={12} sm={0} md={0} lg={0}>
           <div className="App">
             <div className="drawer-toggler unHideGrid">

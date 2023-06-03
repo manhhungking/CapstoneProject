@@ -9,19 +9,12 @@ import Safe from "react-safe";
 import { useRedirect } from "react-admin";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import Paper from "@mui/material/Paper";
+import { MathJaxContext, MathJax } from "better-react-mathjax";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import {
-  Container,
-  Grid,
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  InputAdornment,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
+import Countdown from "react-countdown";
 import "../Style/PracticeResult.css";
 import target from "../Images/target.png";
 import hourglass from "../Images/hourglass.png";
@@ -46,6 +39,11 @@ export function PracticeResult() {
   const params = useParams();
   const params1 = new URLSearchParams();
   const redirect = useRedirect();
+  const config = {
+    loader: {
+      load: ["input/asciimath"],
+    },
+  };
   params1.append("id", params.id);
   params1.append("exam_id", testInfo["exam_id"]);
   function calculateIndexMinusNumOfAudio(i) {
@@ -70,13 +68,69 @@ export function PracticeResult() {
   function secondsToHMS(secs) {
     return new Date(secs * 1000).toISOString().substr(11, 8);
   }
+
+  let stringToHTMLAnswer = (str, type = "none") => {
+    let dom = document.createElement("div");
+    if (type === "key") {
+      dom.style.cssText =
+        "line-break: normal; display: inline-block; vertical-align: middle; ";
+      str = str.replaceAll("<p>", "<p class='text-answerkey'>");
+    } else {
+      dom.style.cssText =
+        "line-break: normal; display: inline-block; vertical-align: middle;";
+    }
+    dom.innerHTML = str;
+    return dom;
+  };
+  const AsignValueToAnswer = (i, answer, type = "none") => {
+    var div_question_answer = document.querySelector(i);
+    console.log(div_question_answer);
+
+    if (div_question_answer != null) {
+      let temp = stringToHTMLAnswer(answer, type);
+      div_question_answer.parentNode.replaceChild(temp, div_question_answer);
+    }
+  };
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    for (let i = 0; i < testSpecific.length; i++) {
+      if (testSpecific[i].Type === "MCQ") {
+        AsignValueToAnswer(
+          ".question-" + (i + 1),
+          testSpecific[i]["Correct_answer"],
+          "key"
+        );
+        AsignValueToAnswer(
+          ".textAnswer-" + (i + 1),
+          testSpecific[i]["User_answer_MCQ"]
+        );
+      } else if (testSpecific[i].Type === "Cons") {
+        AsignValueToAnswer(
+          ".question-" + (i + 1),
+          testSpecific[i]["Solution"],
+          "key"
+        );
+        AsignValueToAnswer(
+          ".textAnswer-" + (i + 1),
+          testSpecific[i]["User_answer_CONS"]
+        );
+      }
+    }
+    return (
+      <span
+        style={{
+          color: "black",
+          fontSize: "1.25rem",
+          float: "right",
+          color: "rgba(0, 0, 0, 0.87)",
+        }}
+      >
+        {time}
+      </span>
+    );
+  };
   useEffect(() => {
     axios
-      .get(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
-          params.id
-        )
-      )
+      .get("http://localhost:8000/test_result/".concat(params.id))
       .then((res) => {
         // console.log("Test Result: ", res.data);
         setLoadingPopUp("none");
@@ -253,14 +307,15 @@ export function PracticeResult() {
               <Typography variant="h6" display="inline">
                 Time completion:
               </Typography>
-              <Typography
+              <Countdown date={Date.now()} renderer={renderer} />
+              {/* <Typography
                 variant="h6"
                 display="inline"
                 style={{ float: "right" }}
                 className="result-stats-text"
               >
                 {time}
-              </Typography>
+              </Typography> */}
             </div>
           </div>
         </Grid>
@@ -435,8 +490,18 @@ export function PracticeResult() {
                       display="inline"
                       className="text-answerkey"
                     >
-                      {correctAnswer}:
+                      <MathJaxContext config={config}>
+                        <MathJax inline dynamic>
+                          <div
+                            style={{
+                              width: "100%",
+                            }}
+                            className={"question-".concat(i + 1)}
+                          />
+                        </MathJax>
+                      </MathJaxContext>
                     </Typography>
+                    :
                     <span
                       style={{
                         marginRight: "0.25em",
@@ -445,7 +510,18 @@ export function PracticeResult() {
                     >
                       &nbsp;
                     </span>
-                    <span className="mr-1 text-useranswer">{userAnswer}</span>
+                    <span className="mr-1 text-useranswer">
+                      <MathJaxContext config={config}>
+                        <MathJax inline dynamic>
+                          <div
+                            style={{
+                              width: "100%",
+                            }}
+                            className={"textAnswer-".concat(i + 1)}
+                          />
+                        </MathJax>
+                      </MathJaxContext>
+                    </span>
                   </span>
                   <span className={classtype} />
                 </div>

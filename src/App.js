@@ -67,7 +67,7 @@ const theme = {
   },
 };
 const dataProvider = jsonServerProvider(
-  "https://backend-capstone-project.herokuapp.com",
+  "http://localhost:8000",
   httpClient
 );
 const queryClient = new QueryClient();

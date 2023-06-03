@@ -98,7 +98,6 @@ function convertQueryDataToQuestionList(data) {
     }
     questionList.push(k);
   }
-  // console.log("Question List: ", questionList);
   return questionList;
 }
 
@@ -106,7 +105,6 @@ export const PraceticeResultSpecific = () => {
   //edit create test
   const [questionList, setQuestionList] = useState([]); // list các câu hỏi bao gồm biến và đáp án
   const location = useLocation();
-  const params1 = new URLSearchParams();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
   const [show, setShow] = useState();
@@ -117,8 +115,6 @@ export const PraceticeResultSpecific = () => {
     leave: { opacity: 0, width: 0 },
   });
   const [time, setTime] = useState(0);
-  const params = useParams();
-  const { data: userInfo, isLoading, error1 } = useGetIdentity();
   const redirect = useRedirect();
   const config = {
     loader: { load: ["input/asciimath"] },
@@ -204,9 +200,7 @@ export const PraceticeResultSpecific = () => {
   useEffect(() => {
     // get the data from the api
     axios
-      .get(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(id)
-      )
+      .get("http://localhost:8000/test_result/".concat(id))
       .then((res) => {
         // console.log("Data: ", res.data);
         setLoadingPopUp("none");
@@ -334,6 +328,41 @@ export const PraceticeResultSpecific = () => {
     dom.innerHTML = str;
     return dom;
   };
+  let stringToHTMLAnswer = (str, type = "mcq") => {
+    let dom = document.createElement("div");
+    // if (type === "cons")
+    //   str = str.replaceAll("<p>", "<p class='text-correct'>");
+    str = str.replaceAll("<p>", "<p style='margin-bottom: 0px'>");
+    dom.style.cssText = "line-break: normal;";
+    dom.innerHTML = str;
+    return dom;
+  };
+  const AsignValueToAnswer = (i, j, c) => {
+    var div_question_answer = document.querySelector(
+      "#textAnswer" + c.concat(i)
+    );
+    if (div_question_answer != null) {
+      let temp = stringToHTMLAnswer(
+        `${questionList[i].answerOptions[j].answerText}`
+      );
+      div_question_answer.parentNode.replaceChild(temp, div_question_answer);
+    }
+  };
+  const AsignValueToAnswerConsOfUser = (i, value) => {
+    var div_question_answer = document.querySelector("#textAnswerCons" + i);
+    console.log(div_question_answer);
+    if (div_question_answer != null) {
+      let temp = stringToHTMLAnswer(value);
+      div_question_answer.parentNode.replaceChild(temp, div_question_answer);
+    }
+  };
+  const AsignValueToAnswerCons = (i, value) => {
+    var div_question_answer = document.querySelector(".questionAnswer-" + i);
+    if (div_question_answer != null) {
+      let temp = stringToHTMLAnswer(value, "cons");
+      div_question_answer.parentNode.replaceChild(temp, div_question_answer);
+    }
+  };
   // Renderer callback with condition
   const renderer = ({ hours, minutes, seconds, completed }) => {
     for (let i = 0; i < questionList.length; i++) {
@@ -347,6 +376,15 @@ export const PraceticeResultSpecific = () => {
       let temp = stringToHTML(`${questionList[i].questionText}`);
       if (div_question != null) {
         div_question.parentNode.replaceChild(temp, div_question);
+      }
+      if (questionList[i].type === "MCQ") {
+        AsignValueToAnswer(i, 0, "A");
+        AsignValueToAnswer(i, 1, "B");
+        AsignValueToAnswer(i, 2, "C");
+        AsignValueToAnswer(i, 3, "D");
+      } else if (questionList[i].type === "Cons") {
+        AsignValueToAnswerCons(i + 1, questionList[i].answerOptions);
+        AsignValueToAnswerConsOfUser(i + 1, questionList[i].userAnswer);
       }
     }
 
@@ -514,27 +552,35 @@ export const PraceticeResultSpecific = () => {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
-                                    className="textAnswer1"
-                                    id={"textAnswerA".concat(i)}
-                                    label="Answer A"
-                                    variant="outlined"
-                                    multiline
-                                    fullWidth
-                                    sx={() => {
-                                      return questionList[i].correctAnswer ===
-                                        "A"
-                                        ? blue_color
-                                        : red_color;
-                                    }}
-                                    InputProps={{
-                                      readOnly: true,
-                                    }}
-                                    defaultValue={
-                                      questionList[i].answerOptions[0]
-                                        .answerText
-                                    }
-                                  />
+                                  <MathJaxContext config={config}>
+                                    <MathJax inline dynamic="true">
+                                      <TextField
+                                        className="textAnswer1"
+                                        id={"textAnswerA".concat(i)}
+                                        label="Answer A"
+                                        variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        sx={() => {
+                                          return questionList[i]
+                                            .correctAnswer === "A"
+                                            ? blue_color
+                                            : red_color;
+                                        }}
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                        defaultValue={
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                            }}
+                                            className={"questionA-".concat(i)}
+                                          />
+                                        }
+                                      />
+                                    </MathJax>
+                                  </MathJaxContext>
                                 </Box>
                               </Box>
                               <Box
@@ -563,27 +609,35 @@ export const PraceticeResultSpecific = () => {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
-                                    className="textAnswer1"
-                                    id={"textAnswerB".concat(i)}
-                                    label="Answer B"
-                                    variant="outlined"
-                                    multiline
-                                    fullWidth
-                                    InputProps={{
-                                      readOnly: true,
-                                    }}
-                                    sx={() => {
-                                      return questionList[i].correctAnswer ===
-                                        "B"
-                                        ? blue_color
-                                        : red_color;
-                                    }}
-                                    defaultValue={
-                                      questionList[i].answerOptions[1]
-                                        .answerText
-                                    }
-                                  />
+                                  <MathJaxContext config={config}>
+                                    <MathJax inline dynamic="true">
+                                      <TextField
+                                        className="textAnswer1"
+                                        id={"textAnswerB".concat(i)}
+                                        label="Answer B"
+                                        variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                        sx={() => {
+                                          return questionList[i]
+                                            .correctAnswer === "B"
+                                            ? blue_color
+                                            : red_color;
+                                        }}
+                                        defaultValue={
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                            }}
+                                            className={"questionB-".concat(i)}
+                                          />
+                                        }
+                                      />
+                                    </MathJax>
+                                  </MathJaxContext>
                                 </Box>
                               </Box>
                               <Box
@@ -612,27 +666,35 @@ export const PraceticeResultSpecific = () => {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
-                                    className="textAnswer1"
-                                    id={"textAnswerC".concat(i)}
-                                    label="Answer C"
-                                    variant="outlined"
-                                    multiline
-                                    fullWidth
-                                    InputProps={{
-                                      readOnly: true,
-                                    }}
-                                    sx={() => {
-                                      return questionList[i].correctAnswer ===
-                                        "C"
-                                        ? blue_color
-                                        : red_color;
-                                    }}
-                                    defaultValue={
-                                      questionList[i].answerOptions[2]
-                                        .answerText
-                                    }
-                                  />
+                                  <MathJaxContext config={config}>
+                                    <MathJax inline dynamic="true">
+                                      <TextField
+                                        className="textAnswer1"
+                                        id={"textAnswerC".concat(i)}
+                                        label="Answer C"
+                                        variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                        sx={() => {
+                                          return questionList[i]
+                                            .correctAnswer === "C"
+                                            ? blue_color
+                                            : red_color;
+                                        }}
+                                        defaultValue={
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                            }}
+                                            className={"questionC-".concat(i)}
+                                          />
+                                        }
+                                      />
+                                    </MathJax>
+                                  </MathJaxContext>
                                 </Box>
                               </Box>
                               <Box
@@ -661,27 +723,35 @@ export const PraceticeResultSpecific = () => {
                                   noValidate
                                   autoComplete="off"
                                 >
-                                  <TextField
-                                    className="textAnswer1"
-                                    id={"textAnswerD".concat(i)}
-                                    label="Answer D"
-                                    variant="outlined"
-                                    multiline
-                                    fullWidth
-                                    InputProps={{
-                                      readOnly: true,
-                                    }}
-                                    sx={() => {
-                                      return questionList[i].correctAnswer ===
-                                        "D"
-                                        ? blue_color
-                                        : red_color;
-                                    }}
-                                    defaultValue={
-                                      questionList[i].answerOptions[3]
-                                        .answerText
-                                    }
-                                  />
+                                  <MathJaxContext config={config}>
+                                    <MathJax inline dynamic="true">
+                                      <TextField
+                                        className="textAnswer1"
+                                        id={"textAnswerD".concat(i)}
+                                        label="Answer D"
+                                        variant="outlined"
+                                        multiline
+                                        fullWidth
+                                        InputProps={{
+                                          readOnly: true,
+                                        }}
+                                        sx={() => {
+                                          return questionList[i]
+                                            .correctAnswer === "D"
+                                            ? blue_color
+                                            : red_color;
+                                        }}
+                                        defaultValue={
+                                          <div
+                                            style={{
+                                              width: "100%",
+                                            }}
+                                            className={"questionD-".concat(i)}
+                                          />
+                                        }
+                                      />
+                                    </MathJax>
+                                  </MathJaxContext>
                                 </Box>
                               </Box>
                             </RadioGroup>
@@ -720,29 +790,50 @@ export const PraceticeResultSpecific = () => {
                               </MathJax>
                             </MathJaxContext>
                             <div className="question-answers">
-                              <TextField
-                                id={"textAnswerCons".concat(i)}
-                                label="User Answer"
-                                multiline
-                                // rows={5}
-                                sx={yellow_color}
-                                variant="outlined"
-                                style={{
-                                  width: "100%",
-                                }}
-                                defaultValue={
-                                  questionList[i].userAnswer !== ""
-                                    ? questionList[i].userAnswer
-                                    : " "
-                                }
-                                className="constructive"
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                              />
+                              <MathJaxContext config={config}>
+                                <MathJax>
+                                  <TextField
+                                    id={"textAnswerCons".concat(i + 1)}
+                                    label="User Answer"
+                                    multiline
+                                    sx={yellow_color}
+                                    variant="outlined"
+                                    style={{
+                                      width: "100%",
+                                    }}
+                                    value={
+                                      <div
+                                        style={{
+                                          width: "100%",
+                                        }}
+                                        className={"questionAnswer-userAnswer-".concat(
+                                          i + 1
+                                        )}
+                                      />
+                                    }
+                                    className="constructive"
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
+                                  />
+                                </MathJax>
+                              </MathJaxContext>
                             </div>
                             <div className="text-correct mt-2">
-                              Answer: {questionList[i].answerOptions}
+                              Answer:
+                              <MathJaxContext config={config}>
+                                <MathJax inline dynamic>
+                                  <div
+                                    style={{
+                                      width: "100%",
+                                      display: "inline-flex",
+                                    }}
+                                    className={"text-correct questionAnswer-".concat(
+                                      i + 1
+                                    )}
+                                  />
+                                </MathJax>
+                              </MathJaxContext>
                             </div>
                           </div>
                         );
@@ -916,7 +1007,7 @@ export const PraceticeResultSpecific = () => {
                 onClick={() => setShow((prevState) => !prevState)}
                 className="btn"
               >
-                <i class="fa-solid fa-bars" />
+                <i className="fa-solid fa-bars" />
               </button>
             </div>
             {transitions?.map(

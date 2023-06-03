@@ -88,7 +88,7 @@ function convertQueryDataToQuestionList(data) {
       field: "test_name",
       hide: false,
       headerName: "Test name",
-      width: 120,
+      width: 200,
     },
     {
       field: "username",
@@ -99,7 +99,7 @@ function convertQueryDataToQuestionList(data) {
     { field: "score", hide: false, headerName: "Score", width: 60 },
     {
       field: "date",
-      hide: false,
+      hide: true,
       headerName: "Taken on",
       type: "dateTime",
       width: 180,
@@ -144,11 +144,6 @@ function convertQueryDataToQuestionList(data) {
     },
   ];
   let rows = [];
-  let initialState = {
-    columns: {
-      columnVisibilityModel: { id: false, last_modified_date: false },
-    },
-  };
   let result = {};
   for (let e of data) {
     let start = e.Start_time;
@@ -176,7 +171,11 @@ function convertQueryDataToQuestionList(data) {
 const VISIBLE_FIELDS = ["name", "rating", "country", "dateCreated", "isAdmin"];
 let initialState = {
   columns: {
-    columnVisibilityModel: { id: false, last_modified_date: false },
+    columnVisibilityModel: {
+      id: false,
+      last_modified_date: false,
+      date: false,
+    },
   },
 };
 export const MyAccountTestCreated = () => {
@@ -192,7 +191,7 @@ export const MyAccountTestCreated = () => {
   useEffect(() => {
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/my_account/tests/created/".concat(userInfo.id)
+        "http://localhost:8000/my_account/tests/created/".concat(userInfo.id)
       )
       .then((res) => {
         setQuestionList(convertQueryDataToQuestionList(res.data));

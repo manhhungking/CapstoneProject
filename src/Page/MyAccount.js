@@ -45,8 +45,17 @@ const headCells = [
     type: "dateTime",
     label: "Date",
     minWidth: 120,
-    maxWidth: 120,
+    maxWidth: 130,
   },
+  // {
+  //   id: "date_time",
+  //   numeric: true,
+  //   disablePadding: false,
+  //   type: "dateTime",
+  //   label: "Date",
+  //   minWidth: 120,
+  //   maxWidth: 120,
+  // },
   {
     id: "score",
     numeric: true,
@@ -120,6 +129,7 @@ function hmsToSeconds(t) {
 function secondsToHMS(secs) {
   return new Date(secs * 1000).toISOString().substr(11, 8);
 }
+
 function convertQueryDataToQuestionList(data) {
   let questionList = [];
 
@@ -147,7 +157,8 @@ function convertQueryDataToQuestionList(data) {
       id: e.id,
       name: e.Name,
       score: e.Score,
-      date: dformat, //new Date(Date.parse("2012-01-26T13:51:50.417-07:00")),
+      date_format: dformat,
+      date: e.Date, //new Date(Date.parse("2012-01-26T13:51:50.417-07:00")),
       time: diff,
       viewresult: "View",
     };
@@ -235,7 +246,7 @@ export const MyAccount = () => {
   useEffect(() => {
     // console.log(userInfo.id);
     axios
-      .get("https://backend-capstone-project.herokuapp.com/my_account/tests/".concat(userInfo.id))
+      .get("http://localhost:8000/my_account/tests/".concat(userInfo.id))
       .then((res) => {
         setQuestionList(convertQueryDataToQuestionList(res.data));
       })
@@ -361,7 +372,7 @@ export const MyAccount = () => {
                             maxWidth: headCells[1].maxWidth,
                           }}
                         >
-                          {row.date}
+                          {row.date_format}
                           {/* {new Date(Date.parse(row.date)).toString()} */}
                         </StyledTableCell>
                         <StyledTableCell

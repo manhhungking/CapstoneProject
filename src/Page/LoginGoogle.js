@@ -22,7 +22,7 @@ export function LoginGoogle() {
   function handleRegister(data) {
     console.log("Register");
     axios
-      .post("https://backend-capstone-project.herokuapp.com/save_user/", {
+      .post("http://localhost:8000/save_user/", {
         username: data.given_name,
         password: "abc",
         email: data.email,
@@ -41,7 +41,7 @@ export function LoginGoogle() {
   }
   function checkExist(data) {
     axios
-      .post("https://backend-capstone-project.herokuapp.com/check_user/", {
+      .post("http://localhost:8000/check_user/", {
         email: data.email,
       })
       .then((res) => {
