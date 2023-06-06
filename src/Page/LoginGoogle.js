@@ -59,7 +59,6 @@ export function LoginGoogle() {
         if (err.response.status === 404) {
           handleRegister(data);
         } else {
-          console.log("Error gì ko biết");
           notify("Cannot sign in! Try again later", {
             type: "error",
           });

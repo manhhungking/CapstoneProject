@@ -5,6 +5,7 @@ import App from "./App";
 import configureStore from "./Page/store/configureStore";
 import "./Page/styles/styles.scss";
 import { HomePage } from "./Page/HomePage";
+import { TermOfCondition } from "./Page/TermOfCondition";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "@material/web/button/filled-button.js";
 import "@material/web/button/outlined-button.js";
@@ -19,6 +20,7 @@ root.render(
     <Routes>
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/app/*" element={<App />} />
+      <Route exact path="/terms-and-condition" element={<TermOfCondition />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>

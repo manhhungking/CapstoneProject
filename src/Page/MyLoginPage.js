@@ -9,9 +9,18 @@ import { ErrorMessage } from "@hookform/error-message";
 import Button from "@mui/material/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { LoginGoogle } from "./LoginGoogle";
+import { LoginFacebook } from "./LoginFacebook";
 import showPwdImg from "../Images/show-password.svg";
 import hidePwdImg from "../Images/hide-password.svg";
-
+// var finished_rendering = function() {
+//   console.log("finished rendering plugins");
+//   var spinner = document.getElementById("spinner");
+//   if (spinner) {
+//     spinner.removeAttribute("style");
+//     spinner.removeChild(spinner.childNodes[0]);
+//   }
+// };
+// window.FB.Event.subscribe("xfbml.render", finished_rendering);
 export function MyLoginPage() {
   const redirect = useRedirect();
   const [password, setPassword] = useState("");
@@ -111,12 +120,12 @@ export function MyLoginPage() {
         <div className="container loginPageContainer" id="container">
           <div
             className="form-container sign-up-container"
-            style={{ overflow: "scroll" }}
+            style={{ overflow: "auto" }}
           >
             <form
               className="loginFormform"
               onSubmit={handleSubmit(onSubmit)}
-              style={{ overflow: "scroll" }}
+              style={{ overflow: "auto" }}
             >
               <h1 className="loginFormh1">Create Account</h1>
               <div className="social-container">{/* <LoginGoogle /> */}</div>
@@ -282,6 +291,8 @@ export function MyLoginPage() {
               </h1>
               <div className="social-container">
                 <LoginGoogle />
+                {window.FB.XFBML.parse()}
+                <LoginFacebook />
               </div>
               <span className="loginFormspan">or use your account</span>
               <input

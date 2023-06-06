@@ -29,6 +29,7 @@ import { MyAccount } from "./Page/MyAccount";
 import { MyAccountTestCreated } from "./Page/MyAccountTestCreated";
 import { EditPersonalInfo } from "./Page/EditPersonalInfo";
 import { Dashboard } from "./Page/Dashboard";
+import { TermOfCondition } from "./Page/TermOfCondition";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import "./fonts/MathJax_Zero.woff";
 import "./fonts/MathJax_Main-Regular.woff";
@@ -66,10 +67,7 @@ const theme = {
     zIndex: "20 !important",
   },
 };
-const dataProvider = jsonServerProvider(
-  "http://localhost:8000",
-  httpClient
-);
+const dataProvider = jsonServerProvider("http://localhost:8000", httpClient);
 const queryClient = new QueryClient();
 
 function App() {
