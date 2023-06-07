@@ -285,7 +285,7 @@ export function MyLoginPage() {
             <form className="loginFormform" action="#">
               <h1
                 className="loginFormh1"
-                style={{ marginTop: "40px", marginBottom: "20px" }}
+                style={{ marginTop: "25px", marginBottom: "10px" }}
               >
                 Sign in
               </h1>

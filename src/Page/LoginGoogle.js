@@ -70,7 +70,6 @@ export function LoginGoogle() {
   function handleCallbackResponse(response) {
     // console.log("Encoded JWT ID Token: " + response.credential);
     var userObject = jwt_decode(response.credential);
-    console.log(userObject);
     setUser(userObject);
     checkExist(userObject);
   }
@@ -85,7 +84,7 @@ export function LoginGoogle() {
       theme: "outline",
       size: "large",
     });
-    google.accounts.id.prompt();
+    // google.accounts.id.prompt();
   }, []);
   return (
     <div
