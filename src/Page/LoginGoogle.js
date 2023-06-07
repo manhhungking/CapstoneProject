@@ -2,17 +2,13 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import { useLogin, useNotify, useRedirect } from "react-admin";
-// import { GoogleLogin } from "react-google-login";
+import { useLogin, useNotify } from "react-admin";
 {
   /* <script src="https://apis.google.com/js/api:client.js" async defer />; */
 }
 
 export function LoginGoogle() {
-  const [user, setUser] = useState({});
   const login = useLogin();
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const notify = useNotify();
   const handleLogin = (data) => {
     login({ email: data.email, password: "abc", isgoogle: true }).catch(() =>
@@ -45,7 +41,6 @@ export function LoginGoogle() {
         email: data.email,
       })
       .then((res) => {
-        console.log(res.data["IsGoogle"]);
         if (res.data["IsGoogle"] === false) {
           notify("Sign in fail! Account has been used", {
             type: "error",
@@ -70,7 +65,7 @@ export function LoginGoogle() {
   function handleCallbackResponse(response) {
     // console.log("Encoded JWT ID Token: " + response.credential);
     var userObject = jwt_decode(response.credential);
-    setUser(userObject);
+    // setUser(userObject);
     checkExist(userObject);
   }
   useEffect(() => {

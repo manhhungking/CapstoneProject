@@ -40,7 +40,6 @@ export function LoginFacebook() {
         email: data.email,
       })
       .then((res) => {
-        console.log(res.data["IsGoogle"]);
         if (res.data["IsGoogle"] === false) {
           notify("Sign in fail! Account has been used", {
             type: "error",
