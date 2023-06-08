@@ -292,7 +292,7 @@ export function MyLoginPage() {
               <div className="social-container">
                 <LoginGoogle />
                 {/* {window.FB.XFBML.parse()} */}
-                {/* <LoginFacebook /> */}
+                <LoginFacebook />
               </div>
               <span className="loginFormspan">or use your account</span>
               <input

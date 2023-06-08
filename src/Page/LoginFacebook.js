@@ -12,6 +12,7 @@ export function LoginFacebook() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const notify = useNotify();
+  console.log("Facebook!!!");
   window.FB.login(function(response) {
     if (response.authResponse) {
       console.log("Welcome!  Fetching your information.... ");
