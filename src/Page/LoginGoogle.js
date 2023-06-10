@@ -16,7 +16,7 @@ export function LoginGoogle() {
     );
   };
   function handleRegister(data) {
-    console.log("Register");
+    // console.log("Register");
     axios
       .post("https://backend-capstone-project.herokuapp.com/save_user/", {
         username: data.given_name,
@@ -32,7 +32,7 @@ export function LoginGoogle() {
         notify("Sign up fail! Email has been used", {
           type: "error",
         });
-        console.log(err);
+        // console.log(err);
       });
   }
   function checkExist(data) {
@@ -50,14 +50,14 @@ export function LoginGoogle() {
         }
       })
       .catch((err) => {
-        console.log(err.response.status);
+        // console.log(err.response.status);
         if (err.response.status === 404) {
           handleRegister(data);
         } else {
           notify("Cannot sign in! Try again later", {
             type: "error",
           });
-          console.log(err);
+          // console.log(err);
         }
       });
   }

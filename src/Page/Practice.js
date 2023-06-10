@@ -309,7 +309,7 @@ export function PracticeList() {
                           marginRight: ".4rem",
                         }}
                       />
-                      Number of selection: {exam["total"]}
+                      Number of selection: {exam["total_selection"]}
                     </Typography>
                     <Typography variant="subtitle2" component="div">
                       <Rating
@@ -422,7 +422,7 @@ export function PracticeList() {
                           marginRight: ".4rem",
                         }}
                       />
-                      Number of selection: {exam["total"]}
+                      Number of selection: {exam["total_selection"]}
                     </Typography>
                     <Typography variant="subtitle2" component="div">
                       <Rating

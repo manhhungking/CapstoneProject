@@ -344,10 +344,10 @@ export function PracticeTest() {
       div_question_answer != null &&
       questionList[i].answerOptions[j].answerText !== "<p></p>"
     ) {
-      console.log(
-        "textAnswer" + c + "-" + i,
-        questionList[i].answerOptions[j].answerText
-      );
+      // console.log(
+      //   "textAnswer" + c + "-" + i,
+      //   questionList[i].answerOptions[j].answerText
+      // );
       div_question_answer.parentNode.replaceChild(temp, div_question_answer);
     }
   };
@@ -661,7 +661,12 @@ export function PracticeTest() {
   async function test_result_Save_API(data) {
     var id;
     await axios // post  lich sử làm bài và kết quả
-      .post("https://backend-capstone-project.herokuapp.com/test_result/".concat(params.id), data)
+      .post(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          params.id
+        ),
+        data
+      )
       .then((res) => {
         id = res.data["id"];
       })
@@ -692,7 +697,9 @@ export function PracticeTest() {
     // console.log("DATA specific will be saved: ", data);
     await axios // update lịch sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(params.id),
+        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(
+          params.id
+        ),
         data
       )
       .then((res) => {
@@ -797,15 +804,20 @@ export function PracticeTest() {
   // Catch Rating value
   function handleRating(rate) {
     setRating(rate);
-    console.log("Rate: ", rate);
+    // console.log("Rate: ", rate);
   }
   async function submit(rate) {
-    console.log(rating, score, id);
+    // console.log(rating, score, id);
     await axios // update lịch sử làm bài và kết quả
-      .patch("https://backend-capstone-project.herokuapp.com/test_result/".concat(id), {
-        Score: score,
-        Star: rate,
-      })
+      .patch(
+        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+          id
+        ),
+        {
+          Score: score,
+          Star: rate,
+        }
+      )
       .then((res) => {
         // console.log("Data save practice test: ", res.data);
         redirect("/app/practice_tests/result/".concat(id));
@@ -1488,8 +1500,7 @@ export function PracticeTest() {
             <LoadingButton
               color="inherit"
               onClick={() => {
-                console.log("Save");
-                submit(5);
+                submit(-1);
               }}
               loading={false}
               variant="contained"

@@ -542,7 +542,9 @@ export function PostEdit() {
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(params.id),
+        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(
+          params.id
+        ),
         data
       )
       .then((res) => {
@@ -587,7 +589,6 @@ export function PostEdit() {
   const handleTextFieldA_MCQChange = (i) => {
     let textFieldA_Element = document.getElementById("textAnswerA".concat(i));
     let newArr = [...questionList];
-    console.log("textFieldA: ", textFieldA_Element);
     newArr[i].answerOptions[0].answerText = handleMathText(
       textFieldA_Element.innerHTML
     );

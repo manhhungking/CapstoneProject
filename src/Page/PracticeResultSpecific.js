@@ -353,7 +353,7 @@ export const PraceticeResultSpecific = () => {
   };
   const AsignValueToAnswerConsOfUser = (i, value) => {
     var div_question_answer = document.querySelector("#textAnswerCons" + i);
-    console.log(div_question_answer);
+    // console.log(div_question_answer);
     if (div_question_answer != null) {
       let temp = stringToHTMLAnswer(value);
       div_question_answer.parentNode.replaceChild(temp, div_question_answer);

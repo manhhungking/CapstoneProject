@@ -49,14 +49,14 @@ export function LoginFacebook() {
         }
       })
       .catch((err) => {
-        console.log(err.response.status);
+        // console.log(err.response.status);
         if (err.response.status === 404) {
           handleRegister(data);
         } else {
           notify("Cannot sign in! Try again later", {
             type: "error",
           });
-          console.log(err);
+          // console.log(err);
         }
       });
   }
@@ -76,7 +76,7 @@ export function LoginFacebook() {
         handleButtonLogin(response.data);
       }}
       onReject={(error) => {
-        console.log(error);
+        // console.log(error);
       }}
     >
       <button className="loginBtn loginBtn--facebook">

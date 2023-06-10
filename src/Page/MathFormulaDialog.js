@@ -24,7 +24,7 @@ export function MathFormulaDialog({ ...props }) {
           id="demo-helper-text-aligned"
           label="Formula"
           onChange={(event) => {
-            console.log("Value: ", event.target.value);
+            // console.log("Value: ", event.target.value);
             setEquation("`".concat(event.target.value).concat("`"));
           }}
         />
