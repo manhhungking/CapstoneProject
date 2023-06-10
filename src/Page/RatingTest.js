@@ -9,7 +9,7 @@ export const RatingTest = (props) => {
   const [rating, setRating] = useState(0);
   const redirect = useRedirect();
   // Catch Rating value
-  async function handleRating(rate) {
+  function handleRating(rate) {
     setRating(rate);
     console.log("Rate: ", rate);
   }

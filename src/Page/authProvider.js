@@ -4,7 +4,7 @@ import axios from "axios";
 export const authProvider = {
   login: ({ email, password, isgoogle }) => {
     return axios
-      .post("http://localhost:8000/auth/", {
+      .post("https://backend-capstone-project.herokuapp.com/auth/", {
         email,
         password,
         isgoogle,

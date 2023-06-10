@@ -17,7 +17,7 @@ export function LoginFacebook() {
   };
   function handleRegister(data) {
     axios
-      .post("http://localhost:8000/save_user/", {
+      .post("https://backend-capstone-project.herokuapp.com/save_user/", {
         username: data.given_name,
         password: "abc",
         email: data.email,
@@ -36,7 +36,7 @@ export function LoginFacebook() {
   }
   function checkExist(data) {
     axios
-      .post("http://localhost:8000/check_user/", {
+      .post("https://backend-capstone-project.herokuapp.com/check_user/", {
         email: data.email,
       })
       .then((res) => {
