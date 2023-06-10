@@ -140,100 +140,108 @@ export const Dashboard = () => {
             !
           </h1>
           <h2>Your recent practice test</h2>
-          <div spacing={2} className="GridContainer">
-            {examList
-              ? typeof examList === typeof []
-                ? examList.map((exam, i) => {
-                    if (exam["description"] === "") {
-                      exam["description"] = "No description";
-                    }
-                    if (exam["duration"] === 0) {
-                      exam["duration"] = infinity;
-                    }
-                    return (
-                      <div item="true" key={i} className="GridPaper">
-                        <Card
-                          sx={{
-                            width: 340,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginBottom: "4px",
-                          }}
-                          className="NavigationAsidePaper"
-                        >
-                          <CardMedia
-                            component="img"
-                            alt="exam paper"
-                            height="140"
-                            image={exam["image"]}
-                          />
-                          <CardContent sx={{ padding: "0px 12px" }}>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                              noWrap
-                              sx={{ margin: "4px 0px" }}
-                            >
-                              {exam["Name"]}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              inline="true"
-                              color="text.secondary"
-                              noWrap
-                              sx={{
-                                marginBottom: "2px",
-                                marginLeft: "2px",
+        </div>
+        <div
+          spacing={2}
+          className="GridContainer"
+          style={{
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          {examList
+            ? typeof examList === typeof []
+              ? examList.map((exam, i) => {
+                  if (exam["description"] === "") {
+                    exam["description"] = "No description";
+                  }
+                  if (exam["duration"] === 0) {
+                    exam["duration"] = infinity;
+                  }
+                  return (
+                    <div item="true" key={i} className="GridPaper">
+                      <Card
+                        sx={{
+                          width: 340,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginBottom: "4px",
+                        }}
+                        className="NavigationAsidePaper"
+                      >
+                        <CardMedia
+                          component="img"
+                          alt="exam paper"
+                          height="140"
+                          image={exam["image"]}
+                        />
+                        <CardContent sx={{ padding: "0px 12px" }}>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            noWrap
+                            sx={{ margin: "4px 0px" }}
+                          >
+                            {exam["Name"]}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            inline="true"
+                            color="text.secondary"
+                            noWrap
+                            sx={{
+                              marginBottom: "2px",
+                              marginLeft: "2px",
+                            }}
+                          >
+                            {exam["description"]}
+                          </Typography>
+                          <Typography variant="subtitle1" component="div">
+                            <div
+                              style={{
+                                transform: "translateY(1px)",
+                                display: "inline-block",
                               }}
                             >
-                              {exam["description"]}
-                            </Typography>
-                            <Typography variant="subtitle1" component="div">
-                              <div
+                              <i
+                                className="fa-regular fa-clock"
                                 style={{
-                                  transform: "translateY(1px)",
-                                  display: "inline-block",
+                                  fontSize: "20px",
+                                  marginRight: ".4rem",
+                                  marginTop: ".4rem",
                                 }}
-                              >
-                                <i
-                                  className="fa-regular fa-clock"
-                                  style={{
-                                    fontSize: "20px",
-                                    marginRight: ".4rem",
-                                    marginTop: ".4rem",
-                                  }}
-                                  sx={{ margin: "0px 4px" }}
-                                />
-                              </div>
-                              {exam["duration"]} min
-                            </Typography>
-                          </CardContent>
-                          <CardActions>
-                            <Button
-                              size="small"
-                              onClick={() => {
-                                redirect(
-                                  window.location.protocol +
-                                    "//" +
-                                    window.location.hostname +
-                                    ":" +
-                                    window.location.port +
-                                    "/app/practice_tests/" +
-                                    exam["id"]
-                                );
-                              }}
-                            >
-                              Practice again
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </div>
-                    );
-                  })
-                : ""
-              : ""}
-          </div>
+                                sx={{ margin: "0px 4px" }}
+                              />
+                            </div>
+                            {exam["duration"]} min
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => {
+                              redirect(
+                                window.location.protocol +
+                                  "//" +
+                                  window.location.hostname +
+                                  ":" +
+                                  window.location.port +
+                                  "/app/practice_tests/" +
+                                  exam["id"]
+                              );
+                            }}
+                          >
+                            Practice again
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </div>
+                  );
+                })
+              : ""
+            : ""}
         </div>
       </div>
       <Divider variant="middle" />

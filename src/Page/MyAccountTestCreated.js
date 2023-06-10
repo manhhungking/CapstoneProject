@@ -1,66 +1,8 @@
 import * as React from "react";
-import {
-  List,
-  Datagrid,
-  Create,
-  SimpleForm,
-  DateField,
-  TextField,
-  EditButton,
-  TextInput,
-  BooleanField,
-  NumberField,
-  NumberInput,
-  BooleanInput,
-  ImageInput,
-  ImageField,
-  useCreate,
-  useNotify,
-  useRedirect,
-  useGetIdentity,
-  ReferenceInput,
-  SelectInput,
-  AutocompleteArrayInput,
-  Toolbar,
-  SaveButton,
-  required,
-  ListContextProvider,
-  useGetList,
-  useList,
-} from "react-admin";
-import {
-  Box,
-  Container,
-  Grid,
-  createTheme,
-  TextField as TextField1,
-  InputAdornment,
-  FormControl,
-  FilledInput,
-  InputLabel,
-  FormHelperText,
-  TablePagination,
-  TableHead,
-  TableContainer,
-  TableCell,
-  TableBody,
-  Table,
-  Paper,
-  TableRow,
-  styled,
-  tableCellClasses,
-  TableSortLabel,
-  FormControlLabel,
-  Switch,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Container, Paper, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
-
-import { visuallyHidden } from "@mui/utils";
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import "../Style/MyAccount.css";
 import axios from "axios";
 import userBanner from "../Images/user_banner.png";

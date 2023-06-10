@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "@material/web/button/filled-button.js";
 import "@material/web/button/outlined-button.js";
 import "@material/web/checkbox/checkbox.js";
-
+import { RatingTest } from "./Page/RatingTest";
 configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -21,6 +21,7 @@ root.render(
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/app/*" element={<App />} />
       <Route exact path="/terms-and-condition" element={<TermOfCondition />} />
+      <Route exact path="/rating" element={<RatingTest />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>

@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { animated, useTransition } from "react-spring";
 import { MathFormulaDialog } from "./MathFormulaDialog";
+import { Rating } from "react-simple-star-rating";
 import {
   SimpleForm,
   Toolbar,
@@ -140,6 +141,9 @@ export function PracticeTest() {
   const redirect = useRedirect();
   const [loadingPopUp, setLoadingPopUp] = useState("block");
   const [savingPopUp, setSavingPopUp] = useState("none");
+  const [ratingPopUp, setRatingPopUp] = useState("none");
+  const [score, setScore] = useState(0);
+  const [id, setId] = useState(0);
   const [show, setShow] = useState();
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState();
@@ -186,6 +190,7 @@ export function PracticeTest() {
     '"&.Mui-focused fieldset": {  "borderWidth": "1px", "borderColor":"rgb(224, 224, 235)" }}' +
     "}";
   const text_none = JSON.parse(color_none);
+  const [rating, setRating] = useState(0);
   useEffect(() => {
     // get the data from the api
     axios
@@ -331,11 +336,18 @@ export function PracticeTest() {
     var div_question_answer = document.querySelector(
       "#textAnswer" + c + "-" + i
     );
-    console.log("textAnswer" + c + "-" + i, div_question_answer);
+
     let temp = stringToHTMLAnswer(
       `${questionList[i].answerOptions[j].answerText}`
     );
-    if (div_question_answer != null) {
+    if (
+      div_question_answer != null &&
+      questionList[i].answerOptions[j].answerText !== "<p></p>"
+    ) {
+      console.log(
+        "textAnswer" + c + "-" + i,
+        questionList[i].answerOptions[j].answerText
+      );
       div_question_answer.parentNode.replaceChild(temp, div_question_answer);
     }
   };
@@ -444,7 +456,6 @@ export function PracticeTest() {
                 <Countdown
                   date={countdown}
                   renderer={renderer}
-                  // onComplete={test_result_Save()}
                   ref={clockRef}
                 />
               )}
@@ -661,17 +672,21 @@ export function PracticeTest() {
     return id;
   }
   async function updateTestMark(Score, id) {
-    await axios // update lịch sử làm bài và kết quả
-      .patch("http://localhost:8000/test_result/".concat(id), { Score })
-      .then((res) => {
-        // console.log("Data save practice test: ", res.data);
-        setSavingPopUp("none");
-        wait(1000);
-        redirect("/app/practice_tests/result/".concat(id));
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
+    setSavingPopUp("none");
+    setScore(Score);
+    setId(id);
+    setRatingPopUp("block");
+    // await axios // update lịch sử làm bài và kết quả
+    //   .patch("http://localhost:8000/test_result/".concat(id), { Score })
+    //   .then((res) => {
+    //     // console.log("Data save practice test: ", res.data);
+    //     setSavingPopUp("none");
+    //     wait(1000);
+    //     redirect("/app/practice_tests/result/".concat(id));
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //   });
   }
   async function saveTestResultSpecific(data) {
     // console.log("DATA specific will be saved: ", data);
@@ -779,6 +794,26 @@ export function PracticeTest() {
       setNoteDisplay("block");
     }
   };
+  // Catch Rating value
+  function handleRating(rate) {
+    setRating(rate);
+    console.log("Rate: ", rate);
+  }
+  async function submit() {
+    console.log(rating, score, id);
+    await axios // update lịch sử làm bài và kết quả
+      .patch("http://localhost:8000/test_result/".concat(id), {
+        Score: score,
+        Star: rating,
+      })
+      .then((res) => {
+        // console.log("Data save practice test: ", res.data);
+        redirect("/app/practice_tests/result/".concat(id));
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }
   if (!isAuthority) {
     return <NotFound />;
   }
@@ -806,12 +841,6 @@ export function PracticeTest() {
                   <div className="multipleChoice">
                     <div className="question-section">
                       <div className="question-text">
-                        {/* <HighlightApp
-                          id={1}
-                          questionText={
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae magna lacus. Sed rhoncus tortor eget venenatis faucibus. Vivamus quis nunc vel eros volutpat auctor. Suspendisse sit amet lorem tristique lectus hendrerit aliquet. Aliquam erat volutpat. Vivamus malesuada, neque at consectetur semper, nibh urna ullamcorper metus, in dapibus arcu massa feugiat erat. Nullam hendrerit malesuada dictum. Nullam mattis orci diam, eu accumsan est maximus quis. Cras mauris nibh, bibendum in pharetra vitae, porttitor at ante. Duis pharetra elit ante, ut feugiat nibh imperdiet eget. Aenean at leo consectetur, sodales sem sit amet, consectetur massa. Ut blandit erat et turpis vestibulum euismod. Cras vitae molestie libero, vel gravida risus. Curabitur dapibus risus eu justo maximus, efficitur blandit leo porta. Donec dignissim felis ac turpis pharetra lobortis. Sed quis vehicula nulla."
-                          }
-                        /> */}
                         {questionList.map((question, i) => {
                           if (question.type === "MCQ") {
                             let calculatedIndex = calculateIndexMinusNumOfAudio(
@@ -918,14 +947,19 @@ export function PracticeTest() {
                                               readOnly: true,
                                             }}
                                             value={
-                                              <div
-                                                style={{
-                                                  width: "100%",
-                                                }}
-                                                className={"textAnswerA-".concat(
-                                                  i
-                                                )}
-                                              />
+                                              questionList[i].answerOptions[0]
+                                                .answerText === "<p></p>" ? (
+                                                " "
+                                              ) : (
+                                                <div
+                                                  style={{
+                                                    width: "100%",
+                                                  }}
+                                                  className={"textAnswerA-".concat(
+                                                    i
+                                                  )}
+                                                />
+                                              )
                                             }
                                           />
                                         </MathJax>
@@ -971,14 +1005,19 @@ export function PracticeTest() {
                                               readOnly: true,
                                             }}
                                             defaultValue={
-                                              <div
-                                                style={{
-                                                  width: "100%",
-                                                }}
-                                                className={"textAnswerB-".concat(
-                                                  i
-                                                )}
-                                              />
+                                              questionList[i].answerOptions[1]
+                                                .answerText === "<p></p>" ? (
+                                                " "
+                                              ) : (
+                                                <div
+                                                  style={{
+                                                    width: "100%",
+                                                  }}
+                                                  className={"textAnswerB-".concat(
+                                                    i
+                                                  )}
+                                                />
+                                              )
                                             }
                                           />
                                         </MathJax>
@@ -1024,14 +1063,19 @@ export function PracticeTest() {
                                               readOnly: true,
                                             }}
                                             defaultValue={
-                                              <div
-                                                style={{
-                                                  width: "100%",
-                                                }}
-                                                className={"textAnswerC-".concat(
-                                                  i
-                                                )}
-                                              />
+                                              questionList[i].answerOptions[2]
+                                                .answerText === "<p></p>" ? (
+                                                " "
+                                              ) : (
+                                                <div
+                                                  style={{
+                                                    width: "100%",
+                                                  }}
+                                                  className={"textAnswerC-".concat(
+                                                    i
+                                                  )}
+                                                />
+                                              )
                                             }
                                           />
                                         </MathJax>
@@ -1080,14 +1124,19 @@ export function PracticeTest() {
                                               readOnly: true,
                                             }}
                                             defaultValue={
-                                              <div
-                                                style={{
-                                                  width: "100%",
-                                                }}
-                                                className={"textAnswerD-".concat(
-                                                  i
-                                                )}
-                                              />
+                                              questionList[i].answerOptions[3]
+                                                .answerText === "<p></p>" ? (
+                                                " "
+                                              ) : (
+                                                <div
+                                                  style={{
+                                                    width: "100%",
+                                                  }}
+                                                  className={"textAnswerD-".concat(
+                                                    i
+                                                  )}
+                                                />
+                                              )
                                             }
                                           />
                                         </MathJax>
@@ -1146,19 +1195,6 @@ export function PracticeTest() {
                                     />
                                   </MathJax>
                                 </MathJaxContext>
-                                {/* <div>
-                                  <TextField
-                                    id={"textAnswerCons".concat(i)}
-                                    label="Answer"
-                                    multiline
-                                    rows={5}
-                                    variant="filled"
-                                    style={{
-                                      width: "100%",
-                                    }}
-                                    defaultValue={""}
-                                  />
-                                </div> */}
                                 <MyRichTextInput
                                   i={"textAnswerCons".concat(i)}
                                   value=""
@@ -1399,6 +1435,74 @@ export function PracticeTest() {
             />
           </h2>
           <div className="content">Please wait a min!</div>
+        </div>
+      </div>
+      <div className="overlay-loading" style={{ display: ratingPopUp }}>
+        <div className="popup">
+          <h3>We would love to hear about your experience!</h3>
+          <Rating
+            onClick={handleRating}
+            initialValue={rating}
+            size="25"
+            allowHover={true}
+            // showTooltip
+            allowFraction
+            // tooltipArray={[
+            //   "Terrible +",
+            //   "Terrible",
+            //   "Bad +",
+            //   "Bad",
+            //   "Average",
+            //   "Average +",
+            //   "Good",
+            //   "Good +",
+            //   "Awesome",
+            //   "Awesome +",
+            // ]}
+          />
+          <div
+            style={{
+              marginTop: "1rem",
+              display: "flex",
+              justifyContent: "space-around",
+              columnGap: "50px",
+              rowGap: "15px",
+            }}
+          >
+            <LoadingButton
+              color="primary"
+              onClick={() => {
+                submit();
+              }}
+              loading={false}
+              variant="contained"
+              size="small"
+              className="SaveButton"
+              sx={{
+                marginBottom: "12px",
+                marginTop: "8px",
+              }}
+            >
+              Submit
+            </LoadingButton>
+            <LoadingButton
+              color="inherit"
+              onClick={() => {
+                console.log("Save");
+                // test_result_Save();
+              }}
+              loading={false}
+              variant="contained"
+              size="small"
+              className="SaveButton"
+              sx={{
+                marginBottom: "12px",
+                marginTop: "8px",
+              }}
+            >
+              Cancel
+            </LoadingButton>
+          </div>
         </div>
       </div>
     </Container>

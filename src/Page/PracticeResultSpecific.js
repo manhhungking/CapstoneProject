@@ -341,7 +341,10 @@ export const PraceticeResultSpecific = () => {
     var div_question_answer = document.querySelector(
       "#textAnswer" + c.concat(i)
     );
-    if (div_question_answer != null) {
+    if (
+      div_question_answer != null &&
+      questionList[i].answerOptions[j].answerText !== "<p></p>"
+    ) {
       let temp = stringToHTMLAnswer(
         `${questionList[i].answerOptions[j].answerText}`
       );
@@ -571,12 +574,17 @@ export const PraceticeResultSpecific = () => {
                                           readOnly: true,
                                         }}
                                         defaultValue={
-                                          <div
-                                            style={{
-                                              width: "100%",
-                                            }}
-                                            className={"questionA-".concat(i)}
-                                          />
+                                          questionList[i].answerOptions[0]
+                                            .answerText === "<p></p>" ? (
+                                            " "
+                                          ) : (
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                              }}
+                                              className={"questionA-".concat(i)}
+                                            />
+                                          )
                                         }
                                       />
                                     </MathJax>
@@ -628,12 +636,17 @@ export const PraceticeResultSpecific = () => {
                                             : red_color;
                                         }}
                                         defaultValue={
-                                          <div
-                                            style={{
-                                              width: "100%",
-                                            }}
-                                            className={"questionB-".concat(i)}
-                                          />
+                                          questionList[i].answerOptions[1]
+                                            .answerText === "<p></p>" ? (
+                                            " "
+                                          ) : (
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                              }}
+                                              className={"questionB-".concat(i)}
+                                            />
+                                          )
                                         }
                                       />
                                     </MathJax>
@@ -685,12 +698,17 @@ export const PraceticeResultSpecific = () => {
                                             : red_color;
                                         }}
                                         defaultValue={
-                                          <div
-                                            style={{
-                                              width: "100%",
-                                            }}
-                                            className={"questionC-".concat(i)}
-                                          />
+                                          questionList[i].answerOptions[2]
+                                            .answerText === "<p></p>" ? (
+                                            " "
+                                          ) : (
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                              }}
+                                              className={"questionC-".concat(i)}
+                                            />
+                                          )
                                         }
                                       />
                                     </MathJax>
@@ -742,12 +760,17 @@ export const PraceticeResultSpecific = () => {
                                             : red_color;
                                         }}
                                         defaultValue={
-                                          <div
-                                            style={{
-                                              width: "100%",
-                                            }}
-                                            className={"questionD-".concat(i)}
-                                          />
+                                          questionList[i].answerOptions[3]
+                                            .answerText === "<p></p>" ? (
+                                            " "
+                                          ) : (
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                              }}
+                                              className={"questionD-".concat(i)}
+                                            />
+                                          )
                                         }
                                       />
                                     </MathJax>

@@ -26,6 +26,7 @@ import "../Style/TestPoolStyle.css";
 import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
+import { Rating } from "react-simple-star-rating";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 15;
@@ -294,20 +295,41 @@ export function PracticeList() {
                           style={{
                             fontSize: "20px",
                             marginRight: ".4rem",
-                            marginTop: ".4rem",
                           }}
                           sx={{ margin: "0px 4px" }}
                         />
                       </div>
                       {exam["duration"]} min
                     </Typography>
+                    <Typography variant="subtitle2" component="div">
+                      <i
+                        class="fas fa-user-friends"
+                        style={{
+                          fontSize: "14px",
+                          marginRight: ".4rem",
+                        }}
+                      />
+                      Number of selection: {exam["total"]}
+                    </Typography>
+                    <Typography variant="subtitle2" component="div">
+                      <Rating
+                        initialValue={
+                          exam["total"] > 0 ? exam["sum"] / exam["total"] : 0
+                        }
+                        allowFraction
+                        readonly
+                        size="14"
+                      />
+                      ({exam["total"]} votes)
+                    </Typography>
                   </CardContent>
-                  <CardActions>
+                  <CardActions style={{ padding: "0px 8px" }}>
                     <Button
                       size="small"
                       onClick={() => {
                         redirect(window.location.href + "/" + exam["id"]);
                       }}
+                      style={{ padding: "4px 8px" }}
                     >
                       Practice
                     </Button>
@@ -392,13 +414,35 @@ export function PracticeList() {
                       </div>
                       {exam["duration"]} min
                     </Typography>
+                    <Typography variant="subtitle2" component="div">
+                      <i
+                        class="fas fa-user-friends"
+                        style={{
+                          fontSize: "14px",
+                          marginRight: ".4rem",
+                        }}
+                      />
+                      Number of selection: {exam["total"]}
+                    </Typography>
+                    <Typography variant="subtitle2" component="div">
+                      <Rating
+                        initialValue={
+                          exam["total"] > 0 ? exam["sum"] / exam["total"] : 0
+                        }
+                        allowFraction
+                        readonly
+                        size="14"
+                      />
+                      ({exam["total"]} votes)
+                    </Typography>
                   </CardContent>
-                  <CardActions>
+                  <CardActions style={{ padding: "0px 8px" }}>
                     <Button
                       size="small"
                       onClick={() => {
                         redirect(window.location.href + "/" + exam["id"]);
                       }}
+                      style={{ padding: "4px 8px" }}
                     >
                       Practice
                     </Button>

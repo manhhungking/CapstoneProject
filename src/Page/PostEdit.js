@@ -36,11 +36,11 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Toolbar, Edit, useCreate, useNotify } from "react-admin";
-import { MathJaxContext, MathJax } from "better-react-mathjax";
 import { MathFormulaDialog } from "./MathFormulaDialog";
 import Paper from "@mui/material/Paper";
 import { MyRichTextInput } from "./MyRichTextInput";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Input from "@mui/material/Input";
 import axios from "axios";
 import { Container, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -1477,12 +1477,15 @@ export function PostEdit() {
                               sx={{ height: "36.5px" }}
                             >
                               Choose file
-                              <input
+                              <Input
                                 id="audioFile"
                                 type="file"
                                 name="audio"
-                                hidden
-                                multiple
+                                inputProps={{
+                                  accept: "audio/mpeg, audio/mp3",
+                                }}
+                                hidden={true}
+                                sx={{ display: "none" }}
                                 onChange={(event) => {
                                   audioToBase64(event, i);
                                 }}
