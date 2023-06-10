@@ -799,12 +799,12 @@ export function PracticeTest() {
     setRating(rate);
     console.log("Rate: ", rate);
   }
-  async function submit() {
+  async function submit(rate) {
     console.log(rating, score, id);
     await axios // update lịch sử làm bài và kết quả
       .patch("http://localhost:8000/test_result/".concat(id), {
         Score: score,
-        Star: rating,
+        Star: rate,
       })
       .then((res) => {
         // console.log("Data save practice test: ", res.data);
@@ -1472,7 +1472,7 @@ export function PracticeTest() {
             <LoadingButton
               color="primary"
               onClick={() => {
-                submit();
+                submit(rating);
               }}
               loading={false}
               variant="contained"
@@ -1489,7 +1489,7 @@ export function PracticeTest() {
               color="inherit"
               onClick={() => {
                 console.log("Save");
-                // test_result_Save();
+                submit(5);
               }}
               loading={false}
               variant="contained"
