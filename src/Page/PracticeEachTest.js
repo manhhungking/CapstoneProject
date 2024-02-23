@@ -195,7 +195,7 @@ export function PracticeTest() {
     // get the data from the api
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
+        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
           params.id
         )
       )
@@ -662,7 +662,7 @@ export function PracticeTest() {
     var id;
     await axios // post  lich sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+        "http://localhost:8000/test_result/".concat(
           params.id
         ),
         data
@@ -682,7 +682,7 @@ export function PracticeTest() {
     setId(id);
     setRatingPopUp("block");
     // await axios // update lịch sử làm bài và kết quả
-    //   .patch("https://backend-capstone-project.herokuapp.com/test_result/".concat(id), { Score })
+    //   .patch("http://localhost:8000/test_result/".concat(id), { Score })
     //   .then((res) => {
     //     // console.log("Data save practice test: ", res.data);
     //     setSavingPopUp("none");
@@ -697,7 +697,7 @@ export function PracticeTest() {
     // console.log("DATA specific will be saved: ", data);
     await axios // update lịch sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/test_result_specific/".concat(
+        "http://localhost:8000/test_result_specific/".concat(
           params.id
         ),
         data
@@ -810,7 +810,7 @@ export function PracticeTest() {
     // console.log(rating, score, id);
     await axios // update lịch sử làm bài và kết quả
       .patch(
-        "https://backend-capstone-project.herokuapp.com/test_result/".concat(
+        "http://localhost:8000/test_result/".concat(
           id
         ),
         {

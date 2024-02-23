@@ -130,7 +130,7 @@ export function PracticeResult() {
   };
   useEffect(() => {
     axios
-      .get("https://backend-capstone-project.herokuapp.com/test_result/".concat(params.id))
+      .get("http://localhost:8000/test_result/".concat(params.id))
       .then((res) => {
         // console.log("Test Result: ", res.data);
         setLoadingPopUp("none");

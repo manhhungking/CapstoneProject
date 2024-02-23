@@ -200,7 +200,7 @@ export const PraceticeResultSpecific = () => {
   useEffect(() => {
     // get the data from the api
     axios
-      .get("https://backend-capstone-project.herokuapp.com/test_result/".concat(id))
+      .get("http://localhost:8000/test_result/".concat(id))
       .then((res) => {
         // console.log("Data: ", res.data);
         setLoadingPopUp("none");

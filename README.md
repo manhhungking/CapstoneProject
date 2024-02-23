@@ -1,5 +1,7 @@
 # Capstone-Project
 
+You can view the documentation of the project here: [CapstoneProject](./Capstone_Project_Report_Hung.pdf)
+
 ## Run Backend
 
 > Install modules via `VENV` (windows)

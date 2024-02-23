@@ -67,7 +67,7 @@ const theme = {
     zIndex: "20 !important",
   },
 };
-const dataProvider = jsonServerProvider("https://backend-capstone-project.herokuapp.com", httpClient);
+const dataProvider = jsonServerProvider("http://localhost:8000", httpClient);
 const queryClient = new QueryClient();
 
 function App() {

@@ -172,7 +172,7 @@ export function PostEdit() {
   useEffect(() => {
     axios
       .get(
-        "https://backend-capstone-project.herokuapp.com/query_questions_and_answers_by_examid/".concat(
+        "http://localhost:8000/query_questions_and_answers_by_examid/".concat(
           params.id
         )
       )
@@ -542,7 +542,7 @@ export function PostEdit() {
     // create("save_questions_and_answers/".concat(params.id), { data });
     axios // post  lich sử làm bài và kết quả
       .post(
-        "https://backend-capstone-project.herokuapp.com/save_questions_and_answers/".concat(
+        "http://localhost:8000/save_questions_and_answers/".concat(
           params.id
         ),
         data
